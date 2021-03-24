@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +29,6 @@ import com.project.cafe.CentralUsuarios.util.UtilMail;
 @RestController
 @RequestMapping("/eutanasia/paratodos")
 public class ControladorRestArchivos {
-
-	@Value("${ruta.responder.comentario}")
-	private String URL_RESPONDER_COMENTARIO;
 
 	@Autowired
 	private UtilMail mailUtil;

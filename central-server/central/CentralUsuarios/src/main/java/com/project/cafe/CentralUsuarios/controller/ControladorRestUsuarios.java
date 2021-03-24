@@ -32,17 +32,11 @@ import com.project.cafe.CentralUsuarios.util.Util;
 import com.project.cafe.CentralUsuarios.util.UtilMail;
 
 @RestController
-@RequestMapping("/eutanasia/paratodos")
+@RequestMapping("/central/usuarios")
 public class ControladorRestUsuarios {
 
 	@Value("${email.servidor}")
 	private String EMAIL_SERVIDOR;
-
-	@Value("${ruta.verificar.cuenta.nueva}")
-	private String URL_VERIFICAR_CUENTA_NUEVA;
-
-	@Value("${ruta.recordar.clave}")
-	private String URL_RECORDAR_CLAVE;
 
 	@Autowired
 	private UtilMail mailUtil;
@@ -204,7 +198,7 @@ public class ControladorRestUsuarios {
 						model.put("nombreCompleto",
 								usuarioActivado.getNombres() + " " + usuarioActivado.getApellidos());
 						model.put("email", usuarioActivado.getCorreo());
-						String urlRuta = URL_RECORDAR_CLAVE + Util.encriptarPassword(usuarioActivado.getUsuario());
+						String urlRuta = "URL_RECORDAR_CLAVE" + Util.encriptarPassword(usuarioActivado.getUsuario());
 						try {
 							model.put("resetUrl", new URL(urlRuta).toURI().toASCIIString());
 						} catch (Exception e) {
@@ -270,7 +264,7 @@ public class ControladorRestUsuarios {
 					model.put("imageUser", newUsuario.getGenero() == EGenero.FEMENINO.ordinal()
 							? "https://raw.githubusercontent.com/cmvb/eutanasia-v9/master/eutanasia/src/assets/images/emailTemplate/woman1.png"
 							: "https://raw.githubusercontent.com/cmvb/eutanasia-v9/master/eutanasia/src/assets/images/emailTemplate/man1.png");
-					String urlRuta = URL_VERIFICAR_CUENTA_NUEVA
+					String urlRuta = "URL_VERIFICAR_CUENTA_NUEVA"
 							+ Util.encriptarPassword(newUsuario.getUsuario() + "|" + newUsuario.getPassword());
 					try {
 						model.put("resetUrl", new URL(urlRuta).toURI().toASCIIString());
