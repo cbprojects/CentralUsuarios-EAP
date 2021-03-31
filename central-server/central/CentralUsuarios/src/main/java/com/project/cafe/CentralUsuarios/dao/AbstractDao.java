@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import com.project.cafe.CentralUsuarios.model.BaseEntidadTB;
 
-public abstract class AbstractDao<T extends BaseEntidadTB> {
+public abstract class AbstractDao<T extends BaseEntidadTB> { 
 
 	private Class<T> clazz;
 
