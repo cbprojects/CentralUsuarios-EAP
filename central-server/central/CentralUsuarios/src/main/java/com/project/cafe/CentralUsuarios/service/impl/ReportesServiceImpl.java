@@ -21,7 +21,7 @@ public class ReportesServiceImpl implements IReportesService {
 		byte[] data = null;
 		// List<PostTB> listaPost = iPostsDao.consultarPosts();
 		String urlJasper = ConstantesValidaciones.RUTA_JASPER_REPORTS + nombreArchivoJasper;
-
+ 
 		try {
 			File file = new ClassPathResource(urlJasper).getFile();
 			JasperPrint print = JasperFillManager.fillReport(file.getPath(), null,

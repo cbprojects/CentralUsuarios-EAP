@@ -18,24 +18,24 @@ import lombok.Setter;
 public class BaseEntidadTB {
 
 	@NotNull
-	@Column(name = "eu_estado", nullable = false)
+	@Column(name = "gdo_estado", nullable = false)
 	private short estado;
 
 	@NotNull
-	@Column(name = "eu_fecha_creacion", nullable = false)
+	@Column(name = "gdo_fecha_creacion", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaCreacion;
 
 	@NotNull
-	@Column(name = "eu_usuario_creacion", nullable = false)
+	@Column(name = "gdo_usuario_creacion", nullable = false)
 	private String usuarioCreacion;
 
-	@Column(name = "eu_fecha_actualizacion", nullable = false)
+	@Column(name = "gdo_fecha_actualizacion", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaActualizacion;
 
 	@NotNull
-	@Column(name = "eu_usuario_actualizacion", nullable = false)
+	@Column(name = "gdo_usuario_actualizacion", nullable = false)
 	private String usuarioActualizacion;
 
 	public short getEstado() {
