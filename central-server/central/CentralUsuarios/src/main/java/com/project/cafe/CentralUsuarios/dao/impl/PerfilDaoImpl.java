@@ -24,8 +24,6 @@ public class PerfilDaoImpl extends AbstractDao<PerfilTB> implements IPerfilDao {
 	@PersistenceContext(unitName = "default")
 	private EntityManager em;
 
-	
-
 	@Override
 	public PerfilTB crearPerfil(PerfilTB perfilAutor) {
 		super.create(perfilAutor);
@@ -37,7 +35,27 @@ public class PerfilDaoImpl extends AbstractDao<PerfilTB> implements IPerfilDao {
 		super.update(perfilAutor);
 		return perfilAutor;
 	}
-	
-	
+
+	@Override
+	public List<PerfilTB> buscarPerfilPorCodigo(String codigoPerfil) {
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT t FROM PerfilTB t WHERE 1 = 1 ");
+		// WHERE
+		if (!StringUtils.isBlank(codigoPerfil)) {
+			JPQL.append("AND t.codigo = :CODIGO ");
+			pamameters.put("CODIGO", codigoPerfil);
+		}
+		// Q. Order By
+		JPQL.append(" ORDER BY t.id");
+		// END QUERY
+
+		TypedQuery<PerfilTB> query = em.createQuery(JPQL.toString(), PerfilTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getResultList();
+	}
 
 }

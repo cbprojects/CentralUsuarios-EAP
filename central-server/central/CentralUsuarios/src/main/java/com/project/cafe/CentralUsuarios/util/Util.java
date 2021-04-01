@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
+import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.UsuarioAutorTB;
 
 public abstract class Util {
@@ -34,11 +35,25 @@ public abstract class Util {
 			case ConstantesTablasNombre.MRA_USUARIO_AUTOR_TB:
 				errores = validarUsuarioAutor((UsuarioAutorTB) entidadTB);
 				break;
+			case ConstantesTablasNombre.MRA_PERFIL_TB:
+				errores = validarPerfilAutor((PerfilTB) entidadTB);
+				break;
 			}
 		} else {
 			errores.add(ConstantesValidaciones.TABLA_NO_ESTABLECIDA_VALIDACIONES);
 		}
 
+		return errores;
+	}
+	public static List<String> validarPerfilAutor(PerfilTB perfilTB) {
+		List<String> errores = new ArrayList<>();
+
+		if (StringUtils.isBlank(perfilTB.getCodigo())) {
+			errores.add(ConstantesValidaciones.CODIGO_PERFIL + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (StringUtils.isBlank(perfilTB.getDescripcion())) {
+			errores.add(ConstantesValidaciones.DESCRIPCION_PERFIL + ConstantesValidaciones.VALOR_VACIO);
+		}
 		return errores;
 	}
 
