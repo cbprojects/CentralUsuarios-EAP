@@ -102,4 +102,8 @@ public final class ConstantesValidaciones {
 	public static final String USUARIO_AUTOR_ME_GUSTA = PropertiesUtil.getProperty("lbl.like.autor");
 	public static final String POST_ME_GUSTA = PropertiesUtil.getProperty("lbl.like.post");
 
+	// Labels Perfil
+	public static final String CODIGO_PERFIL = PropertiesUtil.getProperty("lbl.perfil.codigo");
+	public static final String DESCRIPCION_PERFIL = PropertiesUtil.getProperty("lbl.perfil.descripcion");
+	public static final String MSG_PERFIL_REPETIDO = PropertiesUtil.getProperty("centralusuarios.msg.validate.usuarioRepetido");
 }

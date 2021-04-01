@@ -1,5 +1,7 @@
 package com.project.cafe.CentralUsuarios.dao;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
@@ -17,6 +19,10 @@ public interface IPerfilDao {
 	 */
 	PerfilTB modificarPerfil(PerfilTB perfilAutor);
 
-	
+	/*
+	 * Metodo para consultar los perfiles por codigo
+	 */
+	List<PerfilTB> buscarPerfilPorCodigo(String codigoPerfil);
 
+	
 }
