@@ -1,5 +1,7 @@
 package com.project.cafe.CentralUsuarios.service;
 
+import java.util.List;
+
 import com.project.cafe.CentralUsuarios.model.RolTB;
 
 public interface IRolService {
@@ -7,11 +9,16 @@ public interface IRolService {
 	/*
 	 * Metodo para crear roles
 	 */
-	public RolTB  crearRol(RolTB rol);
+	RolTB  crearRol(RolTB rol);
 
 	/*
 	 * Metodo para modificar rol
 	 */
-	public RolTB modificarRol(RolTB rol);
+	RolTB modificarRol(RolTB rol);
+
+	/*
+	 * Metodo para buscar rol por codigo
+	 */
+	List<RolTB> buscarRolPorCodigo(String codigoRol);
 
 }

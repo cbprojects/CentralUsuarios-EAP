@@ -1,5 +1,7 @@
 package com.project.cafe.CentralUsuarios.service.impl;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,11 @@ public class RolServiceImpl implements IRolService {
 	@Override
 	public RolTB modificarRol(RolTB rol) {
 		return rolDAO.modificarRol(rol);
+	}
+	
+	@Override
+	public List<RolTB> buscarRolPorCodigo(String codigoRol) {
+		return rolDAO.buscarRolPorCodigo(codigoRol);
 	}
 
 }

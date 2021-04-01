@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
+import com.project.cafe.CentralUsuarios.model.RolTB;
 import com.project.cafe.CentralUsuarios.model.UsuarioAutorTB;
 
 public abstract class Util {
@@ -38,6 +39,8 @@ public abstract class Util {
 			case ConstantesTablasNombre.MRA_PERFIL_TB:
 				errores = validarPerfilAutor((PerfilTB) entidadTB);
 				break;
+			case ConstantesTablasNombre.MRA_ROL_TB:
+				errores = validarRol((RolTB) entidadTB);
 			}
 		} else {
 			errores.add(ConstantesValidaciones.TABLA_NO_ESTABLECIDA_VALIDACIONES);
@@ -52,6 +55,18 @@ public abstract class Util {
 			errores.add(ConstantesValidaciones.CODIGO_PERFIL + ConstantesValidaciones.VALOR_VACIO);
 		}
 		if (StringUtils.isBlank(perfilTB.getDescripcion())) {
+			errores.add(ConstantesValidaciones.DESCRIPCION_PERFIL + ConstantesValidaciones.VALOR_VACIO);
+		}
+		return errores;
+	}
+	
+	public static List<String> validarRol(RolTB rolTB) {
+		List<String> errores = new ArrayList<>();
+
+		if (StringUtils.isBlank(rolTB.getCodigo())) {
+			errores.add(ConstantesValidaciones.CODIGO_ROL + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (StringUtils.isBlank(rolTB.getDescripcion())) {
 			errores.add(ConstantesValidaciones.DESCRIPCION_PERFIL + ConstantesValidaciones.VALOR_VACIO);
 		}
 		return errores;
