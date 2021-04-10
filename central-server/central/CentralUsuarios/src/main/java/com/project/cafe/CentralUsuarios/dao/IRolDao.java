@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarRolesDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolTB;
 
@@ -24,5 +26,12 @@ public interface IRolDao {
 	 * Metodo para consultar los roles por codigo
 	 */
 	List<RolTB> buscarRolPorCodigo(String codigoRol);
+	
+	/**
+	 *  método que consulta los roles de manera paginada
+	 * @param filtroRol
+	 * @return
+	 */
+	ResponseConsultarDTO<RolTB> consultarRolesPorFiltros(RequestConsultarRolesDTO filtroRol);
 
 }
