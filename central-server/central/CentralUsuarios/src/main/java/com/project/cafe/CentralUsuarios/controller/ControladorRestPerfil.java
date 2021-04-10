@@ -52,7 +52,7 @@ public class ControladorRestPerfil {
 		try {
 			PerfilTB newPerfil = new PerfilTB();
 			// validaciones de campos vacios o valores incorrectos
-			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_USUARIO_AUTOR_TB, perfilAutor);
+			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_PERFIL_TB, perfilAutor);
 			if (errores.isEmpty()) {
 				// validar rol unico
 				if (validarRolUnicoCrear(perfilAutor.getCodigo())) {
@@ -94,7 +94,7 @@ public class ControladorRestPerfil {
 		try {
 			PerfilTB newPerfil = new PerfilTB();
 			// validaciones de campos vacios o valores incorrectos
-			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_USUARIO_AUTOR_TB, perfilAutor);
+			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_PERFIL_TB, perfilAutor);
 			if (errores.isEmpty()) {
 				// validar rol unico
 				if (validarRolUnicoEditar(perfilAutor.getCodigo(),perfilAutor.getId())) {
