@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarRolesDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
 import com.project.cafe.CentralUsuarios.model.RolTB;
 import com.project.cafe.CentralUsuarios.service.IRolService;
@@ -36,7 +38,7 @@ public class ControladorRestRol {
 		try {
 			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_ROL_TB, rol);
 
-			RolTB newRol= new RolTB();
+			RolTB newRol = new RolTB();
 			if (errores.isEmpty()) {
 				// validar rol unico
 				if (validarRolUnicoCrear(rol.getCodigo())) {
@@ -47,7 +49,7 @@ public class ControladorRestRol {
 
 					throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 				}
-				
+
 			} else {
 				StringBuilder mensajeErrores = new StringBuilder();
 				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
@@ -64,9 +66,9 @@ public class ControladorRestRol {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}
-	
+
 	private boolean validarRolUnicoCrear(String codigo) {
-		List<RolTB> listaRoles= rolService.buscarRolPorCodigo(codigo);
+		List<RolTB> listaRoles = rolService.buscarRolPorCodigo(codigo);
 		if (listaRoles == null || listaRoles.isEmpty()) {
 			return true;
 		}
@@ -84,7 +86,7 @@ public class ControladorRestRol {
 			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_ROL_TB, rol);
 			if (errores.isEmpty()) {
 				// validar rol unico
-				if (validarRolUnicoEditar(rol.getCodigo(),rol.getId())) {
+				if (validarRolUnicoEditar(rol.getCodigo(), rol.getId())) {
 					newRol = rolService.modificarRol(rol);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
@@ -105,19 +107,31 @@ public class ControladorRestRol {
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
-		
+
 	}
 
 	private boolean validarRolUnicoEditar(String codigo, long id) {
 		List<RolTB> listaRol = rolService.buscarRolPorCodigo(codigo);
-		if (listaRol== null || listaRol.isEmpty()) {
+		if (listaRol == null || listaRol.isEmpty()) {
 			return true;
-		}else {
-			if(listaRol.get(0).getId()==(id)){
+		} else {
+			if (listaRol.get(0).getId() == (id)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
+	// CONSULTA
+
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/consultarRolFiltros")
+	public ResponseConsultarDTO<RolTB> consultarRolFiltros(@RequestBody RequestConsultarRolesDTO request) {
+		try {
+			return rolService.consultarRolesFiltros(request);
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+
 }

@@ -69,25 +69,27 @@ public class PerfilDaoImpl extends AbstractDao<PerfilTB> implements IPerfilDao {
 		// QUERY
 		StringBuilder JPQL = new StringBuilder("SELECT r FROM PerfilTB r WHERE 1 = 1 ");
 		// WHERE
-		if (filtroPerfil.getEntidad() != null) {
-			if (StringUtils.isNotBlank(filtroPerfil.getEntidad().getCodigo())) {
+		if (filtroPerfil.getPerfil() != null) {
+			if (StringUtils.isNotBlank(filtroPerfil.getPerfil().getCodigo())) {
 				JPQL.append(" AND UPPER(r.codigo) LIKE UPPER(:CODIGO) ");
-				pamametros.put("CODIGO", ConstantesValidaciones.COMODIN_BD + filtroPerfil.getEntidad().getCodigo()
+				pamametros.put("CODIGO", ConstantesValidaciones.COMODIN_BD + filtroPerfil.getPerfil().getCodigo()
 						+ ConstantesValidaciones.COMODIN_BD);
 			}
 
-			if (StringUtils.isNotBlank(filtroPerfil.getEntidad().getDescripcion())) {
+			if (StringUtils.isNotBlank(filtroPerfil.getPerfil().getDescripcion())) {
 				JPQL.append(" AND UPPER(r.descripcion) LIKE UPPER(:DESCRIPCION) ");
 				pamametros.put("DESCRIPCION", ConstantesValidaciones.COMODIN_BD
-						+ filtroPerfil.getEntidad().getDescripcion() + ConstantesValidaciones.COMODIN_BD);
+						+ filtroPerfil.getPerfil().getDescripcion() + ConstantesValidaciones.COMODIN_BD);
 			}
 		}
+		
+		String COUNT = "SELECT COUNT(r) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
+		
 		// Q. Order By
 		JPQL.append(" ORDER BY r.id DESC");
 		// END QUERY
 
 		// QUERY COUNT
-		String COUNT = "SELECT COUNT(r) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
 		TypedQuery<Long> queryCount = em.createQuery(COUNT, Long.class);
 		pamametros.forEach((k, v) -> queryCount.setParameter(k, v));
 		response.setRegistrosTotales(queryCount.getSingleResult());

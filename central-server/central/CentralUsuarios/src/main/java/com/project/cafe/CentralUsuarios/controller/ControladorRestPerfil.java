@@ -30,7 +30,7 @@ import com.project.cafe.CentralUsuarios.util.Util;
 
 
 @RestController
-@RequestMapping("/central/usuarios")
+@RequestMapping("/central/perfil")
 public class ControladorRestPerfil {
 
 	@Value("${email.servidor}")
@@ -131,10 +131,10 @@ public class ControladorRestPerfil {
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@RequestMapping("/consultarPerfil")
+	@RequestMapping("/consultarPerfilFiltros")
 	public ResponseEntity<ResponseConsultarDTO<PerfilTB>> consultarPerfil(@RequestBody RequestConsultarPerfilesDTO filtroPerfil) {
 		try {
-			if(filtroPerfil.getCantidadRegistro()<0) {
+			if(filtroPerfil.getCantidadRegistro()>0) {
 				ResponseConsultarDTO<PerfilTB> response = new ResponseConsultarDTO<>();
 				response=perfilService.consultarPerfilesPorFiltros(filtroPerfil);
 				return new ResponseEntity<ResponseConsultarDTO<PerfilTB>>(response, HttpStatus.OK); 

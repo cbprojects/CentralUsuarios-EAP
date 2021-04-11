@@ -80,13 +80,14 @@ public class RolDaoImpl extends AbstractDao<RolTB> implements IRolDao {
 			pamametros.put("DESCRIPCION", ConstantesValidaciones.COMODIN_BD + filtroRol.getRol().getDescripcion()
 					+ ConstantesValidaciones.COMODIN_BD);
 		}
+		
+		String COUNT = "SELECT COUNT(r) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
 
 		// Q. Order By
 		JPQL.append(" ORDER BY r.id DESC");
 		// END QUERY
 		
 		//QUERY COUNT
-		String COUNT = "SELECT COUNT(r) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
 		TypedQuery<Long> queryCount = em.createQuery(COUNT, Long.class);
 		pamametros.forEach((k, v) -> queryCount.setParameter(k, v));
 		response.setRegistrosTotales(queryCount.getSingleResult());
