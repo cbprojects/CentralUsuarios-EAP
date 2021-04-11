@@ -10,18 +10,19 @@ public class RequestConsultarPerfilesDTO  implements Serializable  {
 	
 	private static final long serialVersionUID = -1547362098210762545L;
 
-	private PerfilTB entidad;
+	private PerfilTB perfil;
 
 	private int registroInicial;
 
 	private int cantidadRegistro;
 
-	public PerfilTB getEntidad() {
-		return entidad;
+
+	public PerfilTB getPerfil() {
+		return perfil;
 	}
 
-	public void setEntidad(PerfilTB entidad) {
-		this.entidad = entidad;
+	public void setPerfil(PerfilTB perfil) {
+		this.perfil = perfil;
 	}
 
 	public int getRegistroInicial() {
@@ -40,8 +41,8 @@ public class RequestConsultarPerfilesDTO  implements Serializable  {
 		this.cantidadRegistro = cantidadRegistro;
 	}
 
-	public RequestConsultarPerfilesDTO(PerfilTB entidad, int registroInicial, int cantidadRegistro) {
-		this.entidad = entidad;
+	public RequestConsultarPerfilesDTO(PerfilTB perfil, int registroInicial, int cantidadRegistro) {
+		this.perfil = perfil;
 		this.registroInicial = registroInicial;
 		this.cantidadRegistro = cantidadRegistro;
 	}

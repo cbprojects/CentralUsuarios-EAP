@@ -16,7 +16,6 @@ import com.project.cafe.CentralUsuarios.dao.IRolDao;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarRolesDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.RolTB;
-import com.project.cafe.CentralUsuarios.model.UsuarioAutorTB;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
 
 @Repository

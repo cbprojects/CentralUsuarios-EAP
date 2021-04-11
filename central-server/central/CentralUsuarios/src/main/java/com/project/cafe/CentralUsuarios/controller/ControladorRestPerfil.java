@@ -1,27 +1,25 @@
 package com.project.cafe.CentralUsuarios.controller;
 
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.List;
+
+
+
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.cafe.CentralUsuarios.dto.MailDTO;
-import com.project.cafe.CentralUsuarios.enums.EEstado;
-import com.project.cafe.CentralUsuarios.enums.EGenero;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarPerfilesDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.service.IPerfilService;
@@ -29,17 +27,16 @@ import com.project.cafe.CentralUsuarios.util.ConstantesTablasNombre;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
 import com.project.cafe.CentralUsuarios.util.PropertiesUtil;
 import com.project.cafe.CentralUsuarios.util.Util;
-import com.project.cafe.CentralUsuarios.util.UtilMail;
+
 
 @RestController
-@RequestMapping("/central/usuarios")
+@RequestMapping("/central/perfil")
 public class ControladorRestPerfil {
 
 	@Value("${email.servidor}")
 	private String EMAIL_SERVIDOR;
 
-	@Autowired
-	private UtilMail mailUtil;
+	
 
 	@Autowired
 	private IPerfilService perfilService;
@@ -133,10 +130,24 @@ public class ControladorRestPerfil {
 		return false;
 	}
 	
-//	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	@RequestMapping("/consultarPerfil")
-//	public ResponseEntity<PerfilTB> crearPerfil(@RequestBody PerfilTB perfilAutor) {
-//		
-//	}
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/consultarPerfilFiltros")
+	public ResponseEntity<ResponseConsultarDTO<PerfilTB>> consultarPerfil(@RequestBody RequestConsultarPerfilesDTO filtroPerfil) {
+		try {
+			if(filtroPerfil.getCantidadRegistro()>0) {
+				ResponseConsultarDTO<PerfilTB> response = new ResponseConsultarDTO<>();
+				response=perfilService.consultarPerfilesPorFiltros(filtroPerfil);
+				return new ResponseEntity<ResponseConsultarDTO<PerfilTB>>(response, HttpStatus.OK); 
+			}else {
+				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
+				String mensajeErrores = ConstantesValidaciones.MSG_PERFIL_CANTIDAD_REGISTROS;
+
+				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
+			}
+			
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
 	
 }
