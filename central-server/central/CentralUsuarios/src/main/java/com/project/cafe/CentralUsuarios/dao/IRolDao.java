@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarRolesDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
-import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolTB;
 
 @EnableTransactionManagement
