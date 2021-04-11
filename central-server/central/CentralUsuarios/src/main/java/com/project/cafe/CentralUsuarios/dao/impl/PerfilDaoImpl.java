@@ -1,6 +1,5 @@
 package com.project.cafe.CentralUsuarios.dao.impl;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import com.project.cafe.CentralUsuarios.dao.AbstractDao;
 import com.project.cafe.CentralUsuarios.dao.IPerfilDao;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarPerfilesDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
-import com.project.cafe.CentralUsuarios.model.UsuarioAutorTB;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
 
 @Repository
@@ -56,6 +56,52 @@ public class PerfilDaoImpl extends AbstractDao<PerfilTB> implements IPerfilDao {
 		pamameters.forEach((k, v) -> query.setParameter(k, v));
 
 		return query.getResultList();
+	}
+
+	@Override
+	public ResponseConsultarDTO<PerfilTB> consultarPerfilesPorFiltros(RequestConsultarPerfilesDTO filtroPerfil) {
+
+		ResponseConsultarDTO<PerfilTB> response = new ResponseConsultarDTO<>();
+
+		// PARAMETROS
+		Map<String, Object> pamametros = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT r FROM PerfilTB r WHERE 1 = 1 ");
+		// WHERE
+		if (filtroPerfil.getEntidad() != null) {
+			if (StringUtils.isNotBlank(filtroPerfil.getEntidad().getCodigo())) {
+				JPQL.append(" AND UPPER(r.codigo) LIKE UPPER(:CODIGO) ");
+				pamametros.put("CODIGO", ConstantesValidaciones.COMODIN_BD + filtroPerfil.getEntidad().getCodigo()
+						+ ConstantesValidaciones.COMODIN_BD);
+			}
+
+			if (StringUtils.isNotBlank(filtroPerfil.getEntidad().getDescripcion())) {
+				JPQL.append(" AND UPPER(r.descripcion) LIKE UPPER(:DESCRIPCION) ");
+				pamametros.put("DESCRIPCION", ConstantesValidaciones.COMODIN_BD
+						+ filtroPerfil.getEntidad().getDescripcion() + ConstantesValidaciones.COMODIN_BD);
+			}
+		}
+		// Q. Order By
+		JPQL.append(" ORDER BY r.id DESC");
+		// END QUERY
+
+		// QUERY COUNT
+		String COUNT = "SELECT COUNT(r) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
+		TypedQuery<Long> queryCount = em.createQuery(COUNT, Long.class);
+		pamametros.forEach((k, v) -> queryCount.setParameter(k, v));
+		response.setRegistrosTotales(queryCount.getSingleResult());
+
+		TypedQuery<PerfilTB> query = em.createQuery(JPQL.toString(), PerfilTB.class);
+		pamametros.forEach((k, v) -> query.setParameter(k, v));
+
+		query.setFirstResult(filtroPerfil.getRegistroInicial());
+		query.setMaxResults(filtroPerfil.getCantidadRegistro());
+		List<PerfilTB> listaRoles = query.getResultList();
+
+		response.setResultado(listaRoles);
+
+		return response;
 	}
 
 }

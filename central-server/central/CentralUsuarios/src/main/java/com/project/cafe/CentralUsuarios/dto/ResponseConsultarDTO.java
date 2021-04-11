@@ -3,7 +3,6 @@ package com.project.cafe.CentralUsuarios.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.project.cafe.CentralUsuarios.model.PerfilTB;
 
 
 public class ResponseConsultarDTO <T extends Object> implements Serializable  {
