@@ -13,19 +13,19 @@ public final class ConstantesValidaciones {
 	public static final String CARACTERES = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 	// Rutas Útiles
-	public static final String RUTA_JASPER_REPORTS = PropertiesUtil.getProperty("eutanasia.ruta.jasper.reports");
-	public static final String RUTA_SFTP_IMAGES = PropertiesUtil.getProperty("eutanasia.ruta.sftp.archivos");
+	public static final String RUTA_JASPER_REPORTS = PropertiesUtil.getProperty("centralusuarios.ruta.jasper.reports");
+	public static final String RUTA_SFTP_IMAGES = PropertiesUtil.getProperty("centralusuarios.ruta.sftp.archivos");
 	public static final String RUTA_SFTP_IMAGES_USUARIO = PropertiesUtil
-			.getProperty("eutanasia.ruta.sftp.archivos.user");
-	public static final String RUTA_SFTP_IMAGES_POST = PropertiesUtil.getProperty("eutanasia.ruta.sftp.archivos.post");
+			.getProperty("centralusuarios.ruta.sftp.archivos.user");
+	public static final String RUTA_SFTP_IMAGES_POST = PropertiesUtil.getProperty("centralusuarios.ruta.sftp.archivos.post");
 	public static final String TEMPLATE_MAIL_ACTIVATE_USER = PropertiesUtil
-			.getProperty("eutanasia.template.mail.activateUser");
+			.getProperty("centralusuarios.template.mail.activateUser");
 	public static final String TEMPLATE_MAIL_RECORDAR_CLAVE = PropertiesUtil
-			.getProperty("eutanasia.template.mail.recordarClave");
+			.getProperty("centralusuarios.template.mail.recordarClave");
 	public static final String TEMPLATE_MAIL_RESPONDER_COMENTARIO = PropertiesUtil
-			.getProperty("eutanasia.template.mail.comentario");
+			.getProperty("centralusuarios.template.mail.comentario");
 	public static final String TEMPLATE_MAIL_CONTACTO_BANDA = PropertiesUtil
-			.getProperty("eutanasia.template.mail.contacto");
+			.getProperty("centralusuarios.template.mail.contacto");
 
 	// Simbolos y constantes
 	public static final String COMODIN_BD = "%";
@@ -44,27 +44,27 @@ public final class ConstantesValidaciones {
 
 	// Mensajes
 	public static final String ERROR_LOGIN_DATOS_INCORRECTOS_INACTIVOS = PropertiesUtil
-			.getProperty("eutanasia.msg.login.datos.incorrectos");
-	public static final String ERROR_RESTAURAR_CLAVE = PropertiesUtil.getProperty("eutanasia.msg.restaurar.clave");
+			.getProperty("centralusuarios.msg.login.datos.incorrectos");
+	public static final String ERROR_RESTAURAR_CLAVE = PropertiesUtil.getProperty("centralusuarios.msg.restaurar.clave");
 	public static final String ERROR_LOGIN_DATOS_INSUFICIENTES = PropertiesUtil
-			.getProperty("eutanasia.msg.login.datos.insuficientes");
-	public static final String LLAVE_ENCRIPTAR = PropertiesUtil.getProperty("eutanasia.key.encrypt");
-	public static final String VALOR_NULL_OBJETO = PropertiesUtil.getProperty("eutanasia.msg.validate.valor.objeto");
-	public static final String VALOR_VACIO = PropertiesUtil.getProperty("eutanasia.msg.validate.valor.vacio");
-	public static final String VALOR_INCORRECTO = PropertiesUtil.getProperty("eutanasia.msg.validate.valor.incorrecto");
-	public static final String CORREO_NO_VALIDO = PropertiesUtil.getProperty("eutanasia.msg.validate.correoInvalido");
+			.getProperty("centralusuarios.msg.login.datos.insuficientes");
+	public static final String LLAVE_ENCRIPTAR = PropertiesUtil.getProperty("centralusuarios.key.encrypt");
+	public static final String VALOR_NULL_OBJETO = PropertiesUtil.getProperty("centralusuarios.msg.validate.valor.objeto");
+	public static final String VALOR_VACIO = PropertiesUtil.getProperty("centralusuarios.msg.validate.valor.vacio");
+	public static final String VALOR_INCORRECTO = PropertiesUtil.getProperty("centralusuarios.msg.validate.valor.incorrecto");
+	public static final String CORREO_NO_VALIDO = PropertiesUtil.getProperty("centralusuarios.msg.validate.correoInvalido");
 	public static final String TABLA_NO_ESTABLECIDA_VALIDACIONES = PropertiesUtil
-			.getProperty("eutanasia.msg.validate.tabla.no.establecida");
+			.getProperty("centralusuarios.msg.validate.tabla.no.establecida");
 	public static final String SUPERA_LONGITUD = PropertiesUtil
-			.getProperty("eutanasia.msg.validate.valor.superaLongitud");
+			.getProperty("centralusuarios.msg.validate.valor.superaLongitud");
 	public static final String MSG_USUARIO_REPETIDO = PropertiesUtil
-			.getProperty("eutanasia.msg.validate.usuarioRepetido");
+			.getProperty("centralusuarios.msg.validate.usuarioRepetido");
 	public static final String MSG_CORREO_REPETIDO = PropertiesUtil
-			.getProperty("eutanasia.msg.validate.correoRepetido");
-	public static final String MSG_NO_POSTS = PropertiesUtil.getProperty("eutanasia.msg.validate.no.posts");
-	public static final String MSG_ENVIO_EMAIL_EXITOSO = PropertiesUtil.getProperty("eutanasia.msg.email.exitoso");
+			.getProperty("centralusuarios.msg.validate.correoRepetido");
+	public static final String MSG_NO_POSTS = PropertiesUtil.getProperty("centralusuarios.msg.validate.no.posts");
+	public static final String MSG_ENVIO_EMAIL_EXITOSO = PropertiesUtil.getProperty("centralusuarios.msg.email.exitoso");
 	public static final String MSG_ENVIO_EMAIL_EXITOSO_CON_EXCEPCIONES = PropertiesUtil
-			.getProperty("eutanasia.msg.email.exitoso.con.excepciones");
+			.getProperty("centralusuarios.msg.email.exitoso.con.excepciones");
 
 	// Labels
 	public static final String ARCHIVO = PropertiesUtil.getProperty("lbl.archivo.archivo");
