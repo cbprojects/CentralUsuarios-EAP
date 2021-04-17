@@ -112,4 +112,8 @@ public final class ConstantesValidaciones {
 		public static final String CODIGO_ROL = PropertiesUtil.getProperty("lbl.rol.codigo");
 		public static final String DESCRIPCION_ROL = PropertiesUtil.getProperty("lbl.rol.descripcion");
 		public static final String MSG_ROL_REPETIDO = PropertiesUtil.getProperty("centralusuarios.msg.validate.rolRepetido");
+		
+	//	Labels usuario
+		public static final String NICK_USUARIO = PropertiesUtil.getProperty("lbl.rol.codigo");
+		public static final String CONTRASENA_USUARIO = PropertiesUtil.getProperty("lbl.rol.descripcion");
 }
