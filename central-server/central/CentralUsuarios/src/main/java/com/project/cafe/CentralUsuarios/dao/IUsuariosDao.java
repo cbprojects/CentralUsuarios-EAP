@@ -40,3 +40,4 @@ public interface IUsuariosDao {
 	List<UsuarioAutorTB> consultarUsuarios();
 
 }
+

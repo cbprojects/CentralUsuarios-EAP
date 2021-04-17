@@ -1,12 +1,14 @@
 package com.project.cafe.CentralUsuarios.dao;
 
-import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-public abstract class AbstractDao<T extends Serializable> {
+import com.project.cafe.CentralUsuarios.model.BaseEntidadTB;
+
+public abstract class AbstractDao<T extends BaseEntidadTB> { 
 
 	private Class<T> clazz;
 
@@ -27,10 +29,16 @@ public abstract class AbstractDao<T extends Serializable> {
 	}
 
 	public void create(T entity) {
+		entity.setFechaCreacion(new Date());
+		entity.setUsuarioCreacion("SYSTEM");
+		entity.setFechaActualizacion(new Date());
+		entity.setUsuarioActualizacion("SYSTEM");
 		this.entityManager.persist(entity);
 	}
 
 	public T update(T entity) {
+		entity.setFechaActualizacion(new Date());
+		entity.setUsuarioActualizacion("SYSTEM");
 		return this.entityManager.merge(entity);
 	}
 
