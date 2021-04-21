@@ -13,39 +13,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.cafe.CentralUsuarios.dto.RequestConsultarRolesDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarUsuariosDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
-import com.project.cafe.CentralUsuarios.model.RolTB;
-import com.project.cafe.CentralUsuarios.service.IRolService;
+import com.project.cafe.CentralUsuarios.model.UsuarioTB;
+import com.project.cafe.CentralUsuarios.service.IUsuarioService;
 import com.project.cafe.CentralUsuarios.util.ConstantesTablasNombre;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
 import com.project.cafe.CentralUsuarios.util.PropertiesUtil;
 import com.project.cafe.CentralUsuarios.util.Util;
 
 @RestController
-@RequestMapping("/central/rol")
-public class ControladorRestRol {
+@RequestMapping("/central/usuario")
+public class ControladorRestUsuario {
 
 	@Autowired
-	private IRolService rolService;
+	private IUsuarioService usuarioService;
 
 	// CREATE
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@RequestMapping("/crearRol")
-	public ResponseEntity<RolTB> crearRol(@RequestBody RolTB rol) {
+	@RequestMapping("/crearUsuario")
+	public ResponseEntity<UsuarioTB> crearUsuario(@RequestBody UsuarioTB usuario) {
 		try {
-			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_ROL_TB, rol);
+			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_USUARIO_TB, usuario);
 
-			RolTB newRol = new RolTB();
+			UsuarioTB newUsuario = new UsuarioTB();
 			if (errores.isEmpty()) {
-				// validar rol unico
-				if (validarRolUnicoCrear(rol.getCodigo())) {
-					newRol = rolService.crearRol(rol);
+				// validar usuario unico
+				if (validarUsuarioUnicoCrear(usuario.getUsuario())) {
+					newUsuario = usuarioService.crearUsuario(usuario);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
-					String mensajeErrores = ConstantesValidaciones.MSG_ROL_REPETIDO;
+					String mensajeErrores = ConstantesValidaciones.MSG_USUARIO_REPETIDO;
 
 					throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 				}
@@ -61,15 +61,18 @@ public class ControladorRestRol {
 				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 			}
 
-			return new ResponseEntity<RolTB>(newRol, HttpStatus.OK);
+			return new ResponseEntity<UsuarioTB>(newUsuario, HttpStatus.OK);
 		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}
 
-	private boolean validarRolUnicoCrear(String codigo) {
-		List<RolTB> listaRoles = rolService.buscarRolPorCodigo(codigo);
-		if (listaRoles == null || listaRoles.isEmpty()) {
+	private boolean validarUsuarioUnicoCrear(String nick) {
+		List<UsuarioTB> listaUsuarios = usuarioService.buscarUsuarioPorNick(nick);
+		if (listaUsuarios == null || listaUsuarios.isEmpty()) {
 			return true;
 		}
 		return false;
@@ -78,19 +81,19 @@ public class ControladorRestRol {
 	// UPDATE
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@RequestMapping("/modificarRol")
-	public ResponseEntity<RolTB> modificarRol(@RequestBody RolTB rol) {
+	@RequestMapping("/modificarUsuario")
+	public ResponseEntity<UsuarioTB> modificarUsuario(@RequestBody UsuarioTB usuario) {
 		try {
-			RolTB newRol = new RolTB();
+			UsuarioTB newUsuario = new UsuarioTB();
 			// validaciones de campos vacios o valores incorrectos
-			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_ROL_TB, rol);
+			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_USUARIO_TB, usuario);
 			if (errores.isEmpty()) {
-				// validar rol unico
-				if (validarRolUnicoEditar(rol.getCodigo(), rol.getId())) {
-					newRol = rolService.modificarRol(rol);
+				// validar usuario unico
+				if (validarUsuarioUnicoEditar(usuario.getUsuario(), usuario.getId())) {
+					newUsuario = usuarioService.modificarUsuario(usuario);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
-					String mensajeErrores = ConstantesValidaciones.MSG_ROL_REPETIDO;
+					String mensajeErrores = ConstantesValidaciones.MSG_USUARIO_REPETIDO;
 
 					throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 				}
@@ -103,19 +106,19 @@ public class ControladorRestRol {
 
 				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 			}
-			return new ResponseEntity<RolTB>(newRol, HttpStatus.OK);
+			return new ResponseEntity<UsuarioTB>(newUsuario, HttpStatus.OK);
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 
 	}
 
-	private boolean validarRolUnicoEditar(String codigo, long id) {
-		List<RolTB> listaRol = rolService.buscarRolPorCodigo(codigo);
-		if (listaRol == null || listaRol.isEmpty()) {
+	private boolean validarUsuarioUnicoEditar(String nick, long id) {
+		List<UsuarioTB> listaUsuario = usuarioService.buscarUsuarioPorNick(nick);
+		if (listaUsuario == null || listaUsuario.isEmpty()) {
 			return true;
 		} else {
-			if (listaRol.get(0).getId() == (id)) {
+			if (listaUsuario.get(0).getId() == (id)) {
 				return true;
 			}
 		}
@@ -125,10 +128,10 @@ public class ControladorRestRol {
 	// CONSULTA
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@RequestMapping("/consultarRolFiltros")
-	public ResponseConsultarDTO<RolTB> consultarRolFiltros(@RequestBody RequestConsultarRolesDTO request) {
+	@RequestMapping("/consultarUsuarioFiltros")
+	public ResponseConsultarDTO<UsuarioTB> consultarUsuarioFiltros(@RequestBody RequestConsultarUsuariosDTO request) {
 		try {
-			return rolService.consultarRolesFiltros(request);
+			return usuarioService.consultarUsusarioFiltros(request);
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
