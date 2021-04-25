@@ -62,7 +62,7 @@ public class RolDaoImpl extends AbstractDao<RolTB> implements IRolDao {
 	public ResponseConsultarDTO<RolTB> consultarRolesPorFiltros(RequestConsultarRolesDTO filtroRol) {
 
 		ResponseConsultarDTO<RolTB> response = new ResponseConsultarDTO<>();
-		
+
 		// PARAMETROS
 		Map<String, Object> pamametros = new HashMap<>();
 
@@ -74,35 +74,53 @@ public class RolDaoImpl extends AbstractDao<RolTB> implements IRolDao {
 			pamametros.put("CODIGO", ConstantesValidaciones.COMODIN_BD + filtroRol.getRol().getCodigo()
 					+ ConstantesValidaciones.COMODIN_BD);
 		}
-		
+
 		if (StringUtils.isNotBlank(filtroRol.getRol().getDescripcion())) {
 			JPQL.append(" AND UPPER(r.descripcion) LIKE UPPER(:DESCRIPCION) ");
 			pamametros.put("DESCRIPCION", ConstantesValidaciones.COMODIN_BD + filtroRol.getRol().getDescripcion()
 					+ ConstantesValidaciones.COMODIN_BD);
 		}
-		
+
 		String COUNT = "SELECT COUNT(r) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
 
 		// Q. Order By
 		JPQL.append(" ORDER BY r.id DESC");
 		// END QUERY
-		
-		//QUERY COUNT
+
+		// QUERY COUNT
 		TypedQuery<Long> queryCount = em.createQuery(COUNT, Long.class);
 		pamametros.forEach((k, v) -> queryCount.setParameter(k, v));
 		response.setRegistrosTotales(queryCount.getSingleResult());
-		
 
 		TypedQuery<RolTB> query = em.createQuery(JPQL.toString(), RolTB.class);
 		pamametros.forEach((k, v) -> query.setParameter(k, v));
-		
+
 		query.setFirstResult(filtroRol.getRegistroInicial());
 		query.setMaxResults(filtroRol.getCantidadRegistro());
-		List<RolTB> listaRoles=query.getResultList();
-		
+		List<RolTB> listaRoles = query.getResultList();
+
 		response.setResultado(listaRoles);
 
 		return response;
+	}
+
+	@Override
+	public List<RolTB> BuscarRolesNoAsociadosSegunPerfil(long id) {
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("Select grt from RolTB grt where grt.estado = 1 "
+				+ "and grt.id not in(select grpt.rol from RolPerfilTB grpt where grpt.perfil.id =:IDPERFIL )");
+		// WHERE
+		pamameters.put("IDPERFIL", id);
+
+		// END QUERY
+
+		TypedQuery<RolTB> query = em.createQuery(JPQL.toString(), RolTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getResultList();
 	}
 
 }
