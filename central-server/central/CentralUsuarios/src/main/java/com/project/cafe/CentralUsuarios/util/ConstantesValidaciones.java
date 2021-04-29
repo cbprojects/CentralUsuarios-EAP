@@ -17,7 +17,8 @@ public final class ConstantesValidaciones {
 	public static final String RUTA_SFTP_IMAGES = PropertiesUtil.getProperty("centralusuarios.ruta.sftp.archivos");
 	public static final String RUTA_SFTP_IMAGES_USUARIO = PropertiesUtil
 			.getProperty("centralusuarios.ruta.sftp.archivos.user");
-	public static final String RUTA_SFTP_IMAGES_POST = PropertiesUtil.getProperty("centralusuarios.ruta.sftp.archivos.post");
+	public static final String RUTA_SFTP_IMAGES_POST = PropertiesUtil
+			.getProperty("centralusuarios.ruta.sftp.archivos.post");
 	public static final String TEMPLATE_MAIL_ACTIVATE_USER = PropertiesUtil
 			.getProperty("centralusuarios.template.mail.activateUser");
 	public static final String TEMPLATE_MAIL_RECORDAR_CLAVE = PropertiesUtil
@@ -45,14 +46,18 @@ public final class ConstantesValidaciones {
 	// Mensajes
 	public static final String ERROR_LOGIN_DATOS_INCORRECTOS_INACTIVOS = PropertiesUtil
 			.getProperty("centralusuarios.msg.login.datos.incorrectos");
-	public static final String ERROR_RESTAURAR_CLAVE = PropertiesUtil.getProperty("centralusuarios.msg.restaurar.clave");
+	public static final String ERROR_RESTAURAR_CLAVE = PropertiesUtil
+			.getProperty("centralusuarios.msg.restaurar.clave");
 	public static final String ERROR_LOGIN_DATOS_INSUFICIENTES = PropertiesUtil
 			.getProperty("centralusuarios.msg.login.datos.insuficientes");
 	public static final String LLAVE_ENCRIPTAR = PropertiesUtil.getProperty("centralusuarios.key.encrypt");
-	public static final String VALOR_NULL_OBJETO = PropertiesUtil.getProperty("centralusuarios.msg.validate.valor.objeto");
+	public static final String VALOR_NULL_OBJETO = PropertiesUtil
+			.getProperty("centralusuarios.msg.validate.valor.objeto");
 	public static final String VALOR_VACIO = PropertiesUtil.getProperty("centralusuarios.msg.validate.valor.vacio");
-	public static final String VALOR_INCORRECTO = PropertiesUtil.getProperty("centralusuarios.msg.validate.valor.incorrecto");
-	public static final String CORREO_NO_VALIDO = PropertiesUtil.getProperty("centralusuarios.msg.validate.correoInvalido");
+	public static final String VALOR_INCORRECTO = PropertiesUtil
+			.getProperty("centralusuarios.msg.validate.valor.incorrecto");
+	public static final String CORREO_NO_VALIDO = PropertiesUtil
+			.getProperty("centralusuarios.msg.validate.correoInvalido");
 	public static final String TABLA_NO_ESTABLECIDA_VALIDACIONES = PropertiesUtil
 			.getProperty("centralusuarios.msg.validate.tabla.no.establecida");
 	public static final String SUPERA_LONGITUD = PropertiesUtil
@@ -62,7 +67,8 @@ public final class ConstantesValidaciones {
 	public static final String MSG_CORREO_REPETIDO = PropertiesUtil
 			.getProperty("centralusuarios.msg.validate.correoRepetido");
 	public static final String MSG_NO_POSTS = PropertiesUtil.getProperty("centralusuarios.msg.validate.no.posts");
-	public static final String MSG_ENVIO_EMAIL_EXITOSO = PropertiesUtil.getProperty("centralusuarios.msg.email.exitoso");
+	public static final String MSG_ENVIO_EMAIL_EXITOSO = PropertiesUtil
+			.getProperty("centralusuarios.msg.email.exitoso");
 	public static final String MSG_ENVIO_EMAIL_EXITOSO_CON_EXCEPCIONES = PropertiesUtil
 			.getProperty("centralusuarios.msg.email.exitoso.con.excepciones");
 
@@ -105,15 +111,22 @@ public final class ConstantesValidaciones {
 	// Labels Perfil
 	public static final String CODIGO_PERFIL = PropertiesUtil.getProperty("lbl.perfil.codigo");
 	public static final String DESCRIPCION_PERFIL = PropertiesUtil.getProperty("lbl.perfil.descripcion");
-	public static final String MSG_PERFIL_REPETIDO = PropertiesUtil.getProperty("centralusuarios.perfil.validate.perfilRepetido");
-	public static final String MSG_PERFIL_CANTIDAD_REGISTROS = PropertiesUtil.getProperty("centralusuarios.perfil.validate.cantidadRegistros");
-	
+	public static final String MSG_PERFIL_REPETIDO = PropertiesUtil
+			.getProperty("centralusuarios.perfil.validate.perfilRepetido");
+	public static final String MSG_PERFIL_CANTIDAD_REGISTROS = PropertiesUtil
+			.getProperty("centralusuarios.perfil.validate.cantidadRegistros");
+
 	// Labels Rol
-		public static final String CODIGO_ROL = PropertiesUtil.getProperty("lbl.rol.codigo");
-		public static final String DESCRIPCION_ROL = PropertiesUtil.getProperty("lbl.rol.descripcion");
-		public static final String MSG_ROL_REPETIDO = PropertiesUtil.getProperty("centralusuarios.msg.validate.rolRepetido");
-		
-	//	Labels usuario
-		public static final String NICK_USUARIO = PropertiesUtil.getProperty("lbl.rol.codigo");
-		public static final String CONTRASENA_USUARIO = PropertiesUtil.getProperty("lbl.rol.descripcion");
+	public static final String CODIGO_ROL = PropertiesUtil.getProperty("lbl.rol.codigo");
+	public static final String DESCRIPCION_ROL = PropertiesUtil.getProperty("lbl.rol.descripcion");
+	public static final String MSG_ROL_REPETIDO = PropertiesUtil
+			.getProperty("centralusuarios.msg.validate.rolRepetido");
+
+	// Labels usuario
+	public static final String NICK_USUARIO = PropertiesUtil.getProperty("lbl.rol.codigo");
+	public static final String CONTRASENA_USUARIO = PropertiesUtil.getProperty("lbl.rol.descripcion");
+
+	// labels RolPerfil
+	public static final String MSG_BUSQUEDA_ROLPERFIL_VACIO = PropertiesUtil
+			.getProperty("centralusuarios.rolperfil.validate.busquedaRolPerfilVacio");
 }
