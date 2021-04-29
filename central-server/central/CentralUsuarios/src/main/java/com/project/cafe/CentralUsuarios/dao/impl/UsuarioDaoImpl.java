@@ -17,6 +17,7 @@ import com.project.cafe.CentralUsuarios.dto.RequestConsultarUsuariosDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.UsuarioTB;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
+import com.project.cafe.CentralUsuarios.util.PasswordUtil;
 
 @Repository
 public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDao {
@@ -37,16 +38,16 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 	}
 
 	@Override
-	public List<UsuarioTB> buscarUsuarioPorNick(String usuario) {
+	public List<UsuarioTB> buscarUsuarioPorEmail(String email) {
 		// PARAMETROS
 		Map<String, Object> pamameters = new HashMap<>();
 
 		// QUERY
 		StringBuilder JPQL = new StringBuilder("SELECT u FROM UsuarioTB u WHERE 1 = 1 ");
 		// WHERE
-		if (!StringUtils.isBlank(usuario)) {
-			JPQL.append("AND u.usuario = :USUARIO ");
-			pamameters.put("USUARIO", usuario);
+		if (!StringUtils.isBlank(email)) {
+			JPQL.append("AND u.email = :EMAIL");
+			pamameters.put("EMAIL", email);
 		}
 		// Q. Order By
 		JPQL.append(" ORDER BY u.id");
@@ -59,7 +60,7 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 	}
 
 	@Override
-	public ResponseConsultarDTO<UsuarioTB> consultarUsuariosPorFiltros(RequestConsultarUsuariosDTO filtroUsuario) {
+	public ResponseConsultarDTO<UsuarioTB> consultarUsuariosPorFiltros(RequestConsultarUsuariosDTO filtroUsuario) throws Exception{
 
 		ResponseConsultarDTO<UsuarioTB> response = new ResponseConsultarDTO<>();
 		
@@ -69,22 +70,16 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 		// QUERY
 		StringBuilder JPQL = new StringBuilder("SELECT u FROM UsuarioTB u WHERE 1 = 1 ");
 		// WHERE
-		if (StringUtils.isNotBlank(filtroUsuario.getusuario().getUsuario())) {
-			JPQL.append(" AND UPPER(u.usuario) LIKE UPPER(:USUARIO) ");
-			pamametros.put("USUARIO", ConstantesValidaciones.COMODIN_BD + filtroUsuario.getusuario().getUsuario()
-					+ ConstantesValidaciones.COMODIN_BD);
-		}
-		
 		if (filtroUsuario.getusuario() != null && filtroUsuario.getusuario().getPerfil()!= null
 				&& filtroUsuario.getusuario().getPerfil().getId() != 0L) {
 			JPQL.append(" AND u.perfil.id = :IDPERFIL ");
-			pamametros.put("IDPERFIL", ConstantesValidaciones.COMODIN_BD + filtroUsuario.getusuario().getPerfil().getId()
-					+ ConstantesValidaciones.COMODIN_BD);
+			pamametros.put("IDPERFIL", filtroUsuario.getusuario().getPerfil().getId());
 		}
 		
-		if (StringUtils.isNotBlank(filtroUsuario.getusuario().getUsuario())) {
-			JPQL.append(" AND UPPER(u.usuario) LIKE UPPER(:USUARIO) ");
-			pamametros.put("USUARIO", ConstantesValidaciones.COMODIN_BD + filtroUsuario.getusuario().getUsuario()
+		if (StringUtils.isNotBlank(filtroUsuario.getusuario().getEmail())) {
+			filtroUsuario.getusuario().setEmail(PasswordUtil.encriptarAES(filtroUsuario.getusuario().getEmail(), ConstantesValidaciones.CLAVE_AES));
+			JPQL.append(" AND UPPER(u.email) LIKE UPPER(:EMAIL) ");
+			pamametros.put("EMAIL", ConstantesValidaciones.COMODIN_BD + filtroUsuario.getusuario().getEmail()
 					+ ConstantesValidaciones.COMODIN_BD);
 		}
 		

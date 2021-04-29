@@ -21,13 +21,13 @@ public interface IUsuarioService {
 	/*
 	 * Metodo para buscar usuarios por nick
 	 */
-	List<UsuarioTB> buscarUsuarioPorNick(String nickUsuario);
+	List<UsuarioTB> buscarUsuarioPorEmail(String nickEmail);
 
 	/**
 	 * 
 	 * @param filtroUsuario
 	 * @return
 	 */
-	ResponseConsultarDTO<UsuarioTB> consultarUsusarioFiltros(RequestConsultarUsuariosDTO filtroUsuario);
+	ResponseConsultarDTO<UsuarioTB> consultarUsusarioFiltros(RequestConsultarUsuariosDTO filtroUsuario) throws Exception;
 
 }

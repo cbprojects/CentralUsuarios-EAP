@@ -20,6 +20,7 @@ import com.project.cafe.CentralUsuarios.model.UsuarioTB;
 import com.project.cafe.CentralUsuarios.service.IUsuarioService;
 import com.project.cafe.CentralUsuarios.util.ConstantesTablasNombre;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
+import com.project.cafe.CentralUsuarios.util.PasswordUtil;
 import com.project.cafe.CentralUsuarios.util.PropertiesUtil;
 import com.project.cafe.CentralUsuarios.util.Util;
 
@@ -36,12 +37,16 @@ public class ControladorRestUsuario {
 	@RequestMapping("/crearUsuario")
 	public ResponseEntity<UsuarioTB> crearUsuario(@RequestBody UsuarioTB usuario) {
 		try {
+			usuario.setEmail(PasswordUtil.encriptarAES(usuario.getEmail(), ConstantesValidaciones.CLAVE_AES));
+			usuario.setCelular(PasswordUtil.encriptarAES(usuario.getCelular(), ConstantesValidaciones.CLAVE_AES));
+			usuario.setDireccion(PasswordUtil.encriptarAES(usuario.getDireccion(), ConstantesValidaciones.CLAVE_AES));
+			usuario.setContrasena(PasswordUtil.encriptarAES(usuario.getContrasena(), ConstantesValidaciones.CLAVE_AES));
 			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_USUARIO_TB, usuario);
 
 			UsuarioTB newUsuario = new UsuarioTB();
 			if (errores.isEmpty()) {
 				// validar usuario unico
-				if (validarUsuarioUnicoCrear(usuario.getUsuario())) {
+				if (validarUsuarioUnicoCrear(usuario.getEmail())) {
 					newUsuario = usuarioService.crearUsuario(usuario);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
@@ -70,8 +75,8 @@ public class ControladorRestUsuario {
 		}
 	}
 
-	private boolean validarUsuarioUnicoCrear(String nick) {
-		List<UsuarioTB> listaUsuarios = usuarioService.buscarUsuarioPorNick(nick);
+	private boolean validarUsuarioUnicoCrear(String email) {
+		List<UsuarioTB> listaUsuarios = usuarioService.buscarUsuarioPorEmail(email);
 		if (listaUsuarios == null || listaUsuarios.isEmpty()) {
 			return true;
 		}
@@ -84,12 +89,16 @@ public class ControladorRestUsuario {
 	@RequestMapping("/modificarUsuario")
 	public ResponseEntity<UsuarioTB> modificarUsuario(@RequestBody UsuarioTB usuario) {
 		try {
+			usuario.setEmail(PasswordUtil.encriptarAES(usuario.getEmail(), ConstantesValidaciones.CLAVE_AES));
+			usuario.setCelular(PasswordUtil.encriptarAES(usuario.getCelular(), ConstantesValidaciones.CLAVE_AES));
+			usuario.setDireccion(PasswordUtil.encriptarAES(usuario.getDireccion(), ConstantesValidaciones.CLAVE_AES));
+			usuario.setContrasena(PasswordUtil.encriptarAES(usuario.getContrasena(), ConstantesValidaciones.CLAVE_AES));
 			UsuarioTB newUsuario = new UsuarioTB();
 			// validaciones de campos vacios o valores incorrectos
 			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_USUARIO_TB, usuario);
 			if (errores.isEmpty()) {
 				// validar usuario unico
-				if (validarUsuarioUnicoEditar(usuario.getUsuario(), usuario.getId())) {
+				if (validarUsuarioUnicoEditar(usuario.getEmail(), usuario.getId())) {
 					newUsuario = usuarioService.modificarUsuario(usuario);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
@@ -107,14 +116,14 @@ public class ControladorRestUsuario {
 				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 			}
 			return new ResponseEntity<UsuarioTB>(newUsuario, HttpStatus.OK);
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 
 	}
 
-	private boolean validarUsuarioUnicoEditar(String nick, long id) {
-		List<UsuarioTB> listaUsuario = usuarioService.buscarUsuarioPorNick(nick);
+	private boolean validarUsuarioUnicoEditar(String email, long id) {
+		List<UsuarioTB> listaUsuario = usuarioService.buscarUsuarioPorEmail(email);
 		if (listaUsuario == null || listaUsuario.isEmpty()) {
 			return true;
 		} else {
@@ -131,8 +140,9 @@ public class ControladorRestUsuario {
 	@RequestMapping("/consultarUsuarioFiltros")
 	public ResponseConsultarDTO<UsuarioTB> consultarUsuarioFiltros(@RequestBody RequestConsultarUsuariosDTO request) {
 		try {
+			
 			return usuarioService.consultarUsusarioFiltros(request);
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}

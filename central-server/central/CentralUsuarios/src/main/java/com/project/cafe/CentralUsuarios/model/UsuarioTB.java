@@ -36,12 +36,8 @@ public class UsuarioTB extends BaseEntidadTB implements Serializable {
 	private long id;
 
 	@NotNull
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private PerfilTB perfil;
-	
-	@NotNull
-	@Column(name = "usu_usuario", nullable = false, length = 100)
-	private String usuario;
 	
 	@NotNull
 	@Column(name = "usu_contrasena", nullable = false, length = 100)
@@ -85,14 +81,6 @@ public class UsuarioTB extends BaseEntidadTB implements Serializable {
 
 	public void setPerfil(PerfilTB perfil) {
 		this.perfil = perfil;
-	}
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
 	}
 
 	public String getContrasena() {

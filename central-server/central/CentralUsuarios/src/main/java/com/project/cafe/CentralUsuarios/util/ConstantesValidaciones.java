@@ -41,6 +41,9 @@ public final class ConstantesValidaciones {
 	public static final int SALT_ENCRIPTAR_CLAVE = 28;
 	public static final char[] SIMBOLOS = CARACTERES.toCharArray();
 	public static final char[] BUFFER = new char[TAMANO_TOKEN];
+	public static final String CLAVE_AES = "B13EC3B0742D2308";
+	
+	
 
 	// Mensajes
 	public static final String ERROR_LOGIN_DATOS_INCORRECTOS_INACTIVOS = PropertiesUtil

@@ -12,6 +12,7 @@ import com.project.cafe.CentralUsuarios.dto.RequestConsultarUsuariosDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.UsuarioTB;
 import com.project.cafe.CentralUsuarios.service.IUsuarioService;
+import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
 import com.project.cafe.CentralUsuarios.util.PasswordUtil;
 
 @Service
@@ -23,7 +24,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Transactional
 	@Override
 	public UsuarioTB crearUsuario(UsuarioTB usuario) throws Exception {
-		usuario.setContrasena(PasswordUtil.encriptarAES(usuario.getContrasena(), "B13EC3B0742D2308"));
 		return usuarioDAO.crearUsuario(usuario);
 	}
 
@@ -34,12 +34,12 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 	
 	@Override
-	public List<UsuarioTB> buscarUsuarioPorNick(String nickUsuario) {
-		return usuarioDAO.buscarUsuarioPorNick(nickUsuario);
+	public List<UsuarioTB> buscarUsuarioPorEmail(String email) {
+		return usuarioDAO.buscarUsuarioPorEmail(email);
 	}
 	
 	@Override
-	public ResponseConsultarDTO<UsuarioTB> consultarUsusarioFiltros(RequestConsultarUsuariosDTO filtroUsuario) {
+	public ResponseConsultarDTO<UsuarioTB> consultarUsusarioFiltros(RequestConsultarUsuariosDTO filtroUsuario) throws Exception{
 		return usuarioDAO.consultarUsuariosPorFiltros(filtroUsuario);
 	}
 	

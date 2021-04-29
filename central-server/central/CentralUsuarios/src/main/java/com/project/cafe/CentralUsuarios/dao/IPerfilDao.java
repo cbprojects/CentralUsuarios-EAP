@@ -33,4 +33,10 @@ public interface IPerfilDao {
 	 */
 	ResponseConsultarDTO<PerfilTB> consultarPerfilesPorFiltros(RequestConsultarPerfilesDTO filtroPerfil);
 	
+	/**
+	 *  devuelve todos los perfiles que estén activos
+	 * @return
+	 */
+	List<PerfilTB> consultarPerfilesActivos();
+	
 }

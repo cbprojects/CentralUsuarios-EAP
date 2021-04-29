@@ -1,5 +1,6 @@
 package com.project.cafe.CentralUsuarios.dao.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,9 +83,9 @@ public class PerfilDaoImpl extends AbstractDao<PerfilTB> implements IPerfilDao {
 						+ filtroPerfil.getPerfil().getDescripcion() + ConstantesValidaciones.COMODIN_BD);
 			}
 		}
-		
+
 		String COUNT = "SELECT COUNT(r) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
-		
+
 		// Q. Order By
 		JPQL.append(" ORDER BY r.id DESC");
 		// END QUERY
@@ -104,6 +105,28 @@ public class PerfilDaoImpl extends AbstractDao<PerfilTB> implements IPerfilDao {
 		response.setResultado(listaRoles);
 
 		return response;
+	}
+
+	@Override
+	public List<PerfilTB> consultarPerfilesActivos() {
+
+		List<PerfilTB> listaPerfiles = new ArrayList<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT r FROM PerfilTB r WHERE 1 = 1 ");
+		// WHERE
+
+		JPQL.append(" AND UPPER(r.estado) = 1 ");
+
+		String COUNT = "SELECT COUNT(r) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
+
+		// Q. Order By
+		JPQL.append(" ORDER BY r.id DESC");
+		// END QUERY
+		TypedQuery<PerfilTB> query = em.createQuery(JPQL.toString(), PerfilTB.class);
+		listaPerfiles = query.getResultList();
+
+		return listaPerfiles;
 	}
 
 }
