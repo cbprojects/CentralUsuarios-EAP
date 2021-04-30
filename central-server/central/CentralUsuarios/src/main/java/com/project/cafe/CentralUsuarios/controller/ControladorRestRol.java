@@ -62,7 +62,7 @@ public class ControladorRestRol {
 			}
 
 			return new ResponseEntity<RolTB>(newRol, HttpStatus.OK);
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}
@@ -104,7 +104,7 @@ public class ControladorRestRol {
 				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 			}
 			return new ResponseEntity<RolTB>(newRol, HttpStatus.OK);
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 

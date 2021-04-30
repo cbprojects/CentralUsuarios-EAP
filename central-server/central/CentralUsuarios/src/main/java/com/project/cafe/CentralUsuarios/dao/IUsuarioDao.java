@@ -24,13 +24,13 @@ public interface IUsuarioDao {
 	/*
 	 * Metodo para consultar los usuarios por nick
 	 */
-	List<UsuarioTB> buscarUsuarioPorNick(String usuario);
+	List<UsuarioTB> buscarUsuarioPorEmail(String email);
 	
 	/**
 	 *  método que consulta los usuarios de manera paginada
 	 * @param filtroRol
 	 * @return
 	 */
-	ResponseConsultarDTO<UsuarioTB> consultarUsuariosPorFiltros(RequestConsultarUsuariosDTO filtroUsuario);
+	ResponseConsultarDTO<UsuarioTB> consultarUsuariosPorFiltros(RequestConsultarUsuariosDTO filtroUsuario) throws Exception;
 
 }

@@ -81,7 +81,7 @@ public abstract class Util {
 	public static List<String> validarUsuario(UsuarioTB usuarioTB) {
 		List<String> errores = new ArrayList<>();
 
-		if (StringUtils.isBlank(usuarioTB.getUsuario())) {
+		if (StringUtils.isBlank(usuarioTB.getEmail())) {
 			errores.add(ConstantesValidaciones.NICK_USUARIO + ConstantesValidaciones.VALOR_VACIO);
 		}
 		if (StringUtils.isBlank(usuarioTB.getContrasena())) {

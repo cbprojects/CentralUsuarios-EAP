@@ -40,5 +40,9 @@ public class PerfilServiceImpl implements IPerfilService {
 	public ResponseConsultarDTO<PerfilTB> consultarPerfilesPorFiltros(RequestConsultarPerfilesDTO filtroPerfil) {
 		return perfilDAO.consultarPerfilesPorFiltros(filtroPerfil);
 	}
+	
+	public List<PerfilTB> consultarPerfilesActivos(){
+		return perfilDAO.consultarPerfilesActivos();
+	}
 
 }
