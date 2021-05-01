@@ -34,7 +34,7 @@ public class ControladorRestRol {
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/crearRol")
-	public ResponseEntity<RolTB> crearUsuario(@RequestBody RolTB rol) {
+	public ResponseEntity<RolTB> crearRol(@RequestBody RolTB rol) {
 		try {
 			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_ROL_TB, rol);
 
@@ -62,7 +62,7 @@ public class ControladorRestRol {
 			}
 
 			return new ResponseEntity<RolTB>(newRol, HttpStatus.OK);
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}
@@ -104,7 +104,7 @@ public class ControladorRestRol {
 				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 			}
 			return new ResponseEntity<RolTB>(newRol, HttpStatus.OK);
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 

@@ -13,6 +13,7 @@ import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolTB;
 import com.project.cafe.CentralUsuarios.model.UsuarioAutorTB;
+import com.project.cafe.CentralUsuarios.model.UsuarioTB;
 
 public abstract class Util {
 
@@ -41,6 +42,11 @@ public abstract class Util {
 				break;
 			case ConstantesTablasNombre.MRA_ROL_TB:
 				errores = validarRol((RolTB) entidadTB);
+				break;
+				
+			case ConstantesTablasNombre.MRA_USUARIO_TB:
+				errores = validarUsuario((UsuarioTB) entidadTB);
+				break;
 			}
 		} else {
 			errores.add(ConstantesValidaciones.TABLA_NO_ESTABLECIDA_VALIDACIONES);
@@ -68,6 +74,18 @@ public abstract class Util {
 		}
 		if (StringUtils.isBlank(rolTB.getDescripcion())) {
 			errores.add(ConstantesValidaciones.DESCRIPCION_PERFIL + ConstantesValidaciones.VALOR_VACIO);
+		}
+		return errores;
+	}
+	
+	public static List<String> validarUsuario(UsuarioTB usuarioTB) {
+		List<String> errores = new ArrayList<>();
+
+		if (StringUtils.isBlank(usuarioTB.getEmail())) {
+			errores.add(ConstantesValidaciones.NICK_USUARIO + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (StringUtils.isBlank(usuarioTB.getContrasena())) {
+			errores.add(ConstantesValidaciones.CONTRASENA_USUARIO + ConstantesValidaciones.VALOR_VACIO);
 		}
 		return errores;
 	}

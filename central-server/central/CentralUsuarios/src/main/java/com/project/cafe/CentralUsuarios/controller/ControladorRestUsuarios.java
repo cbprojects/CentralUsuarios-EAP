@@ -287,7 +287,7 @@ public class ControladorRestUsuarios {
 			}
 
 			return new ResponseEntity<UsuarioAutorTB>(newUsuario, HttpStatus.OK);
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}
@@ -335,7 +335,7 @@ public class ControladorRestUsuarios {
 			}
 
 			return new ResponseEntity<UsuarioAutorTB>(newUsuario, HttpStatus.OK);
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}

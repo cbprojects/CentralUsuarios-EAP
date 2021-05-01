@@ -33,4 +33,11 @@ public interface IRolDao {
 	 */
 	ResponseConsultarDTO<RolTB> consultarRolesPorFiltros(RequestConsultarRolesDTO filtroRol);
 
+	/**
+	 *  método que consulta los roles que no esten asociados a el perfil enviado
+	 * @param id
+	 * @return
+	 */
+	List<RolTB> BuscarRolesNoAsociadosSegunPerfil(long id);
+
 }
