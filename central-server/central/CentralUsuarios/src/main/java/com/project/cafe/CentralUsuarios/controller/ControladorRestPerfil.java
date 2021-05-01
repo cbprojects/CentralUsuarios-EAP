@@ -131,7 +131,28 @@ public class ControladorRestPerfil {
 		try {
 			if (filtroPerfil.getCantidadRegistro() > 0) {
 				ResponseConsultarDTO<PerfilTB> response = new ResponseConsultarDTO<>();
-				response = perfilService.consultarPerfilesPorFiltros(filtroPerfil);
+				response = perfilService.consultarPerfilesPorFiltros(filtroPerfil,false);
+				return new ResponseEntity<ResponseConsultarDTO<PerfilTB>>(response, HttpStatus.OK);
+			} else {
+				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
+				String mensajeErrores = ConstantesValidaciones.MSG_PERFIL_CANTIDAD_REGISTROS;
+
+				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
+			}
+
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+	
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/consultarPerfilFiltrosActivos")
+	public ResponseEntity<ResponseConsultarDTO<PerfilTB>> consultarPerfilActivos(
+			@RequestBody RequestConsultarPerfilesDTO filtroPerfil) {
+		try {
+			if (filtroPerfil.getCantidadRegistro() > 0) {
+				ResponseConsultarDTO<PerfilTB> response = new ResponseConsultarDTO<>();
+				response = perfilService.consultarPerfilesPorFiltros(filtroPerfil,true);
 				return new ResponseEntity<ResponseConsultarDTO<PerfilTB>>(response, HttpStatus.OK);
 			} else {
 				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");

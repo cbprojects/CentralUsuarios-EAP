@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.cafe.CentralUsuarios.dto.RequestCrearRolPerfilDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarRolPerfilDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseCrearRolPerfilDTO;
 import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolPerfilTB;
@@ -39,12 +40,11 @@ public class ControladorRestRolPerfil {
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/crearRolPerfil")
-	public ResponseEntity<List<RolPerfilTB>> crearPerfil(@RequestBody RequestCrearRolPerfilDTO requestCrearRolPErfil) {
+	public ResponseEntity<ResponseCrearRolPerfilDTO> crearPerfil(@RequestBody RequestCrearRolPerfilDTO requestCrearRolPErfil) {
 		try {
 			// eliminamos los datos en RolPerfilTB para el perfil enviado
 			rolPerfilService.eliminarRolPerfilMasivoXPerfil(requestCrearRolPErfil.getPerfil().getId());
 			// Creamos los RolPerfilTb Segun La LIsta de Roles
-			List<RolPerfilTB> lstResponse = new ArrayList<>();
 			if (requestCrearRolPErfil.getLstRoles() != null && !requestCrearRolPErfil.getLstRoles().isEmpty()) {
 				RolPerfilTB crearRolPerfil;
 				Short activo=1;
@@ -53,10 +53,13 @@ public class ControladorRestRolPerfil {
 					crearRolPerfil.setPerfil(requestCrearRolPErfil.getPerfil());
 					crearRolPerfil.setRol(rolTB);
 					crearRolPerfil.setEstado(activo);
-					lstResponse.add(rolPerfilService.crearRolPerfil(crearRolPerfil));
+					rolPerfilService.crearRolPerfil(crearRolPerfil);
 				}
 			}
-			return new ResponseEntity<List<RolPerfilTB>>(lstResponse, HttpStatus.OK);
+			ResponseCrearRolPerfilDTO response = new ResponseCrearRolPerfilDTO();
+			response.setCodigo(PropertiesUtil.getProperty("centralusuarios.msg.validate.string.cero"));
+			response.setMensaje(PropertiesUtil.getProperty("centralusuarios.msg.validate.string.mensaje.exito"));
+			return new ResponseEntity<ResponseCrearRolPerfilDTO>(response, HttpStatus.OK);
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
