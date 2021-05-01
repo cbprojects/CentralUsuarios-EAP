@@ -37,8 +37,8 @@ public class PerfilServiceImpl implements IPerfilService {
 	}
 
 	@Override
-	public ResponseConsultarDTO<PerfilTB> consultarPerfilesPorFiltros(RequestConsultarPerfilesDTO filtroPerfil) {
-		return perfilDAO.consultarPerfilesPorFiltros(filtroPerfil);
+	public ResponseConsultarDTO<PerfilTB> consultarPerfilesPorFiltros(RequestConsultarPerfilesDTO filtroPerfil, boolean activos) {
+		return perfilDAO.consultarPerfilesPorFiltros(filtroPerfil,activos);
 	}
 	
 	public List<PerfilTB> consultarPerfilesActivos(){

@@ -29,7 +29,7 @@ public interface IPerfilService {
 	 * @param filtroPerfil
 	 * @return
 	 */
-	ResponseConsultarDTO<PerfilTB> consultarPerfilesPorFiltros(RequestConsultarPerfilesDTO filtroPerfil);
+	ResponseConsultarDTO<PerfilTB> consultarPerfilesPorFiltros(RequestConsultarPerfilesDTO filtroPerfil, boolean activos);
 	
 	/**
 	 *  devuelve todos los perfiles que estén activos

@@ -60,7 +60,7 @@ public class PerfilDaoImpl extends AbstractDao<PerfilTB> implements IPerfilDao {
 	}
 
 	@Override
-	public ResponseConsultarDTO<PerfilTB> consultarPerfilesPorFiltros(RequestConsultarPerfilesDTO filtroPerfil) {
+	public ResponseConsultarDTO<PerfilTB> consultarPerfilesPorFiltros(RequestConsultarPerfilesDTO filtroPerfil, boolean activos) {
 
 		ResponseConsultarDTO<PerfilTB> response = new ResponseConsultarDTO<>();
 
@@ -69,6 +69,10 @@ public class PerfilDaoImpl extends AbstractDao<PerfilTB> implements IPerfilDao {
 
 		// QUERY
 		StringBuilder JPQL = new StringBuilder("SELECT r FROM PerfilTB r WHERE 1 = 1 ");
+		
+		if(activos) {
+			JPQL.append(" AND r.estado = 1 ");
+		}
 		// WHERE
 		if (filtroPerfil.getPerfil() != null) {
 			if (StringUtils.isNotBlank(filtroPerfil.getPerfil().getCodigo())) {
