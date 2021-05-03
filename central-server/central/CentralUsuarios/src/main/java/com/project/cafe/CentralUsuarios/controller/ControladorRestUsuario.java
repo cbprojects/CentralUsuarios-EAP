@@ -164,38 +164,16 @@ public class ControladorRestUsuario {
 		}
 	}
 
-	// LOGIN
-
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@RequestMapping("/login")
-	public ResponseEntity<UsuarioTB> loginUsuario(@RequestBody UsuarioTB usuario) {
-		try {
-			UsuarioTB usuarioLogueado = null;
-			if (usuario != null && !StringUtils.isBlank(usuario.getEmail())
-					&& !StringUtils.isBlank(usuario.getContrasena())) {
-				// AQUI VA LO DE JULIO -> usuarioLogueado =
-				// usuarioService.loginUsuario(usuario.getEmail(), usuario.getContrasena());
-				if (usuarioLogueado == null) {
-					throw new ModelNotFoundException(
-							ConstantesValidaciones.ERROR_LOGIN_DATOS_INCORRECTOS_INACTIVOS.toString());
-				}
-			} else {
-				throw new ModelNotFoundException(ConstantesValidaciones.ERROR_LOGIN_DATOS_INSUFICIENTES);
-			}
-
-			return new ResponseEntity<UsuarioTB>(usuarioLogueado, HttpStatus.OK);
-		} catch (JSONException e) {
-			throw new ModelNotFoundException(e.getMessage());
-		}
-	}
-
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/restaurarClave")
-	public ResponseEntity<UsuarioTB> restaurarClave(@RequestBody UsuarioTB usuario) {
+	public ResponseEntity<UsuarioTB> restaurarClave(@RequestBody UsuarioTB usuario){
 		try {
 			UsuarioTB usuarioActivado = null;
 			if (usuario != null && !StringUtils.isBlank(usuario.getEmail())) {
+				usuario.setEmail(PasswordUtil.encriptarAES(usuario.getEmail(),
+						ConstantesValidaciones.CLAVE_AES));
 				usuario.setEstado((short) EEstado.INACTIVO.ordinal());
+				
 				List<UsuarioTB> usuariosEncontrados = usuarioService.buscarUsuarioPorEmail(usuario.getEmail());
 				if (usuariosEncontrados != null && !usuariosEncontrados.isEmpty()) {
 					usuarioActivado = usuariosEncontrados.get(0);
@@ -229,7 +207,7 @@ public class ControladorRestUsuario {
 			}
 
 			return new ResponseEntity<UsuarioTB>(usuarioActivado, HttpStatus.OK);
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}
