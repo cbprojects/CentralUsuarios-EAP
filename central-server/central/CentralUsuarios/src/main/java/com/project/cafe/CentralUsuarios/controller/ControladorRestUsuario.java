@@ -1,9 +1,14 @@
 package com.project.cafe.CentralUsuarios.controller;
 
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.cafe.CentralUsuarios.dto.MailDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUsuariosDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
+import com.project.cafe.CentralUsuarios.enums.EEstado;
 import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
 import com.project.cafe.CentralUsuarios.model.UsuarioTB;
 import com.project.cafe.CentralUsuarios.service.IUsuarioService;
@@ -23,6 +30,7 @@ import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
 import com.project.cafe.CentralUsuarios.util.PasswordUtil;
 import com.project.cafe.CentralUsuarios.util.PropertiesUtil;
 import com.project.cafe.CentralUsuarios.util.Util;
+import com.project.cafe.CentralUsuarios.util.UtilMail;
 
 @RestController
 @RequestMapping("/central/usuario")
@@ -30,6 +38,15 @@ public class ControladorRestUsuario {
 
 	@Autowired
 	private IUsuarioService usuarioService;
+
+	@Value("${email.servidor}")
+	private String EMAIL_SERVIDOR;
+
+	@Value("${ruta.recordar.clave}")
+	private String RUTA_RECORDAR_CLAVE;
+
+	@Autowired
+	private UtilMail mailUtil;
 
 	// CREATE
 
@@ -140,9 +157,79 @@ public class ControladorRestUsuario {
 	@RequestMapping("/consultarUsuarioFiltros")
 	public ResponseConsultarDTO<UsuarioTB> consultarUsuarioFiltros(@RequestBody RequestConsultarUsuariosDTO request) {
 		try {
-			
+
 			return usuarioService.consultarUsusarioFiltros(request);
 		} catch (Exception e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+
+	// LOGIN
+
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/login")
+	public ResponseEntity<UsuarioTB> loginUsuario(@RequestBody UsuarioTB usuario) {
+		try {
+			UsuarioTB usuarioLogueado = null;
+			if (usuario != null && !StringUtils.isBlank(usuario.getEmail())
+					&& !StringUtils.isBlank(usuario.getContrasena())) {
+				// AQUI VA LO DE JULIO -> usuarioLogueado =
+				// usuarioService.loginUsuario(usuario.getEmail(), usuario.getContrasena());
+				if (usuarioLogueado == null) {
+					throw new ModelNotFoundException(
+							ConstantesValidaciones.ERROR_LOGIN_DATOS_INCORRECTOS_INACTIVOS.toString());
+				}
+			} else {
+				throw new ModelNotFoundException(ConstantesValidaciones.ERROR_LOGIN_DATOS_INSUFICIENTES);
+			}
+
+			return new ResponseEntity<UsuarioTB>(usuarioLogueado, HttpStatus.OK);
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/restaurarClave")
+	public ResponseEntity<UsuarioTB> restaurarClave(@RequestBody UsuarioTB usuario) {
+		try {
+			UsuarioTB usuarioActivado = null;
+			if (usuario != null && !StringUtils.isBlank(usuario.getEmail())) {
+				usuario.setEstado((short) EEstado.INACTIVO.ordinal());
+				List<UsuarioTB> usuariosEncontrados = usuarioService.buscarUsuarioPorEmail(usuario.getEmail());
+				if (usuariosEncontrados != null && !usuariosEncontrados.isEmpty()) {
+					usuarioActivado = usuariosEncontrados.get(0);
+					if (usuarioActivado != null) {
+						MailDTO mailDto = new MailDTO();
+						mailDto.setFrom(EMAIL_SERVIDOR);
+						mailDto.setTo(usuarioActivado.getEmail());
+						mailDto.setSubject("RESTAURAR CLAVE");
+
+						Map<String, Object> model = new HashMap<>();
+						model.put("user", usuarioActivado.getEmail());
+						model.put("nombreCompleto", usuarioActivado.getNombre());
+						model.put("email", usuarioActivado.getEmail());
+						String urlRuta = RUTA_RECORDAR_CLAVE + usuarioActivado.getEmail();
+						try {
+							model.put("resetUrl", new URL(urlRuta).toURI().toASCIIString());
+						} catch (Exception e) {
+							throw new ModelNotFoundException(e.getMessage());
+						}
+						mailDto.setModel(model);
+
+						mailUtil.sendMail(mailDto, ConstantesValidaciones.TEMPLATE_MAIL_RECORDAR_CLAVE);
+					} else {
+						throw new ModelNotFoundException(ConstantesValidaciones.ERROR_RESTAURAR_CLAVE.toString());
+					}
+				} else {
+					throw new ModelNotFoundException(ConstantesValidaciones.ERROR_RESTAURAR_CLAVE.toString());
+				}
+			} else {
+				throw new ModelNotFoundException(ConstantesValidaciones.ERROR_RESTAURAR_CLAVE);
+			}
+
+			return new ResponseEntity<UsuarioTB>(usuarioActivado, HttpStatus.OK);
+		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}
