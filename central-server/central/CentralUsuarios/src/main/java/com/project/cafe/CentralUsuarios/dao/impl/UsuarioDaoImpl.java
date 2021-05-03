@@ -78,9 +78,8 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 		}
 
 		if (StringUtils.isNotBlank(filtroUsuario.getusuario().getEmail())) {
-			// Comentareado el encriptar para pruebas de reestablecer clave
-			// filtroUsuario.getusuario().setEmail(PasswordUtil.encriptarAES(filtroUsuario.getusuario().getEmail(),
-			// ConstantesValidaciones.CLAVE_AES));
+			filtroUsuario.getusuario().setEmail(PasswordUtil.encriptarAES(filtroUsuario.getusuario().getEmail(),
+			ConstantesValidaciones.CLAVE_AES));
 			filtroUsuario.getusuario().setEmail(filtroUsuario.getusuario().getEmail());
 			JPQL.append(" AND UPPER(u.email) LIKE UPPER(:EMAIL) ");
 			pamametros.put("EMAIL", ConstantesValidaciones.COMODIN_BD + filtroUsuario.getusuario().getEmail()
