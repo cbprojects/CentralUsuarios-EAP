@@ -1,6 +1,7 @@
 package com.project.cafe.CentralUsuarios.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -12,8 +13,7 @@ import com.project.cafe.CentralUsuarios.dto.RequestConsultarUsuariosDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.UsuarioTB;
 import com.project.cafe.CentralUsuarios.service.IUsuarioService;
-import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
-import com.project.cafe.CentralUsuarios.util.PasswordUtil;
+
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
@@ -41,6 +41,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public ResponseConsultarDTO<UsuarioTB> consultarUsusarioFiltros(RequestConsultarUsuariosDTO filtroUsuario) throws Exception{
 		return usuarioDAO.consultarUsuariosPorFiltros(filtroUsuario);
+	}
+
+	@Override
+	public Optional<UsuarioTB> loginUsuario(String user, String clave) {
+		return usuarioDAO.loginUsuario(user,clave);
 	}
 	
 	

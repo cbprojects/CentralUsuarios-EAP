@@ -1,7 +1,10 @@
 package com.project.cafe.CentralUsuarios.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUsuariosDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseLoginUsuarioDTO;
 import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
+import com.project.cafe.CentralUsuarios.model.RolTB;
 import com.project.cafe.CentralUsuarios.model.UsuarioTB;
+import com.project.cafe.CentralUsuarios.service.IRolPerfilService;
 import com.project.cafe.CentralUsuarios.service.IUsuarioService;
 import com.project.cafe.CentralUsuarios.util.ConstantesTablasNombre;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
@@ -31,6 +37,8 @@ public class ControladorRestUsuario {
 	@Autowired
 	private IUsuarioService usuarioService;
 
+	@Autowired
+	private IRolPerfilService rolPerfilService;
 	// CREATE
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -140,8 +148,41 @@ public class ControladorRestUsuario {
 	@RequestMapping("/consultarUsuarioFiltros")
 	public ResponseConsultarDTO<UsuarioTB> consultarUsuarioFiltros(@RequestBody RequestConsultarUsuariosDTO request) {
 		try {
-			
+
 			return usuarioService.consultarUsusarioFiltros(request);
+		} catch (Exception e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+
+	// LOGIN
+
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/loginUsuario")
+	public ResponseEntity<ResponseLoginUsuarioDTO> loginUsuario(@RequestBody UsuarioTB usuario) {
+		try {
+			Optional <UsuarioTB> usuarioLogueado = null;
+			if (usuario != null && !StringUtils.isBlank(usuario.getEmail())
+					&& !StringUtils.isBlank(usuario.getContrasena())) {
+				String user= PasswordUtil.encriptarAES(usuario.getEmail(), ConstantesValidaciones.CLAVE_AES);
+				String clave = PasswordUtil.encriptarAES(usuario.getContrasena(), ConstantesValidaciones.CLAVE_AES);
+				usuarioLogueado = usuarioService.loginUsuario(user, clave);
+				if (!usuarioLogueado.isPresent()) {
+					throw new ModelNotFoundException(
+							ConstantesValidaciones.ERROR_LOGIN_DATOS_INCORRECTOS_INACTIVOS.toString());
+				}else {
+					ResponseLoginUsuarioDTO response= new ResponseLoginUsuarioDTO();
+					response.setUsuario(usuarioLogueado.get());
+					List<RolTB> listaRoles= new ArrayList<>();
+					listaRoles=rolPerfilService.BuscarRolesSegunPerfil(usuarioLogueado.get().getPerfil().getId());
+					response.setListaRoles(listaRoles);	
+					return new ResponseEntity<ResponseLoginUsuarioDTO>(response, HttpStatus.OK);
+				}
+			} else {
+				throw new ModelNotFoundException(ConstantesValidaciones.ERROR_LOGIN_DATOS_INSUFICIENTES);
+			}
+		} catch (JSONException  e ) {
+			throw new ModelNotFoundException(e.getMessage());
 		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
