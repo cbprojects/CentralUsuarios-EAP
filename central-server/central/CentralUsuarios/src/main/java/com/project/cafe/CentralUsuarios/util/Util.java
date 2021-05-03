@@ -2,7 +2,6 @@ package com.project.cafe.CentralUsuarios.util;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -12,7 +11,6 @@ import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolTB;
-import com.project.cafe.CentralUsuarios.model.UsuarioAutorTB;
 import com.project.cafe.CentralUsuarios.model.UsuarioTB;
 
 public abstract class Util {
@@ -34,16 +32,13 @@ public abstract class Util {
 		List<String> errores = new ArrayList<>();
 		if (!StringUtils.isBlank(tabla)) {
 			switch (tabla) {
-			case ConstantesTablasNombre.MRA_USUARIO_AUTOR_TB:
-				errores = validarUsuarioAutor((UsuarioAutorTB) entidadTB);
-				break;
 			case ConstantesTablasNombre.MRA_PERFIL_TB:
 				errores = validarPerfilAutor((PerfilTB) entidadTB);
 				break;
 			case ConstantesTablasNombre.MRA_ROL_TB:
 				errores = validarRol((RolTB) entidadTB);
 				break;
-				
+
 			case ConstantesTablasNombre.MRA_USUARIO_TB:
 				errores = validarUsuario((UsuarioTB) entidadTB);
 				break;
@@ -54,6 +49,7 @@ public abstract class Util {
 
 		return errores;
 	}
+
 	public static List<String> validarPerfilAutor(PerfilTB perfilTB) {
 		List<String> errores = new ArrayList<>();
 
@@ -65,7 +61,7 @@ public abstract class Util {
 		}
 		return errores;
 	}
-	
+
 	public static List<String> validarRol(RolTB rolTB) {
 		List<String> errores = new ArrayList<>();
 
@@ -77,7 +73,7 @@ public abstract class Util {
 		}
 		return errores;
 	}
-	
+
 	public static List<String> validarUsuario(UsuarioTB usuarioTB) {
 		List<String> errores = new ArrayList<>();
 
@@ -87,44 +83,6 @@ public abstract class Util {
 		if (StringUtils.isBlank(usuarioTB.getContrasena())) {
 			errores.add(ConstantesValidaciones.CONTRASENA_USUARIO + ConstantesValidaciones.VALOR_VACIO);
 		}
-		return errores;
-	}
-
-	public static List<String> validarUsuarioAutor(UsuarioAutorTB usuarioAutorTB) {
-		List<String> errores = new ArrayList<>();
-
-		if (StringUtils.isBlank(usuarioAutorTB.getNombres())) {
-			errores.add(ConstantesValidaciones.NOMBRES_USUARIO + ConstantesValidaciones.VALOR_VACIO);
-		}
-		if (StringUtils.isBlank(usuarioAutorTB.getApellidos())) {
-			errores.add(ConstantesValidaciones.APELLIDOS_USUARIO + ConstantesValidaciones.VALOR_VACIO);
-		}
-		if (StringUtils.isBlank(usuarioAutorTB.getResena())) {
-			errores.add(ConstantesValidaciones.RESENA_USUARIO + ConstantesValidaciones.VALOR_VACIO);
-		}
-		if (StringUtils.isBlank(usuarioAutorTB.getUsuario())) {
-			errores.add(ConstantesValidaciones.USUARIO + ConstantesValidaciones.VALOR_VACIO);
-		}
-		if (usuarioAutorTB.getGenero() <= 0) {
-			errores.add(ConstantesValidaciones.GENERO_POST + ConstantesValidaciones.VALOR_VACIO);
-		}
-		if (StringUtils.isBlank(usuarioAutorTB.getCorreo())) {
-			errores.add(ConstantesValidaciones.CORREO_USUARIO + ConstantesValidaciones.VALOR_VACIO);
-		} else if (!Util.esCorreoValido(usuarioAutorTB.getCorreo())) {
-			errores.add(ConstantesValidaciones.CORREO_USUARIO + ConstantesValidaciones.VALOR_INCORRECTO);
-		}
-		if (StringUtils.isBlank(usuarioAutorTB.getUrlImagen())) {
-			errores.add(ConstantesValidaciones.IMAGEN_USUARIO + ConstantesValidaciones.VALOR_VACIO);
-		}
-		if (usuarioAutorTB.getFechaNacimiento() == null) {
-			errores.add(ConstantesValidaciones.FECHA_NACIMIENTO_USUARIO + ConstantesValidaciones.VALOR_VACIO);
-		} else if (usuarioAutorTB.getFechaNacimiento().after(new Date())) {
-			errores.add(ConstantesValidaciones.FECHA_NACIMIENTO_USUARIO + ConstantesValidaciones.VALOR_INCORRECTO);
-		}
-		if (StringUtils.isBlank(usuarioAutorTB.getPassword())) {
-			errores.add(ConstantesValidaciones.CLAVE_USUARIO + ConstantesValidaciones.VALOR_VACIO);
-		}
-
 		return errores;
 	}
 
