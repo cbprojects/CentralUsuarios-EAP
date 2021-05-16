@@ -187,6 +187,7 @@ public class ControladorRestUsuario {
 		try {
 			UsuarioTB usuarioActivado = null;
 			if (usuario != null && !StringUtils.isBlank(usuario.getEmail())) {
+				String email=usuario.getEmail();
 				usuario.setEmail(PasswordUtil.encriptarAES(usuario.getEmail(),
 						ConstantesValidaciones.CLAVE_AES));
 				usuario.setEstado((short) EEstado.INACTIVO.ordinal());
@@ -197,14 +198,14 @@ public class ControladorRestUsuario {
 					if (usuarioActivado != null) {
 						MailDTO mailDto = new MailDTO();
 						mailDto.setFrom(EMAIL_SERVIDOR);
-						mailDto.setTo(usuarioActivado.getEmail());
+						mailDto.setTo(email);
 						mailDto.setSubject("RESTAURAR CLAVE");
 
 						Map<String, Object> model = new HashMap<>();
-						model.put("user", usuarioActivado.getEmail());
+						model.put("user", email);
 						model.put("nombreCompleto", usuarioActivado.getNombre());
-						model.put("email", usuarioActivado.getEmail());
-						String urlRuta = RUTA_RECORDAR_CLAVE + usuarioActivado.getEmail();
+						model.put("email", email);
+						String urlRuta = RUTA_RECORDAR_CLAVE + email;
 						try {
 							model.put("resetUrl", new URL(urlRuta).toURI().toASCIIString());
 						} catch (Exception e) {
