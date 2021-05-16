@@ -70,10 +70,8 @@ public class ControladorRestUsuario {
 	@RequestMapping("/crearUsuario")
 	public ResponseEntity<UsuarioTB> crearUsuario(@RequestBody UsuarioTB usuario) {
 		try {
-			usuario.setEmail(PasswordUtil.encriptarAES(usuario.getEmail(), ConstantesValidaciones.CLAVE_AES));
 			usuario.setCelular(PasswordUtil.encriptarAES(usuario.getCelular(), ConstantesValidaciones.CLAVE_AES));
 			usuario.setDireccion(PasswordUtil.encriptarAES(usuario.getDireccion(), ConstantesValidaciones.CLAVE_AES));
-			usuario.setContrasena(PasswordUtil.encriptarAES(usuario.getContrasena(), ConstantesValidaciones.CLAVE_AES));
 			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_USUARIO_TB, usuario);
 
 			UsuarioTB newUsuario = new UsuarioTB();
@@ -81,6 +79,7 @@ public class ControladorRestUsuario {
 				// validar usuario unico
 				if (validarUsuarioUnicoCrear(usuario.getEmail())) {
 					newUsuario = usuarioService.crearUsuario(usuario);
+					enviarCorreo(newUsuario);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
 					String mensajeErrores = ConstantesValidaciones.MSG_USUARIO_REPETIDO;
@@ -122,10 +121,11 @@ public class ControladorRestUsuario {
 	@RequestMapping("/modificarUsuario")
 	public ResponseEntity<UsuarioTB> modificarUsuario(@RequestBody UsuarioTB usuario) {
 		try {
-			usuario.setEmail(PasswordUtil.encriptarAES(usuario.getEmail(), ConstantesValidaciones.CLAVE_AES));
 			usuario.setCelular(PasswordUtil.encriptarAES(usuario.getCelular(), ConstantesValidaciones.CLAVE_AES));
 			usuario.setDireccion(PasswordUtil.encriptarAES(usuario.getDireccion(), ConstantesValidaciones.CLAVE_AES));
-			usuario.setContrasena(PasswordUtil.encriptarAES(usuario.getContrasena(), ConstantesValidaciones.CLAVE_AES));
+			if(StringUtils.isNotBlank(usuario.getContrasena())) {
+				usuario.setContrasena(PasswordUtil.encriptarAES(usuario.getContrasena(), ConstantesValidaciones.CLAVE_AES));
+			}
 			UsuarioTB newUsuario = new UsuarioTB();
 			// validaciones de campos vacios o valores incorrectos
 			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_USUARIO_TB, usuario);
@@ -187,33 +187,11 @@ public class ControladorRestUsuario {
 		try {
 			UsuarioTB usuarioActivado = null;
 			if (usuario != null && !StringUtils.isBlank(usuario.getEmail())) {
-				String email=usuario.getEmail();
-				usuario.setEmail(PasswordUtil.encriptarAES(usuario.getEmail(),
-						ConstantesValidaciones.CLAVE_AES));
-				usuario.setEstado((short) EEstado.INACTIVO.ordinal());
-				
 				List<UsuarioTB> usuariosEncontrados = usuarioService.buscarUsuarioPorEmail(usuario.getEmail());
 				if (usuariosEncontrados != null && !usuariosEncontrados.isEmpty()) {
 					usuarioActivado = usuariosEncontrados.get(0);
 					if (usuarioActivado != null) {
-						MailDTO mailDto = new MailDTO();
-						mailDto.setFrom(EMAIL_SERVIDOR);
-						mailDto.setTo(email);
-						mailDto.setSubject("RESTAURAR CLAVE");
-
-						Map<String, Object> model = new HashMap<>();
-						model.put("user", email);
-						model.put("nombreCompleto", usuarioActivado.getNombre());
-						model.put("email", email);
-						String urlRuta = RUTA_RECORDAR_CLAVE + email;
-						try {
-							model.put("resetUrl", new URL(urlRuta).toURI().toASCIIString());
-						} catch (Exception e) {
-							throw new ModelNotFoundException(e.getMessage());
-						}
-						mailDto.setModel(model);
-
-						mailUtil.sendMail(mailDto, ConstantesValidaciones.TEMPLATE_MAIL_RECORDAR_CLAVE);
+						enviarCorreo(usuarioActivado);
 					} else {
 						throw new ModelNotFoundException(ConstantesValidaciones.ERROR_RESTAURAR_CLAVE.toString());
 					}
@@ -237,7 +215,7 @@ public class ControladorRestUsuario {
 			Optional <UsuarioTB> usuarioLogueado = null;
 			if (usuario != null && !StringUtils.isBlank(usuario.getEmail())
 					&& !StringUtils.isBlank(usuario.getContrasena())) {
-				String user= PasswordUtil.encriptarAES(usuario.getEmail(), ConstantesValidaciones.CLAVE_AES);
+				String user= usuario.getEmail();
 				String clave = PasswordUtil.encriptarAES(usuario.getContrasena(), ConstantesValidaciones.CLAVE_AES);
 				usuarioLogueado = usuarioService.loginUsuario(user, clave);
 				if (!usuarioLogueado.isPresent()) {
@@ -259,6 +237,28 @@ public class ControladorRestUsuario {
 		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
+	}
+	
+	private void enviarCorreo(UsuarioTB usuario) {
+		
+		MailDTO mailDto = new MailDTO();
+		mailDto.setFrom(EMAIL_SERVIDOR);
+		mailDto.setTo(usuario.getEmail());
+		mailDto.setSubject("RESTAURAR CLAVE");
+
+		Map<String, Object> model = new HashMap<>();
+		model.put("user", usuario.getEmail());
+		model.put("nombreCompleto", usuario.getNombre());
+		model.put("email", usuario.getEmail());
+		String urlRuta = RUTA_RECORDAR_CLAVE + usuario.getEmail();
+		try {
+			model.put("resetUrl", new URL(urlRuta).toURI().toASCIIString());
+		} catch (Exception e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+		mailDto.setModel(model);
+
+		mailUtil.sendMail(mailDto, ConstantesValidaciones.TEMPLATE_MAIL_RECORDAR_CLAVE);
 	}
 
 }

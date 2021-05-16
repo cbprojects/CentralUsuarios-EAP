@@ -130,7 +130,7 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 			Map<String, Object> pamameters = new HashMap<>();
 
 			// QUERY
-			StringBuilder JPQL = new StringBuilder("SELECT u FROM UsuarioTB u WHERE 1 = 1 ");
+			StringBuilder JPQL = new StringBuilder("SELECT u FROM UsuarioTB u WHERE u.estado = 1 ");
 			// WHERE
 			JPQL.append(" AND u.email = :EMAIL ");
 			pamameters.put("EMAIL", user);
