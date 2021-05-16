@@ -3,8 +3,10 @@ package com.project.cafe.CentralUsuarios.dao.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -119,6 +121,37 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 		response.setResultado(listaUsuarios);
 
 		return response;
+	}
+
+	@Override
+	public Optional<UsuarioTB> loginUsuario(String user, String clave) {
+		try {
+			// PARAMETROS
+			Map<String, Object> pamameters = new HashMap<>();
+
+			// QUERY
+			StringBuilder JPQL = new StringBuilder("SELECT u FROM UsuarioTB u WHERE 1 = 1 ");
+			// WHERE
+			JPQL.append(" AND u.email = :EMAIL ");
+			pamameters.put("EMAIL", user);
+			JPQL.append(" AND u.contrasena = :CLAVE ");
+			pamameters.put("CLAVE", clave);
+			
+			// Q. Order By
+			JPQL.append(" ORDER BY u.id");
+			// END QUERY
+
+			TypedQuery<UsuarioTB> query = em.createQuery(JPQL.toString(), UsuarioTB.class);
+			pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+			return Optional.of(query.getSingleResult());
+			
+		} catch (Exception ex) {
+            if (ex instanceof NoResultException) {
+                return Optional.empty();
+            }
+        }
+		return null;
 	}
 
 }

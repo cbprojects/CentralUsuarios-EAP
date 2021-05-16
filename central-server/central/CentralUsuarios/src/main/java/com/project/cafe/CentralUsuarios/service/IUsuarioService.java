@@ -1,6 +1,7 @@
 package com.project.cafe.CentralUsuarios.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUsuariosDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
@@ -29,5 +30,13 @@ public interface IUsuarioService {
 	 * @return
 	 */
 	ResponseConsultarDTO<UsuarioTB> consultarUsusarioFiltros(RequestConsultarUsuariosDTO filtroUsuario) throws Exception;
+
+	/**
+	 * 
+	 * @param user
+	 * @param clave
+	 * @return
+	 */
+	Optional<UsuarioTB> loginUsuario(String user, String clave);
 
 }

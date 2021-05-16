@@ -1,6 +1,7 @@
 package com.project.cafe.CentralUsuarios.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -32,5 +33,13 @@ public interface IUsuarioDao {
 	 * @return
 	 */
 	ResponseConsultarDTO<UsuarioTB> consultarUsuariosPorFiltros(RequestConsultarUsuariosDTO filtroUsuario) throws Exception;
+
+	/**
+	 * 
+	 * @param user
+	 * @param clave
+	 * @return
+	 */
+	Optional<UsuarioTB> loginUsuario(String user, String clave);
 
 }

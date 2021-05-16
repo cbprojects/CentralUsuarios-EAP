@@ -122,8 +122,6 @@ public class PerfilDaoImpl extends AbstractDao<PerfilTB> implements IPerfilDao {
 
 		JPQL.append(" AND UPPER(r.estado) = 1 ");
 
-		String COUNT = "SELECT COUNT(r) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
-
 		// Q. Order By
 		JPQL.append(" ORDER BY r.id DESC");
 		// END QUERY
