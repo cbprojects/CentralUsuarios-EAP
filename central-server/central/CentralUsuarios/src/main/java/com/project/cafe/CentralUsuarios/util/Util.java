@@ -80,9 +80,6 @@ public abstract class Util {
 		if (StringUtils.isBlank(usuarioTB.getEmail())) {
 			errores.add(ConstantesValidaciones.NICK_USUARIO + ConstantesValidaciones.VALOR_VACIO);
 		}
-		if (StringUtils.isBlank(usuarioTB.getContrasena())) {
-			errores.add(ConstantesValidaciones.CONTRASENA_USUARIO + ConstantesValidaciones.VALOR_VACIO);
-		}
 		return errores;
 	}
 

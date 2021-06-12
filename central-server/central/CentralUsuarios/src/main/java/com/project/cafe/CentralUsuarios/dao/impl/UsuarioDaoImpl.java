@@ -80,8 +80,6 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 		}
 
 		if (StringUtils.isNotBlank(filtroUsuario.getusuario().getEmail())) {
-			filtroUsuario.getusuario().setEmail(PasswordUtil.encriptarAES(filtroUsuario.getusuario().getEmail(),
-			ConstantesValidaciones.CLAVE_AES));
 			filtroUsuario.getusuario().setEmail(filtroUsuario.getusuario().getEmail());
 			JPQL.append(" AND UPPER(u.email) LIKE UPPER(:EMAIL) ");
 			pamametros.put("EMAIL", ConstantesValidaciones.COMODIN_BD + filtroUsuario.getusuario().getEmail()
@@ -130,7 +128,7 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 			Map<String, Object> pamameters = new HashMap<>();
 
 			// QUERY
-			StringBuilder JPQL = new StringBuilder("SELECT u FROM UsuarioTB u WHERE 1 = 1 ");
+			StringBuilder JPQL = new StringBuilder("SELECT u FROM UsuarioTB u WHERE u.estado = 1 ");
 			// WHERE
 			JPQL.append(" AND u.email = :EMAIL ");
 			pamameters.put("EMAIL", user);
