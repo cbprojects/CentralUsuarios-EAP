@@ -42,4 +42,29 @@ public class UsuarioSedeTB extends BaseEntidadTB implements Serializable {
 	@NotNull
 	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private SedeTB sede;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public UsuarioTB getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioTB usuario) {
+		this.usuario = usuario;
+	}
+
+	public SedeTB getSede() {
+		return sede;
+	}
+
+	public void setSede(SedeTB sede) {
+		this.sede = sede;
+	}
+	
 }
