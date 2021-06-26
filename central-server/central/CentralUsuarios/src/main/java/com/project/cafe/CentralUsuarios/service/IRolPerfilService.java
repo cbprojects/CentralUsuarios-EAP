@@ -2,8 +2,6 @@ package com.project.cafe.CentralUsuarios.service;
 
 import java.util.List;
 
-import com.project.cafe.CentralUsuarios.dto.RequestConsultarPerfilesDTO;
-import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.RolPerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolTB;
 
