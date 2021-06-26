@@ -57,7 +57,7 @@ public class CajaTB extends BaseEntidadTB implements Serializable {
 
 	@NotNull
 	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	private EntrepanoTB sociedad;
+	private SociedadTB sociedad;
 
 	public long getId() {
 		return id;
@@ -107,11 +107,11 @@ public class CajaTB extends BaseEntidadTB implements Serializable {
 		this.qr = qr;
 	}
 
-	public EntrepanoTB getSociedad() {
+	public SociedadTB getSociedad() {
 		return sociedad;
 	}
 	
-	public void setSociedad(EntrepanoTB sociedad) {
+	public void setSociedad(SociedadTB sociedad) {
 		this.sociedad = sociedad;
 	}
 
