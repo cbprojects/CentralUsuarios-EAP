@@ -44,7 +44,7 @@ public class CajaTB extends BaseEntidadTB implements Serializable {
 	private String codigoAlterno;
 
 	@NotNull
-	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@ManyToOne( optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private EntrepanoTB entrepano;
 
 	@NotNull
