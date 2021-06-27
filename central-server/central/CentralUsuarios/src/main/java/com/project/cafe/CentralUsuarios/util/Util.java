@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
+import com.project.cafe.CentralUsuarios.model.CajaTB;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolTB;
 import com.project.cafe.CentralUsuarios.model.UsuarioTB;
@@ -42,6 +43,10 @@ public abstract class Util {
 			case ConstantesTablasNombre.MRA_USUARIO_TB:
 				errores = validarUsuario((UsuarioTB) entidadTB);
 				break;
+				
+			case ConstantesTablasNombre.MRA_CAJA_TB:
+				errores = validarCaja((CajaTB) entidadTB);
+				break;
 			}
 		} else {
 			errores.add(ConstantesValidaciones.TABLA_NO_ESTABLECIDA_VALIDACIONES);
@@ -58,6 +63,32 @@ public abstract class Util {
 		}
 		if (StringUtils.isBlank(perfilTB.getDescripcion())) {
 			errores.add(ConstantesValidaciones.DESCRIPCION_PERFIL + ConstantesValidaciones.VALOR_VACIO);
+		}
+		return errores;
+	}
+	
+	public static List<String> validarCaja(CajaTB cajaTB) {
+		List<String> errores = new ArrayList<>();
+
+		if (StringUtils.isBlank(cajaTB.getCodigoAlterno())) {
+			errores.add(ConstantesValidaciones.CODIGO_CAJA + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (StringUtils.isBlank(cajaTB.getCodigoBarras())) {
+			errores.add(ConstantesValidaciones.CODIGO_BARRAS_CAJA + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if(cajaTB.getEntrepano()==null) {
+			errores.add(ConstantesValidaciones.SIN_ENTREPANO_CAJA + ConstantesValidaciones.NO_TIENE_ENTREPANO);
+		}else {
+			if(cajaTB.getEntrepano().getId()==0) {
+				errores.add(ConstantesValidaciones.SIN_ENTREPANO_CAJA + ConstantesValidaciones.NO_TIENE_ENTREPANO);
+			}
+		}
+		if(cajaTB.getSociedad()==null) {
+			errores.add(ConstantesValidaciones.SIN_SOCIEDAD_CAJA+ ConstantesValidaciones.NO_TIENE_SOCIEDAD);
+		}else {
+			if(cajaTB.getSociedad().getId()==0) {
+				errores.add(ConstantesValidaciones.SIN_SOCIEDAD_CAJA+ ConstantesValidaciones.NO_TIENE_SOCIEDAD);
+			}
 		}
 		return errores;
 	}

@@ -132,4 +132,14 @@ public final class ConstantesValidaciones {
 	// labels RolPerfil
 	public static final String MSG_BUSQUEDA_ROLPERFIL_VACIO = PropertiesUtil
 			.getProperty("centralusuarios.rolperfil.validate.busquedaRolPerfilVacio");
+	
+	// labels caja
+	public static final String CODIGO_CAJA = PropertiesUtil.getProperty("lbl.caja.codigo");
+	public static final String CODIGO_BARRAS_CAJA = PropertiesUtil.getProperty("lbl.caja.codigoBarras");
+	public static final String SIN_ENTREPANO_CAJA = PropertiesUtil.getProperty("lbl.caja.entrepano");
+	public static final String NO_TIENE_ENTREPANO = PropertiesUtil.getProperty("lbl.msg.validate.cajaSinEntrepano");
+	public static final String SIN_SOCIEDAD_CAJA = PropertiesUtil.getProperty("lbl.caja.sociedad");
+	public static final String NO_TIENE_SOCIEDAD = PropertiesUtil.getProperty("lbl.msg.validate.cajaSinSociedad");
+	public static final String MSG_CAJA_REPETIDA = PropertiesUtil.getProperty("lbl.msg.validate.cajaRepetida");
+	
 }

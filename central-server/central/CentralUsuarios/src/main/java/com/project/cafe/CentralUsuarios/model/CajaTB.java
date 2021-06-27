@@ -36,7 +36,7 @@ public class CajaTB extends BaseEntidadTB implements Serializable {
 	private long id;
 
 	@NotNull
-	@Column(name = "caj_descripcion", nullable = false, length = 50)
+	@Column(name = "caj_descripcion", nullable = true, length = 50)
 	private String descripcion;
 
 	@NotNull
@@ -52,7 +52,7 @@ public class CajaTB extends BaseEntidadTB implements Serializable {
 	private String codigoBarras;
 
 	@NotNull
-	@Column(name = "caj_QR", nullable = false, length = 128)
+	@Column(name = "caj_QR", nullable = true, length = 128)
 	private String qr;
 
 	@NotNull
