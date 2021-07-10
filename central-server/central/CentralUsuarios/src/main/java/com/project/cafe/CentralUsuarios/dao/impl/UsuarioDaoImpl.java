@@ -19,7 +19,6 @@ import com.project.cafe.CentralUsuarios.dto.RequestConsultarUsuariosDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.UsuarioTB;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
-import com.project.cafe.CentralUsuarios.util.PasswordUtil;
 
 @Repository
 public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDao {

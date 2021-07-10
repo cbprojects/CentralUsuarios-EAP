@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
 import com.project.cafe.CentralUsuarios.model.TipoUDTB;
-import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
 import com.project.cafe.CentralUsuarios.service.ITipoUDService;
 
 @RestController

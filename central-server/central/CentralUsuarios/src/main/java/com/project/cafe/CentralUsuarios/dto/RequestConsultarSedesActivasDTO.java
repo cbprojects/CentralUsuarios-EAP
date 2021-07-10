@@ -2,7 +2,6 @@ package com.project.cafe.CentralUsuarios.dto;
 
 import java.io.Serializable;
 
-import com.project.cafe.CentralUsuarios.model.RolTB;
 
 public class RequestConsultarSedesActivasDTO implements Serializable {
 

@@ -11,11 +11,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 import com.project.cafe.CentralUsuarios.dao.AbstractDao;
-import com.project.cafe.CentralUsuarios.dao.IBloqueDao;
-import com.project.cafe.CentralUsuarios.dao.IBodegaDao;
 import com.project.cafe.CentralUsuarios.dao.ICuerpoDao;
-import com.project.cafe.CentralUsuarios.model.BloqueTB;
-import com.project.cafe.CentralUsuarios.model.BodegaTB;
 import com.project.cafe.CentralUsuarios.model.CuerpoTB;
 
 @Repository

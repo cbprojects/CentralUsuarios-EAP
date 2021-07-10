@@ -12,9 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.cafe.CentralUsuarios.dao.AbstractDao;
 import com.project.cafe.CentralUsuarios.dao.IBloqueDao;
-import com.project.cafe.CentralUsuarios.dao.IBodegaDao;
 import com.project.cafe.CentralUsuarios.model.BloqueTB;
-import com.project.cafe.CentralUsuarios.model.BodegaTB;
 
 @Repository
 public class BloqueDaoImpl extends AbstractDao<BloqueTB> implements IBloqueDao {

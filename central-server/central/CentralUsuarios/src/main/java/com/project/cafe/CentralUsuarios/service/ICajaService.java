@@ -5,6 +5,7 @@ import java.util.List;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarCajasDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
+import com.project.cafe.CentralUsuarios.model.SociedadTB;
 
 public interface ICajaService {
 
@@ -29,5 +30,12 @@ public interface ICajaService {
 	 * @return
 	 */
 	ResponseConsultarDTO<CajaTB> consultarCajasFiltros(RequestConsultarCajasDTO filtroCaja);
+
+	/**
+	 * 
+	 * @param filtroCaja
+	 * @return caja inicial segun la sociedad enviada
+	 */
+	CajaTB retornarCajaInicialPorSociedad(SociedadTB sociedad);
 
 }

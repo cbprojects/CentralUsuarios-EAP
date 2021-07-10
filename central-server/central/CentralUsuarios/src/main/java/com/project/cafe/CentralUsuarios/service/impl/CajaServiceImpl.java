@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.cafe.CentralUsuarios.dao.ICajaDao;
+import com.project.cafe.CentralUsuarios.dao.IEntrepanoDao;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarCajasDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
+import com.project.cafe.CentralUsuarios.model.EntrepanoTB;
+import com.project.cafe.CentralUsuarios.model.SociedadTB;
 import com.project.cafe.CentralUsuarios.service.ICajaService;
 
 @Service
@@ -18,6 +21,9 @@ public class CajaServiceImpl implements ICajaService {
 
 	@Autowired
 	private ICajaDao cajaDAO;
+	
+	@Autowired
+	private IEntrepanoDao entrepanoDAO;
 
 	@Transactional
 	@Override
@@ -40,6 +46,28 @@ public class CajaServiceImpl implements ICajaService {
 	public ResponseConsultarDTO<CajaTB> consultarCajasFiltros(RequestConsultarCajasDTO filtroCaja) {
 		// TODO Auto-generated method stub
 		return cajaDAO.consultarCajasFiltros(filtroCaja);
+	}
+
+	@Override
+	public CajaTB retornarCajaInicialPorSociedad(SociedadTB sociedad) {
+		List<CajaTB> lstCajas=cajaDAO.buscarcajaPorCodigoSociedad("CAJA0",sociedad.getId());
+		if(lstCajas == null || lstCajas.isEmpty()) {
+			List<EntrepanoTB> lstEntrepano = entrepanoDAO.buscarEntrepanoPorCodigo("ENTREPANO0");
+			EntrepanoTB nuevoEntrepano= new EntrepanoTB();
+			nuevoEntrepano=lstEntrepano.get(0);
+			CajaTB nuevaCaja= new CajaTB();
+			nuevaCaja.setSociedad(sociedad);
+			nuevaCaja.setCodigoAlterno("CAJA_INICIAL");
+			nuevaCaja.setCodigoBarras("CAJA_INICIAL");
+			nuevaCaja.setDescripcion("Caja inicial sociedad:"+sociedad.getNombre());
+			nuevaCaja.setEntrepano(nuevoEntrepano);
+			Short uno='1';
+			nuevaCaja.setEstado(uno);
+			nuevaCaja.setQr("CAJA_INICIAL");
+			return cajaDAO.crearCaja(nuevaCaja);
+		}else {
+			return lstCajas.get(0);
+		}
 	}
 	
 

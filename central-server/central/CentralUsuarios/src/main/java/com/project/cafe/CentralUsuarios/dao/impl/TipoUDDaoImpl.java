@@ -1,9 +1,6 @@
 package com.project.cafe.CentralUsuarios.dao.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -13,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.project.cafe.CentralUsuarios.dao.AbstractDao;
 import com.project.cafe.CentralUsuarios.dao.ITipoUDDao;
 import com.project.cafe.CentralUsuarios.model.TipoUDTB;
-import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
 
 @Repository
 public class TipoUDDaoImpl extends AbstractDao<TipoUDTB> implements ITipoUDDao {
