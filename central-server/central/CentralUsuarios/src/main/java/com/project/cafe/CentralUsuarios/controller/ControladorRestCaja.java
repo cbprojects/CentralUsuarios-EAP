@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarCajasDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarPorIDDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
@@ -128,7 +129,7 @@ public class ControladorRestCaja {
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/consultarCajaFiltros")
-	public ResponseConsultarDTO<CajaTB> consultarRolFiltros(@RequestBody RequestConsultarCajasDTO request) {
+	public ResponseConsultarDTO<CajaTB> consultarCajaFiltros(@RequestBody RequestConsultarCajasDTO request) {
 		try {
 			return cajaService.consultarCajasFiltros(request);
 		} catch (JSONException e) {
@@ -136,4 +137,16 @@ public class ControladorRestCaja {
 		}
 	}
 
+	// CONSULTA
+
+		@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+		@RequestMapping("/consultarCajasPorSociedad")
+		public List<CajaTB> consultarCajasPorSociedad(@RequestBody RequestConsultarPorIDDTO request) {
+			try {
+				return cajaService.consultarCajasPorSociedad(request.getId());
+			} catch (JSONException e) {
+				throw new ModelNotFoundException(e.getMessage());
+			}
+		}
+	
 }

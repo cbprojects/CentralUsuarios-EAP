@@ -30,4 +30,19 @@ public interface IUnidadDocumentalService {
 	 */
 	ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltros(RequestConsultarUnidadDocumentalDTO filtroUnidadDocumental);
 
+	/*
+	 * Metodo para buscar unidad documental por id
+	 */
+	UnidadDocumentalTB buscarUnidadDocumentalPorId(long idUnidadDocumental);
+
+	/*
+	 * Metodo para buscar unidad documental por caja
+	 */
+	List<UnidadDocumentalTB> RequestConsultarUnidadDocumentalPorCaja(Long idCaja);
+
+	/*
+	 * Metodo para cambiar de caja las unidades documentales
+	 */
+	void cambiarCajaUnidadDocumentalMasivo(List<UnidadDocumentalTB> lstUnidadDocumentalCajaUno, Long idCajaUno);
+
 }

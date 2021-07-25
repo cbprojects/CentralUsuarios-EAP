@@ -7,9 +7,11 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.cafe.CentralUsuarios.dao.ICajaDao;
 import com.project.cafe.CentralUsuarios.dao.IUnidadDocumentalDao;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUnidadDocumentalDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
+import com.project.cafe.CentralUsuarios.model.CajaTB;
 import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
 import com.project.cafe.CentralUsuarios.service.IUnidadDocumentalService;
 
@@ -18,6 +20,9 @@ public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
 
 	@Autowired
 	private IUnidadDocumentalDao unidadDocumentalDAO;
+	
+	@Autowired
+	private ICajaDao cajaDAO;
 
 	@Transactional
 	@Override
@@ -38,8 +43,28 @@ public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
 
 	@Override
 	public ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltros(RequestConsultarUnidadDocumentalDTO filtroUnidadDocumental){
-		// TODO Auto-generated method stub
 		return unidadDocumentalDAO.consultarUnidadDocumentalFiltros(filtroUnidadDocumental);
+	}
+
+	@Override
+	public UnidadDocumentalTB buscarUnidadDocumentalPorId(long idUnidadDocumental) {
+		return unidadDocumentalDAO.buscarUnidadDocumentalPorId(idUnidadDocumental);
+	}
+
+	@Override
+	public List<UnidadDocumentalTB> RequestConsultarUnidadDocumentalPorCaja(Long idCaja) {
+		return unidadDocumentalDAO.RequestConsultarUnidadDocumentalPorCaja(idCaja);
+	}
+
+	@Override
+	@Transactional
+	public void cambiarCajaUnidadDocumentalMasivo(List<UnidadDocumentalTB> lstUnidadDocumentalCajaUno, Long idCaja) {
+		CajaTB nuevaCaja=new CajaTB();
+		nuevaCaja=cajaDAO.consultarCajaPorId(idCaja);
+		for (UnidadDocumentalTB unidadDocumentalTB : lstUnidadDocumentalCajaUno) {
+			unidadDocumentalTB.setCaja(nuevaCaja);
+			unidadDocumentalDAO.modificarUnidadDocumental(unidadDocumentalTB);
+		}
 	}
 	
 

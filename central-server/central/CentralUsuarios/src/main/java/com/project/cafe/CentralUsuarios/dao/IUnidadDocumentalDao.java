@@ -31,7 +31,17 @@ public interface IUnidadDocumentalDao {
 	 * @param filtroUnidadDocumental
 	 * @return lista de unidades documentales
 	 */
-	public ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltros(RequestConsultarUnidadDocumentalDTO filtroUnidadDocumental);
+	ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltros(RequestConsultarUnidadDocumentalDTO filtroUnidadDocumental);
+
+	/*
+	 * Metodo para buscar unidad documental por id
+	 */
+	UnidadDocumentalTB buscarUnidadDocumentalPorId(long idUnidadDocumental);
+
+	/*
+	 * Metodo para buscar unidad documental por caja
+	 */
+	List<UnidadDocumentalTB> RequestConsultarUnidadDocumentalPorCaja(Long idCaja);
 
 	
 

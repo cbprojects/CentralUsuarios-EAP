@@ -48,7 +48,7 @@ public class CajaDaoImpl extends AbstractDao<CajaTB> implements ICajaDao {
 			JPQL.append(" AND c.codigoAlterno = :CODIGO ");
 			pamameters.put("CODIGO", codigocaja);
 		}
-		if (idSociedad==0) {
+		if (idSociedad == 0) {
 			JPQL.append(" AND c.sociedad.id = :SOCIEDAD ");
 			pamameters.put("SOCIEDAD", idSociedad);
 		}
@@ -71,14 +71,9 @@ public class CajaDaoImpl extends AbstractDao<CajaTB> implements ICajaDao {
 		Map<String, Object> pamametros = new HashMap<>();
 
 		// QUERY
-		StringBuilder JPQL = new StringBuilder("SELECT c FROM CajaTB c "
-				+ " INNER JOIN c.entrepano e "
-				+ "INNER JOIN e.estante es "
-				+ "INNER JOIN es.cuerpo cu "
-				+ "INNER JOIN cu.bloque bl "
-				+ "INNER JOIN bl.bodega b "
-				+ "INNER JOIN b.sede s "
-				+ " WHERE 1 = 1 ");
+		StringBuilder JPQL = new StringBuilder("SELECT c FROM CajaTB c " + " INNER JOIN c.entrepano e "
+				+ "INNER JOIN e.estante es " + "INNER JOIN es.cuerpo cu " + "INNER JOIN cu.bloque bl "
+				+ "INNER JOIN bl.bodega b " + "INNER JOIN b.sede s " + " WHERE 1 = 1 ");
 		// WHERE
 		if (StringUtils.isNotBlank(filtroCaja.getCaja().getCodigoAlterno())) {
 			JPQL.append(" AND UPPER(c.codigoAlterno) LIKE UPPER(:CODIGO) ");
@@ -91,7 +86,7 @@ public class CajaDaoImpl extends AbstractDao<CajaTB> implements ICajaDao {
 			pamametros.put("DESCRIPCION", ConstantesValidaciones.COMODIN_BD + filtroCaja.getCaja().getDescripcion()
 					+ ConstantesValidaciones.COMODIN_BD);
 		}
-		
+
 		if (StringUtils.isNotBlank(filtroCaja.getCaja().getCodigoBarras())) {
 			JPQL.append(" AND c.codigoBarras = :CODIGOBARRAS ");
 			pamametros.put("CODIGOBARRAS", filtroCaja.getCaja().getCodigoBarras());
@@ -101,41 +96,41 @@ public class CajaDaoImpl extends AbstractDao<CajaTB> implements ICajaDao {
 			JPQL.append(" AND c.qr = :QR ");
 			pamametros.put("QR", filtroCaja.getCaja().getQr());
 		}
-		if (filtroCaja.getCaja().getSociedad()!=null) {
-			if (filtroCaja.getCaja().getSociedad().getId()!=0) {
+		if (filtroCaja.getCaja().getSociedad() != null) {
+			if (filtroCaja.getCaja().getSociedad().getId() != 0) {
 				JPQL.append(" AND c.sociedad.id = :IDSOCIEDAD ");
 				pamametros.put("IDSOCIEDAD", filtroCaja.getCaja().getSociedad().getId());
 			}
-			
+
 		}
-		if (filtroCaja.getCaja().getEntrepano()!=null) {
-			if (filtroCaja.getCaja().getEntrepano().getId()!=0) {
+		if (filtroCaja.getCaja().getEntrepano() != null) {
+			if (filtroCaja.getCaja().getEntrepano().getId() != 0) {
 				JPQL.append(" AND c.entrepano.id = :IDENTREPANO ");
 				pamametros.put("IDENTREPANO", filtroCaja.getCaja().getEntrepano().getId());
 			}
-			
+
 		}
-		if (filtroCaja.getIdEstante()!=0) {
+		if (filtroCaja.getIdEstante() != 0) {
 			JPQL.append(" AND es.id = :IDESTANTE ");
 			pamametros.put("IDESTANTE", filtroCaja.getIdEstante());
 		}
-		if (filtroCaja.getIdCuerpo()!=0) {
+		if (filtroCaja.getIdCuerpo() != 0) {
 			JPQL.append(" AND cu.id = :IDCUERPO ");
 			pamametros.put("IDCUERPO", filtroCaja.getIdCuerpo());
 		}
-		if (filtroCaja.getIdBloque()!=0) {
+		if (filtroCaja.getIdBloque() != 0) {
 			JPQL.append(" AND bl.id = :IDBLOQUE ");
 			pamametros.put("IDBLOQUE", filtroCaja.getIdBloque());
 		}
-		if (filtroCaja.getIdBodega()!=0) {
+		if (filtroCaja.getIdBodega() != 0) {
 			JPQL.append(" AND b.id = :IDBODEGA ");
 			pamametros.put("IDBODEGA", filtroCaja.getIdBodega());
 		}
-		if (filtroCaja.getIdSede()!=0) {
+		if (filtroCaja.getIdSede() != 0) {
 			JPQL.append(" AND s.id = :IDSEDE ");
 			pamametros.put("IDSEDE", filtroCaja.getIdSede());
 		}
-		
+
 		String COUNT = "SELECT COUNT(c) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
 
 		// Q. Order By
@@ -159,6 +154,46 @@ public class CajaDaoImpl extends AbstractDao<CajaTB> implements ICajaDao {
 		return response;
 	}
 
-	
+	@Override
+	public List<CajaTB> consultarCajasPorSociedad(Long idSociedad) {
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT c FROM CajaTB c WHERE 1 = 1 ");
+		// WHERE
+		JPQL.append(" AND c.sociedad.id = :ID ");
+		pamameters.put("ID", idSociedad);
+
+		// Q. Order By
+		JPQL.append(" ORDER BY c.id");
+		// END QUERY
+
+		TypedQuery<CajaTB> query = em.createQuery(JPQL.toString(), CajaTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getResultList();
+	}
+
+	@Override
+	public CajaTB consultarCajaPorId(Long idCaja) {
+		// PARAMETROS
+				Map<String, Object> pamameters = new HashMap<>();
+
+				// QUERY
+				StringBuilder JPQL = new StringBuilder("SELECT c FROM CajaTB c WHERE 1 = 1 ");
+				// WHERE
+				JPQL.append(" AND c.id = :ID ");
+				pamameters.put("ID", idCaja);
+
+				// Q. Order By
+				JPQL.append(" ORDER BY c.id");
+				// END QUERY
+
+				TypedQuery<CajaTB> query = em.createQuery(JPQL.toString(), CajaTB.class);
+				pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+				return query.getSingleResult();
+	}
 
 }

@@ -38,4 +38,11 @@ public interface ICajaService {
 	 */
 	CajaTB retornarCajaInicialPorSociedad(SociedadTB sociedad);
 
+	/**
+	 * 
+	 * @param idSociedad
+	 * @return lista cajas  segun la sociedad enviada
+	 */
+	List<CajaTB> consultarCajasPorSociedad(Long idSociedad);
+
 }

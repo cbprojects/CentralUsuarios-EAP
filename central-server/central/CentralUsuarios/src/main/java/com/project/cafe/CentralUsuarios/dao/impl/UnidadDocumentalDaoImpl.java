@@ -42,15 +42,14 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 		Map<String, Object> pamameters = new HashMap<>();
 
 		// QUERY
-		StringBuilder JPQL = new StringBuilder("SELECT u FROM UnidadDocumentalTB u "
-				+ " INNER JOIN u.sociedadArea sa "
-				+ " WHERE 1 = 1 ");
+		StringBuilder JPQL = new StringBuilder(
+				"SELECT u FROM UnidadDocumentalTB u " + " INNER JOIN u.sociedadArea sa " + " WHERE 1 = 1 ");
 		// WHERE
 		if (!StringUtils.isBlank(codigo)) {
 			JPQL.append(" AND u.codigo = :CODIGO ");
 			pamameters.put("CODIGO", codigo);
 		}
-		if (idSociedad==0) {
+		if (idSociedad == 0) {
 			JPQL.append(" AND sa.sociedad.id = :SOCIEDAD ");
 			pamameters.put("SOCIEDAD", idSociedad);
 		}
@@ -65,7 +64,8 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 	}
 
 //	@Override
-	public ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltros(RequestConsultarUnidadDocumentalDTO filtroUnidadDocumental) {
+	public ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltros(
+			RequestConsultarUnidadDocumentalDTO filtroUnidadDocumental) {
 
 		ResponseConsultarDTO<UnidadDocumentalTB> response = new ResponseConsultarDTO<>();
 
@@ -73,53 +73,55 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 		Map<String, Object> pamametros = new HashMap<>();
 
 		// QUERY
-		StringBuilder JPQL = new StringBuilder("SELECT u FROM UnidadDocumentalTB u "
-				+ " INNER JOIN u.sociedadArea sa "
-				+ " WHERE 1 = 1 ");
+		StringBuilder JPQL = new StringBuilder(
+				"SELECT u FROM UnidadDocumentalTB u " + " INNER JOIN u.sociedadArea sa " + " WHERE 1 = 1 ");
 		// WHERE
-		if (!StringUtils.isBlank(filtroUnidadDocumental.getUnidadDocumental().getCodigo())) {
-			JPQL.append(" AND u.codigo = :CODIGO ");
-			pamametros.put("CODIGO", ConstantesValidaciones.COMODIN_BD 
-					+filtroUnidadDocumental.getUnidadDocumental().getCodigo()+ ConstantesValidaciones.COMODIN_BD );
+		if (StringUtils.isNotBlank(filtroUnidadDocumental.getUnidadDocumental().getCodigo())) {
+			JPQL.append(" AND UPPER(u.codigo) LIKE UPPER(:CODIGO) ");
+			pamametros.put("CODIGO", ConstantesValidaciones.COMODIN_BD
+					+ filtroUnidadDocumental.getUnidadDocumental().getCodigo() + ConstantesValidaciones.COMODIN_BD);
 		}
-		if (StringUtils.isBlank(filtroUnidadDocumental.getUnidadDocumental().getNombre())) {
-			JPQL.append(" AND u.nombre = :NOMBRE ");
-			pamametros.put("NOMBRE", ConstantesValidaciones.COMODIN_BD 
-					+filtroUnidadDocumental.getUnidadDocumental().getNombre()+ ConstantesValidaciones.COMODIN_BD );
+		if (StringUtils.isNotBlank(filtroUnidadDocumental.getUnidadDocumental().getNombre())) {
+			JPQL.append(" AND UPPER(u.nombre) LIKE UPPER(:NOMBRE) ");
+			pamametros.put("NOMBRE", ConstantesValidaciones.COMODIN_BD
+					+ filtroUnidadDocumental.getUnidadDocumental().getNombre() + ConstantesValidaciones.COMODIN_BD);
 		}
-		if (StringUtils.isBlank(filtroUnidadDocumental.getUnidadDocumental().getCodigoBarra())) {
+		if (StringUtils.isNotBlank(filtroUnidadDocumental.getUnidadDocumental().getCodigoBarra())) {
 			JPQL.append(" AND u.codigoBarra = :CODIGOBARRAS ");
 			pamametros.put("CODIGOBARRAS", filtroUnidadDocumental.getUnidadDocumental().getCodigoBarra());
 		}
-		if (filtroUnidadDocumental.getUnidadDocumental().getFechaRecibe()==null) {
+		if (filtroUnidadDocumental.getUnidadDocumental().getFechaRecibe() != null) {
 			JPQL.append(" AND u.fechaRecibe = :FECHARECIBE ");
 			pamametros.put("FECHARECIBE", filtroUnidadDocumental.getUnidadDocumental().getFechaRecibe());
 		}
-		if(filtroUnidadDocumental.getUnidadDocumental().getTipoDocumental()==null) {
-			if(filtroUnidadDocumental.getUnidadDocumental().getTipoDocumental().getId()==0) {
+		if (filtroUnidadDocumental.getUnidadDocumental().getTipoDocumental() != null) {
+			if (filtroUnidadDocumental.getUnidadDocumental().getTipoDocumental().getId() != 0) {
 				JPQL.append(" AND u.tipoDocumental.id = :IDTIPODOCUMENTAL ");
-				pamametros.put("IDTIPODOCUMENTAL", filtroUnidadDocumental.getUnidadDocumental().getTipoDocumental().getId());
+				pamametros.put("IDTIPODOCUMENTAL",
+						filtroUnidadDocumental.getUnidadDocumental().getTipoDocumental().getId());
 			}
 		}
-		if(filtroUnidadDocumental.getUnidadDocumental().getContenedor()==null) {
-			if(filtroUnidadDocumental.getUnidadDocumental().getContenedor().getId()==0) {
+		if (filtroUnidadDocumental.getUnidadDocumental().getContenedor() != null) {
+			if (filtroUnidadDocumental.getUnidadDocumental().getContenedor().getId() != 0) {
 				JPQL.append(" AND u.contenedor.id = :IDCONTENEDOR ");
 				pamametros.put("IDCONTENEDOR", filtroUnidadDocumental.getUnidadDocumental().getContenedor().getId());
 			}
 		}
-		if(filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad()==null) {
-			if(filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getId()==0) {
+		if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad() != null) {
+			if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getId() != 0) {
 				JPQL.append(" AND sa.sociedad.id = :IDSOCIEDAD ");
-				pamametros.put("IDSOCIEDAD", filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getId());
+				pamametros.put("IDSOCIEDAD",
+						filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getId());
 			}
 		}
-		if(filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getArea()==null) {
-			if(filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getId()==0) {
+		if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getArea() != null) {
+			if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getId() != 0) {
 				JPQL.append(" AND sa.area.id = :IDAREA ");
-				pamametros.put("IDAREA", filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getArea().getId());
+				pamametros.put("IDAREA",
+						filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getArea().getId());
 			}
 		}
-		
+
 		String COUNT = "SELECT COUNT(u) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
 
 		// Q. Order By
@@ -143,6 +145,46 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 		return response;
 	}
 
-	
+	@Override
+	public UnidadDocumentalTB buscarUnidadDocumentalPorId(long idUnidadDocumental) {
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder(
+				"SELECT u FROM UnidadDocumentalTB u " + " INNER JOIN u.sociedadArea sa " + " WHERE 1 = 1 ");
+		// WHERE
+		JPQL.append(" AND u.id = :ID ");
+		pamameters.put("ID", idUnidadDocumental);
+
+		// END QUERY
+
+		TypedQuery<UnidadDocumentalTB> query = em.createQuery(JPQL.toString(), UnidadDocumentalTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getSingleResult();
+	}
+
+	@Override
+	public List<UnidadDocumentalTB> RequestConsultarUnidadDocumentalPorCaja(Long idCaja) {
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder(
+				"SELECT u FROM UnidadDocumentalTB u " + " INNER JOIN u.sociedadArea sa " + " WHERE 1 = 1 ");
+		// WHERE
+		JPQL.append(" AND u.caja.id = :CAJA ");
+		pamameters.put("CAJA", idCaja);
+
+		// Q. Order By
+		JPQL.append(" ORDER BY u.id");
+		// END QUERY
+
+		TypedQuery<UnidadDocumentalTB> query = em.createQuery(JPQL.toString(), UnidadDocumentalTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getResultList();
+	}
 
 }

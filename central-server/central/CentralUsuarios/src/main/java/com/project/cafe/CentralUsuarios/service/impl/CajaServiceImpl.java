@@ -48,26 +48,32 @@ public class CajaServiceImpl implements ICajaService {
 		return cajaDAO.consultarCajasFiltros(filtroCaja);
 	}
 
+	@Transactional
 	@Override
 	public CajaTB retornarCajaInicialPorSociedad(SociedadTB sociedad) {
-		List<CajaTB> lstCajas=cajaDAO.buscarcajaPorCodigoSociedad("CAJA0",sociedad.getId());
+		List<CajaTB> lstCajas=cajaDAO.buscarcajaPorCodigoSociedad("C-INICIAL",sociedad.getId());
 		if(lstCajas == null || lstCajas.isEmpty()) {
 			List<EntrepanoTB> lstEntrepano = entrepanoDAO.buscarEntrepanoPorCodigo("ENTREPANO0");
 			EntrepanoTB nuevoEntrepano= new EntrepanoTB();
 			nuevoEntrepano=lstEntrepano.get(0);
 			CajaTB nuevaCaja= new CajaTB();
 			nuevaCaja.setSociedad(sociedad);
-			nuevaCaja.setCodigoAlterno("CAJA_INICIAL");
+			nuevaCaja.setCodigoAlterno("C-INICIAL");
 			nuevaCaja.setCodigoBarras("CAJA_INICIAL");
 			nuevaCaja.setDescripcion("Caja inicial sociedad:"+sociedad.getNombre());
 			nuevaCaja.setEntrepano(nuevoEntrepano);
-			Short uno='1';
-			nuevaCaja.setEstado(uno);
+			Short activo=1;
+			nuevaCaja.setEstado(activo);
 			nuevaCaja.setQr("CAJA_INICIAL");
 			return cajaDAO.crearCaja(nuevaCaja);
 		}else {
 			return lstCajas.get(0);
 		}
+	}
+
+	@Override
+	public List<CajaTB> consultarCajasPorSociedad(Long idSociedad) {
+		return cajaDAO.consultarCajasPorSociedad(idSociedad);
 	}
 	
 
