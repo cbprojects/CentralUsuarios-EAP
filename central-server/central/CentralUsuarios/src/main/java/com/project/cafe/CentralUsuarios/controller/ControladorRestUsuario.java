@@ -30,7 +30,6 @@ import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 
 import com.project.cafe.CentralUsuarios.dto.ResponseLoginUsuarioDTO;
 
-import com.project.cafe.CentralUsuarios.enums.EEstado;
 
 import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
 import com.project.cafe.CentralUsuarios.model.RolTB;

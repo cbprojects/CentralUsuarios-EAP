@@ -13,4 +13,11 @@ public interface IEntrepanoDao {
 	 */
 	List<EntrepanoTB> buscarEntrepanosActivosPorEstante(Long idEstante);
 
+	/**
+	 * 
+	 * @param codigo
+	 * @return entrapano por codigo
+	 */
+	List<EntrepanoTB> buscarEntrepanoPorCodigo(String codigo);
+
 }

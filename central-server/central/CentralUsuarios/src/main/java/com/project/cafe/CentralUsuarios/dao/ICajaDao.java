@@ -33,6 +33,20 @@ public interface ICajaDao {
 	 */
 	ResponseConsultarDTO<CajaTB> consultarCajasFiltros(RequestConsultarCajasDTO filtroCaja);
 
+	/**
+	 * 
+	 * @param idSociedad
+	 * @return lista cajas  segun la sociedad enviada
+	 */
+	List<CajaTB> consultarCajasPorSociedad(Long idSociedad);
+
+	/**
+	 * 
+	 * @param idSociedad
+	 * @return  caja  segun el id
+	 */
+	CajaTB consultarCajaPorId(Long idCaja);
+
 	
 
 }

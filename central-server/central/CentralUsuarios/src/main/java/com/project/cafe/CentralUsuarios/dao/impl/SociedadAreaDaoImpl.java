@@ -55,4 +55,31 @@ public class SociedadAreaDaoImpl extends AbstractDao<SociedadAreaTB> implements 
 		return listaAreas;
 	}
 
+	@Override
+	public List<SociedadAreaTB> buscarSociedadAreaPorSociedadArea(long idSociedad, long idArea) {
+		List<SociedadAreaTB> listaSociedadArea = new ArrayList<>();;
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT sa FROM SociedadAreaTB sa WHERE 1 = 1 ");
+		// WHERE
+		JPQL.append(" AND sa.area.id = :IDAREA ");
+		pamameters.put("IDAREA", idArea);
+		
+		JPQL.append(" AND sa.sociedad.id = :IDSOCIEDAD ");
+		pamameters.put("IDSOCIEDAD", idSociedad);
+
+		// Q. Order By
+		JPQL.append(" ORDER BY sa.id");
+		// END QUERY
+
+		TypedQuery<SociedadAreaTB> query = em.createQuery(JPQL.toString(), SociedadAreaTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		listaSociedadArea = query.getResultList();
+
+		return listaSociedadArea;
+	}
+
 }

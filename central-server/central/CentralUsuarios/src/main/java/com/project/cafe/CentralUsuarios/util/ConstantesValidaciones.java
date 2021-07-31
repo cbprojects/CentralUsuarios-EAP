@@ -142,4 +142,18 @@ public final class ConstantesValidaciones {
 	public static final String NO_TIENE_SOCIEDAD = PropertiesUtil.getProperty("lbl.msg.validate.cajaSinSociedad");
 	public static final String MSG_CAJA_REPETIDA = PropertiesUtil.getProperty("lbl.msg.validate.cajaRepetida");
 	
+	//labels unidad documental 
+	public static final String CODIGO_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.codigo");
+	public static final String NOMBRE_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.nombre");
+	public static final String CODIGO_BARRAS_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.codigoBarras");
+	public static final String FECHA_RECIBE_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.fechaRecibe");
+	public static final String SOCIEDAD_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.sociedad");
+	public static final String SIN_SOCIEDAD_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.msg.validate.unidadDocumentalSinSociedad");
+	public static final String AREA_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.area");
+	public static final String SIN_AREA_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.msg.validate.unidadDocumentalSinArea");
+	public static final String TIPO_DOCUMENTAL_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.tipoDocumental");
+	public static final String SIN_TIPO_DOCUMENTAL_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.msg.validate.unidadDocumentalSinTipoDocumental");
+	public static final String CONTENEDOR_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.Contenedor");
+	public static final String SIN_CONTENEDOR_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.msg.validate.unidadDocumentalSinContenedor");
+	public static final String MSG_UNIDAD_DOCUMENTAL_REPETIDA = PropertiesUtil.getProperty("lbl.msg.validate.unidadDocumentalRepetida");
 }

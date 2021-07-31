@@ -12,6 +12,7 @@ import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolTB;
+import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
 import com.project.cafe.CentralUsuarios.model.UsuarioTB;
 
 public abstract class Util {
@@ -47,11 +48,69 @@ public abstract class Util {
 			case ConstantesTablasNombre.MRA_CAJA_TB:
 				errores = validarCaja((CajaTB) entidadTB);
 				break;
+				
+			case ConstantesTablasNombre.MRA_UNIDAD_DOCUMENTAL_TB:
+				errores = validarUnidadDocumental((UnidadDocumentalTB) entidadTB);
+				break;
 			}
 		} else {
 			errores.add(ConstantesValidaciones.TABLA_NO_ESTABLECIDA_VALIDACIONES);
 		}
 
+		return errores;
+	}
+	
+	public static List<String> validarUnidadDocumental(UnidadDocumentalTB unidadDocumental) {
+		List<String> errores = new ArrayList<>();
+
+		if (StringUtils.isBlank(unidadDocumental.getCodigo())) {
+			errores.add(ConstantesValidaciones.CODIGO_UNIDAD_DOCUMENTAL + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (StringUtils.isBlank(unidadDocumental.getNombre())) {
+			errores.add(ConstantesValidaciones.NOMBRE_UNIDAD_DOCUMENTAL + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (StringUtils.isBlank(unidadDocumental.getCodigoBarra())) {
+			errores.add(ConstantesValidaciones.CODIGO_BARRAS_UNIDAD_DOCUMENTAL + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (unidadDocumental.getFechaRecibe()==null) {
+			errores.add(ConstantesValidaciones.FECHA_RECIBE_UNIDAD_DOCUMENTAL + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if(unidadDocumental.getTipoDocumental()==null) {
+			errores.add(ConstantesValidaciones.TIPO_DOCUMENTAL_UNIDAD_DOCUMENTAL 
+					+ ConstantesValidaciones.SIN_TIPO_DOCUMENTAL_UNIDAD_DOCUMENTAL);
+		}else {
+			if(unidadDocumental.getTipoDocumental().getId()==0) {
+				errores.add(ConstantesValidaciones.TIPO_DOCUMENTAL_UNIDAD_DOCUMENTAL 
+						+ ConstantesValidaciones.SIN_TIPO_DOCUMENTAL_UNIDAD_DOCUMENTAL);
+			}
+		}
+		if(unidadDocumental.getContenedor()==null) {
+			errores.add(ConstantesValidaciones.CONTENEDOR_UNIDAD_DOCUMENTAL 
+					+ ConstantesValidaciones.SIN_CONTENEDOR_UNIDAD_DOCUMENTAL);
+		}else {
+			if(unidadDocumental.getContenedor().getId()==0) {
+				errores.add(ConstantesValidaciones.CONTENEDOR_UNIDAD_DOCUMENTAL 
+						+ ConstantesValidaciones.SIN_CONTENEDOR_UNIDAD_DOCUMENTAL);
+			}
+		}
+		if(unidadDocumental.getSociedadArea().getSociedad()==null) {
+			errores.add(ConstantesValidaciones.SOCIEDAD_UNIDAD_DOCUMENTAL 
+					+ ConstantesValidaciones.SIN_SOCIEDAD_UNIDAD_DOCUMENTAL);
+		}else {
+			if(unidadDocumental.getSociedadArea().getSociedad().getId()==0) {
+				errores.add(ConstantesValidaciones.SOCIEDAD_UNIDAD_DOCUMENTAL 
+						+ ConstantesValidaciones.SIN_SOCIEDAD_UNIDAD_DOCUMENTAL);
+			}
+		}
+		if(unidadDocumental.getSociedadArea().getArea()==null) {
+			errores.add(ConstantesValidaciones.AREA_UNIDAD_DOCUMENTAL 
+					+ ConstantesValidaciones.SIN_AREA_UNIDAD_DOCUMENTAL);
+		}else {
+			if(unidadDocumental.getSociedadArea().getArea().getId()==0) {
+				errores.add(ConstantesValidaciones.AREA_UNIDAD_DOCUMENTAL 
+						+ ConstantesValidaciones.SIN_AREA_UNIDAD_DOCUMENTAL);
+			}
+		}
 		return errores;
 	}
 
