@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
@@ -28,10 +30,10 @@ public class BloqueDaoImpl extends AbstractDao<BloqueTB> implements IBloqueDao {
 		// QUERY
 		StringBuilder JPQL = new StringBuilder("SELECT b FROM BloqueTB b WHERE 1 = 1 ");
 		// WHERE
-			JPQL.append("AND b.bodega.id = :IDBODEGA ");
-			pamameters.put("IDBODEGA", idBodega);
-			
-			JPQL.append("AND b.estado = 1");
+		JPQL.append("AND b.bodega.id = :IDBODEGA ");
+		pamameters.put("IDBODEGA", idBodega);
+
+		JPQL.append("AND b.estado = 1");
 		// Q. Order By
 		JPQL.append(" ORDER BY b.id");
 		// END QUERY
@@ -41,5 +43,4 @@ public class BloqueDaoImpl extends AbstractDao<BloqueTB> implements IBloqueDao {
 
 		return query.getResultList();
 	}
-
 }
