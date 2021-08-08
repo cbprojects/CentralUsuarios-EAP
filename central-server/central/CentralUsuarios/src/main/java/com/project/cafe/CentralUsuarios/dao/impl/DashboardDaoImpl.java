@@ -76,17 +76,17 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 				response.setBoxes3(boxes3);
 			}
 			if (seccion == ESeccionDashboard.CHARTBOX1) {
-				response.setChartBox1(llenarChartBoxDto(lista.get(0)));
+				response.setChartBox1(llenarChartBoxDto(lista));
 			}
 
 			if (seccion == ESeccionDashboard.CHARTBOX2) {
-				response.setChartBox2(llenarChartBoxDto(lista.get(0)));
+				response.setChartBox2(llenarChartBoxDto(lista));
 			}
 			if (seccion == ESeccionDashboard.CHARTBOX3) {
-				response.setChartBox3(llenarChartBoxDto(lista.get(0)));
+				response.setChartBox3(llenarChartBoxDto(lista));
 			}
 			if (seccion == ESeccionDashboard.CHARTBOX4) {
-				response.setChartBox4(llenarChartBoxDto(lista.get(0)));
+				response.setChartBox4(llenarChartBoxDto(lista));
 			}
 
 			if (seccion == ESeccionDashboard.CHARTPIE1) {
@@ -97,9 +97,9 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 				response.setChartPie2(llenarChartPieDto(lista.get(0)));
 			}
 
-			if (seccion == ESeccionDashboard.CHARTTABLE1) {
-				response.setChartTable1(llenarChartTableDto(lista));
-			}
+//			if (seccion == ESeccionDashboard.CHARTTABLE1) {
+//				response.setChartTable1(llenarChartTableDto(lista));
+//			}
 
 			if (seccion == ESeccionDashboard.TABLE1) {
 				response.setTable1(llenarTablePersonaDto(lista, 1));
@@ -138,28 +138,35 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 		return box;
 	}
 
-	private DashBoardChartBoxDTO llenarChartBoxDto(Object[] objeto) {
+	private DashBoardChartBoxDTO llenarChartBoxDto(List<Object[]> listaObjeto) {
 		DashBoardChartBoxDTO chartbox = new DashBoardChartBoxDTO();
 		DashBoardBoxDTO box = new DashBoardBoxDTO();
-		DashBoardChartDTO data = new DashBoardChartDTO();
-		String[] valores = Arrays.copyOf(objeto, objeto.length, String[].class);
-		box.setColor(valores[3]);
-		box.setPrincipalLabel(valores[4]);
-		box.setPrincipalValue(valores[5]);
-		box.setSubtitleLabel(valores[6]);
-		box.setSubtitleValue(valores[7]);
-		box.setUpperLabel(valores[8]);
-		box.setUpperValue(valores[9]);
-		box.setEstado(valores[10]);
+		List<DashBoardChartDTO> listData = new ArrayList<>();
+		for (Object[] objeto : listaObjeto) {
+			DashBoardChartDTO data = new DashBoardChartDTO();	
+			String[] valores = Arrays.copyOf(objeto, objeto.length, String[].class);
+			box.setColor(valores[5]);
+			box.setPrincipalLabel(valores[6]);
+			box.setPrincipalValue(valores[7]);
+			box.setSubtitleLabel(valores[8]);
+			box.setSubtitleValue(valores[9]);
+			box.setUpperLabel(valores[10]);
+			box.setUpperValue(valores[11]);
+			box.setEstado(valores[12]);
 
-		data.setColor(valores[3]);
-		data.setColumns(Arrays.asList(valores[0].split(",")));
-		data.setLabel(valores[1]);
-		data.setType(valores[2]);
+			data.setColumn(valores[0]);
+			data.setValue(valores[1]);
+			data.setLabel(valores[2]);
+			data.setType(valores[3]);
+			data.setColor(valores[4]);
 
+			listData.add(data);
+			chartbox.setEstado(valores[10]);
+		}
+		
 		chartbox.setBox(box);
-		chartbox.setData(data);
-		chartbox.setEstado(valores[10]);
+		chartbox.setData(listData);
+		
 		return chartbox;
 	}
 
@@ -168,13 +175,14 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 		DashBoardChartDTO data = new DashBoardChartDTO();
 		String[] valores = Arrays.copyOf(objeto, objeto.length, String[].class);
 
-		data.setColumns(Arrays.asList(valores[0].split(",")));
-		data.setLabel(valores[1]);
-		data.setType(valores[2]);
-		data.setColor(valores[3]);
+		data.setColumn(valores[0]);
+		data.setValue(valores[1]);
+		data.setLabel(valores[2]);
+		data.setType(valores[3]);
+		data.setColor(valores[4]);
 
 		chartpie.setData(data);
-		chartpie.setEstado(valores[4]);
+		chartpie.setEstado(valores[5]);
 		return chartpie;
 	}
 
@@ -186,7 +194,7 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 
 		String[] valores = Arrays.copyOf(objeto, objeto.length, String[].class);
 
-		data.setColumns(Arrays.asList(valores[0].split(",")));
+		data.setColumn(valores[0]);
 		data.setLabel(valores[1]);
 		data.setType(valores[2]);
 		data.setColor(valores[3]);
@@ -209,11 +217,14 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 		for (Object[] objeto : lista) {
 			DashBoardPersonaDTO persona = new DashBoardPersonaDTO();
 			valores = Arrays.copyOf(objeto, objeto.length, String[].class);
+			
+			
 
 			if (tipo == 0) {
 				persona.setUsuario(valores[5]);
 				persona.setCommit(valores[6]);
 				persona.setFechaCommit(valores[7]);
+				persona.setRutaImagen(valores[8]);
 				listaPersona.add(persona);
 			}
 
@@ -223,6 +234,7 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 				persona.setPayment(valores[3]);
 				persona.setActivity(valores[4]);
 				persona.setSatisfaction(valores[5]);
+				persona.setRutaImagen(valores[6]);
 				listaPersona.add(persona);
 			}
 		}
@@ -240,8 +252,7 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 		table.setCabeceras(Arrays.asList(valores[0].split(",")));
 
 		table.setValues(llenarValuesTable(lista, tipo));
-
-		table.setEstado(valores[6]);
+		table.setEstado(valores[7]);
 
 		return table;
 	}

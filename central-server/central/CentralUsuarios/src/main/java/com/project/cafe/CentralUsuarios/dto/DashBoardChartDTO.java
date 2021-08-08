@@ -7,14 +7,16 @@ import java.util.List;
 public class DashBoardChartDTO implements Serializable {
 
 	private static final long serialVersionUID = 5815571462998322025L;
-	private String color;
-	private List<String> columns;
+	
+	private String column;
+	private String value;
 	private String label;
 	private String type;
+	private String color;
 	
-	public DashBoardChartDTO(String color, List<String> columns, String label, String type) {
+	public DashBoardChartDTO(String color, String column, String label, String type) {
 		this.color = color;
-		this.columns = columns;
+		this.column = column;
 		this.label = label;
 		this.type = type;
 	}
@@ -31,12 +33,12 @@ public class DashBoardChartDTO implements Serializable {
 		this.color = color;
 	}
 
-	public List<String> getColumns() {
-		return columns;
+	public String getColumn() {
+		return column;
 	}
 
-	public void setColumns(List<String> columns) {
-		this.columns = columns;
+	public void setColumn(String column) {
+		this.column = column;
 	}
 
 	public String getLabel() {
@@ -54,5 +56,15 @@ public class DashBoardChartDTO implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	
 
 }
