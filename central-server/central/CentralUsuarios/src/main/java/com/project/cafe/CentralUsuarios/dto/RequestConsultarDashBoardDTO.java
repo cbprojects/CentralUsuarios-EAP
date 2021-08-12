@@ -21,13 +21,14 @@ public class RequestConsultarDashBoardDTO implements Serializable {
 	private DashBoardTablePersonaDTO table3;
 	private DashBoardTablePersonaDTO table4;
 	private DashBoardTableFacturaDTO table5;
+	private DashBoardImgDTO img;
 	
 	public RequestConsultarDashBoardDTO(DashBoardBoxesUnoDTO boxes1, DashBoardBoxesDosDTO boxes2,
 			DashBoardBoxesTresDTO boxes3, DashBoardChartBoxDTO chartBox1, DashBoardChartBoxDTO chartBox2,
 			DashBoardChartBoxDTO chartBox3, DashBoardChartBoxDTO chartBox4, DashBoardChartPieDTO chartPie1,
 			DashBoardChartPieDTO chartPie2, DashBoardChartTableDTO chartTable1, DashBoardTablePersonaDTO table1,
 			DashBoardTablePersonaDTO table2, DashBoardTablePersonaDTO table3, DashBoardTablePersonaDTO table4,
-			DashBoardTableFacturaDTO table5) {
+			DashBoardTableFacturaDTO table5,DashBoardImgDTO img) {
 		this.boxes1 = boxes1;
 		this.boxes2 = boxes2;
 		this.boxes3 = boxes3;
@@ -43,6 +44,7 @@ public class RequestConsultarDashBoardDTO implements Serializable {
 		this.table3 = table3;
 		this.table4 = table4;
 		this.table5 = table5;
+		this.img = img;
 	}
 
 	public RequestConsultarDashBoardDTO() {
@@ -168,5 +170,14 @@ public class RequestConsultarDashBoardDTO implements Serializable {
 	public void setTable5(DashBoardTableFacturaDTO table5) {
 		this.table5 = table5;
 	}
+
+	public DashBoardImgDTO getImg() {
+		return img;
+	}
+
+	public void setImg(DashBoardImgDTO img) {
+		this.img = img;
+	}
+	
 	
 }
