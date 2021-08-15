@@ -22,8 +22,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "gdo_RolPerfil_tb")
 public class RolPerfilTB extends BaseEntidadTB implements Serializable {
 

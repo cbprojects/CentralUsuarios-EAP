@@ -1,16 +1,17 @@
 package com.project.cafe.CentralUsuarios.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 public class DashBoardChartBoxDTO implements Serializable {
 
 	private static final long serialVersionUID = 4675493820892508858L;
-	private DashBoardChartDTO data;
+	private List<DashBoardChartDTO> data;
 	private DashBoardBoxDTO box;
 	private String estado;
 
-	public DashBoardChartBoxDTO(DashBoardChartDTO data, DashBoardBoxDTO box, String estado) {
+	public DashBoardChartBoxDTO(List<DashBoardChartDTO> data, DashBoardBoxDTO box, String estado) {
 		this.data = data;
 		this.box = box;
 		this.estado = estado;
@@ -20,11 +21,11 @@ public class DashBoardChartBoxDTO implements Serializable {
 
 	}
 
-	public DashBoardChartDTO getData() {
+	public List<DashBoardChartDTO> getData() {
 		return data;
 	}
 
-	public void setData(DashBoardChartDTO data) {
+	public void setData(List<DashBoardChartDTO> data) {
 		this.data = data;
 	}
 

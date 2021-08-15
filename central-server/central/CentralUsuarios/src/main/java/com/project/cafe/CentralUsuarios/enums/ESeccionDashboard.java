@@ -14,12 +14,14 @@ public enum ESeccionDashboard {
 	CHARTBOX4("CHARTBOX4"),
 	CHARTPIE1("CHARTPIE1"),
 	CHARTPIE2("CHARTPIE2"),
-	CHARTTABLE1("CHARTTABLE1"),
+	CHARTCHARTTABLE1("CHARTCHARTTABLE1"),
+	TABLECHARTTABLE1("TABLECHARTTABLE1"),
 	TABLE1("TABLE1"),
 	TABLE2("TABLE2"),
 	TABLE3("TABLE3"),
 	TABLE4("TABLE4"),
-	TABLE5("TABLE5");
+	TABLE5("TABLE5"),
+	IMG("IMG");
 
 	private final String nombre;
 
@@ -42,12 +44,14 @@ public enum ESeccionDashboard {
 		lista.add(CHARTBOX4);
 		lista.add(CHARTPIE1);
 		lista.add(CHARTPIE2);
-		lista.add(CHARTTABLE1);
+		lista.add(CHARTCHARTTABLE1);
+		lista.add(TABLECHARTTABLE1);
 		lista.add(TABLE1);
 		lista.add(TABLE2);
 		lista.add(TABLE3);
 		lista.add(TABLE4);
 		lista.add(TABLE5);
+		lista.add(IMG);
 		return lista;
 	}
 

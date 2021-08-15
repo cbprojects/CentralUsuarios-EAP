@@ -26,6 +26,7 @@ import com.project.cafe.CentralUsuarios.dto.DashBoardChartDTO;
 import com.project.cafe.CentralUsuarios.dto.DashBoardChartPieDTO;
 import com.project.cafe.CentralUsuarios.dto.DashBoardChartTableDTO;
 import com.project.cafe.CentralUsuarios.dto.DashBoardFacturaDTO;
+import com.project.cafe.CentralUsuarios.dto.DashBoardImgDTO;
 import com.project.cafe.CentralUsuarios.dto.DashBoardPersonaDTO;
 import com.project.cafe.CentralUsuarios.dto.DashBoardTableFacturaDTO;
 import com.project.cafe.CentralUsuarios.dto.DashBoardTablePersonaDTO;
@@ -51,7 +52,8 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 					seccion.ordinal());
 
 			List<Object[]> lista = storedProcedure.getResultList();
-			if (seccion == ESeccionDashboard.BOXES1) {
+			switch (seccion) {
+			case BOXES1:
 				DashBoardBoxesUnoDTO boxes1 = new DashBoardBoxesUnoDTO();
 				boxes1.setBox1(llenarBoxDto(lista.get(0)));
 				boxes1.setBox2(llenarBoxDto(lista.get(1)));
@@ -60,65 +62,67 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 				boxes1.setBox5(llenarBoxDto(lista.get(4)));
 				boxes1.setBox6(llenarBoxDto(lista.get(5)));
 				response.setBoxes1(boxes1);
-			}
-			if (seccion == ESeccionDashboard.BOXES2) {
+				break;
+			case BOXES2:
 				DashBoardBoxesDosDTO boxes2 = new DashBoardBoxesDosDTO();
 				boxes2.setBox1(llenarBoxDto(lista.get(0)));
 				boxes2.setBox2(llenarBoxDto(lista.get(1)));
 				response.setBoxes2(boxes2);
-			}
-			if (seccion == ESeccionDashboard.BOXES3) {
+				break;
+			case BOXES3:
 				DashBoardBoxesTresDTO boxes3 = new DashBoardBoxesTresDTO();
 				boxes3.setBox1(llenarBoxDto(lista.get(0)));
 				boxes3.setBox2(llenarBoxDto(lista.get(1)));
 				boxes3.setBox3(llenarBoxDto(lista.get(1)));
 				boxes3.setBox4(llenarBoxDto(lista.get(1)));
 				response.setBoxes3(boxes3);
-			}
-			if (seccion == ESeccionDashboard.CHARTBOX1) {
-				response.setChartBox1(llenarChartBoxDto(lista.get(0)));
-			}
-
-			if (seccion == ESeccionDashboard.CHARTBOX2) {
-				response.setChartBox2(llenarChartBoxDto(lista.get(0)));
-			}
-			if (seccion == ESeccionDashboard.CHARTBOX3) {
-				response.setChartBox3(llenarChartBoxDto(lista.get(0)));
-			}
-			if (seccion == ESeccionDashboard.CHARTBOX4) {
-				response.setChartBox4(llenarChartBoxDto(lista.get(0)));
-			}
-
-			if (seccion == ESeccionDashboard.CHARTPIE1) {
-				response.setChartPie1(llenarChartPieDto(lista.get(0)));
-			}
-
-			if (seccion == ESeccionDashboard.CHARTPIE2) {
-				response.setChartPie2(llenarChartPieDto(lista.get(0)));
-			}
-
-			if (seccion == ESeccionDashboard.CHARTTABLE1) {
-				response.setChartTable1(llenarChartTableDto(lista));
-			}
-
-			if (seccion == ESeccionDashboard.TABLE1) {
+				break;
+			case CHARTBOX1:
+				response.setChartBox1(llenarChartBoxDto(lista));
+				break;
+			case CHARTBOX2:
+				response.setChartBox2(llenarChartBoxDto(lista));
+				break;
+			case CHARTBOX3:
+				response.setChartBox3(llenarChartBoxDto(lista));
+				break;
+			case CHARTBOX4:
+				response.setChartBox4(llenarChartBoxDto(lista));
+				break;
+			case CHARTPIE1:
+				response.setChartPie1(llenarChartPieDto(lista));
+				break;
+			case CHARTPIE2:
+				response.setChartPie2(llenarChartPieDto(lista));
+				break;
+			case CHARTCHARTTABLE1:
+				response.setChartTable1(new DashBoardChartTableDTO());
+				response.getChartTable1().setData(llenarListChartDto(lista));
+				break;
+			case TABLECHARTTABLE1:
+				response.getChartTable1().setTable(llenarTablePersonaDto(lista, 0));
+				break;
+			case TABLE1:
 				response.setTable1(llenarTablePersonaDto(lista, 1));
-			}
-
-			if (seccion == ESeccionDashboard.TABLE2) {
+				break;
+			case TABLE2:
 				response.setTable2(llenarTablePersonaDto(lista, 1));
-			}
-
-			if (seccion == ESeccionDashboard.TABLE3) {
+				break;
+			case TABLE3:
 				response.setTable3(llenarTablePersonaDto(lista, 1));
-			}
-
-			if (seccion == ESeccionDashboard.TABLE4) {
+				break;
+			case TABLE4:
 				response.setTable4(llenarTablePersonaDto(lista, 1));
-			}
-
-			if (seccion == ESeccionDashboard.TABLE5) {
+				break;
+			case TABLE5:
 				response.setTable5(llenarTableFacturaDto(lista));
+				break;
+			case IMG:
+				response.setImg(llenarImg(lista.get(0)));
+				break;
+
+			default:
+				break;
 			}
 		}
 		return response;
@@ -138,69 +142,73 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 		return box;
 	}
 
-	private DashBoardChartBoxDTO llenarChartBoxDto(Object[] objeto) {
+	private DashBoardChartBoxDTO llenarChartBoxDto(List<Object[]> listaObjeto) {
 		DashBoardChartBoxDTO chartbox = new DashBoardChartBoxDTO();
 		DashBoardBoxDTO box = new DashBoardBoxDTO();
-		DashBoardChartDTO data = new DashBoardChartDTO();
-		String[] valores = Arrays.copyOf(objeto, objeto.length, String[].class);
-		box.setColor(valores[3]);
-		box.setPrincipalLabel(valores[4]);
-		box.setPrincipalValue(valores[5]);
-		box.setSubtitleLabel(valores[6]);
-		box.setSubtitleValue(valores[7]);
-		box.setUpperLabel(valores[8]);
-		box.setUpperValue(valores[9]);
-		box.setEstado(valores[10]);
+		List<DashBoardChartDTO> listData = new ArrayList<>();
+		for (Object[] objeto : listaObjeto) {
+			DashBoardChartDTO data = new DashBoardChartDTO();
+			String[] valores = Arrays.copyOf(objeto, objeto.length, String[].class);
+			box.setColor(valores[5]);
+			box.setPrincipalLabel(valores[6]);
+			box.setPrincipalValue(valores[7]);
+			box.setSubtitleLabel(valores[8]);
+			box.setSubtitleValue(valores[9]);
+			box.setUpperLabel(valores[10]);
+			box.setUpperValue(valores[11]);
+			box.setEstado(valores[12]);
 
-		data.setColor(valores[3]);
-		data.setColumns(Arrays.asList(valores[0].split(",")));
-		data.setLabel(valores[1]);
-		data.setType(valores[2]);
+			data.setColumn(valores[0]);
+			data.setValue(valores[1]);
+			data.setLabel(valores[2]);
+			data.setType(valores[3]);
+			data.setColor(valores[4]);
+
+			listData.add(data);
+			chartbox.setEstado(valores[12]);
+		}
 
 		chartbox.setBox(box);
-		chartbox.setData(data);
-		chartbox.setEstado(valores[10]);
+		chartbox.setData(listData);
+
 		return chartbox;
 	}
 
-	private DashBoardChartPieDTO llenarChartPieDto(Object[] objeto) {
+	private DashBoardChartPieDTO llenarChartPieDto(List<Object[]> listaObjeto) {
 		DashBoardChartPieDTO chartpie = new DashBoardChartPieDTO();
-		DashBoardChartDTO data = new DashBoardChartDTO();
-		String[] valores = Arrays.copyOf(objeto, objeto.length, String[].class);
+		List<DashBoardChartDTO> listData = new ArrayList<>();
+		for (Object[] objeto : listaObjeto) {
+			DashBoardChartDTO data = new DashBoardChartDTO();
+			String[] valores = Arrays.copyOf(objeto, objeto.length, String[].class);
 
-		data.setColumns(Arrays.asList(valores[0].split(",")));
-		data.setLabel(valores[1]);
-		data.setType(valores[2]);
-		data.setColor(valores[3]);
+			data.setColumn(valores[0]);
+			data.setValue(valores[1]);
+			data.setLabel(valores[2]);
+			data.setType(valores[3]);
+			data.setColor(valores[4]);
+			listData.add(data);
+			chartpie.setEstado(valores[5]);
+		}
 
-		chartpie.setData(data);
-		chartpie.setEstado(valores[4]);
+		chartpie.setData(listData);
+
 		return chartpie;
 	}
 
-	private DashBoardChartTableDTO llenarChartTableDto(List<Object[]> lista) {
-		DashBoardChartTableDTO chartable = new DashBoardChartTableDTO();
-		DashBoardChartDTO data = new DashBoardChartDTO();
-		DashBoardTablePersonaDTO table = new DashBoardTablePersonaDTO();
-		Object[] objeto = lista.get(0);
+	private List<DashBoardChartDTO> llenarListChartDto(List<Object[]> listaObjeto) {
+		List<DashBoardChartDTO> listData = new ArrayList<>();
+		for (Object[] objeto : listaObjeto) {
+			DashBoardChartDTO data = new DashBoardChartDTO();
+			String[] valores = Arrays.copyOf(objeto, objeto.length, String[].class);
 
-		String[] valores = Arrays.copyOf(objeto, objeto.length, String[].class);
-
-		data.setColumns(Arrays.asList(valores[0].split(",")));
-		data.setLabel(valores[1]);
-		data.setType(valores[2]);
-		data.setColor(valores[3]);
-
-		table.setCabeceras(Arrays.asList(valores[4].split(",")));
-
-		table.setValues(llenarValuesTable(lista, 0));
-
-		table.setEstado(valores[8]);
-
-		chartable.setData(data);
-		chartable.setEstado(valores[8]);
-		chartable.setTable(table);
-		return chartable;
+			data.setColumn(valores[0]);
+			data.setValue(valores[1]);
+			data.setLabel(valores[2]);
+			data.setType(valores[3]);
+			data.setColor(valores[4]);
+			listData.add(data);
+		}
+		return listData;
 	}
 
 	private List<DashBoardPersonaDTO> llenarValuesTable(List<Object[]> lista, int tipo) {
@@ -211,9 +219,10 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 			valores = Arrays.copyOf(objeto, objeto.length, String[].class);
 
 			if (tipo == 0) {
-				persona.setUsuario(valores[5]);
-				persona.setCommit(valores[6]);
-				persona.setFechaCommit(valores[7]);
+				persona.setUsuario(valores[1]);
+				persona.setCommit(valores[2]);
+				persona.setFechaCommit(valores[3]);
+				persona.setRutaImagen(valores[4]);
 				listaPersona.add(persona);
 			}
 
@@ -223,6 +232,7 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 				persona.setPayment(valores[3]);
 				persona.setActivity(valores[4]);
 				persona.setSatisfaction(valores[5]);
+				persona.setRutaImagen(valores[6]);
 				listaPersona.add(persona);
 			}
 		}
@@ -240,8 +250,12 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 		table.setCabeceras(Arrays.asList(valores[0].split(",")));
 
 		table.setValues(llenarValuesTable(lista, tipo));
-
-		table.setEstado(valores[6]);
+		if (tipo == 0) {
+			table.setEstado(valores[5]);
+		}
+		if (tipo == 1) {
+			table.setEstado(valores[7]);
+		}
 
 		return table;
 	}
@@ -276,12 +290,21 @@ public class DashboardDaoImpl extends AbstractDao<BloqueTB> implements IDashboar
 			factura.setFechaCreacion(valores[5]);
 			factura.setEstado(valores[6]);
 			factura.setPrecio(valores[7]);
-			
+
 			listaFactura.add(factura);
 
 		}
 
 		return listaFactura;
+	}
+
+	private DashBoardImgDTO llenarImg(Object[] objeto) {
+		DashBoardImgDTO img = new DashBoardImgDTO();
+		String[] valores;
+		valores = Arrays.copyOf(objeto, objeto.length, String[].class);
+		img.setRutaImg(valores[0]);
+		img.setEstado(valores[1]);
+		return img;
 	}
 
 }
