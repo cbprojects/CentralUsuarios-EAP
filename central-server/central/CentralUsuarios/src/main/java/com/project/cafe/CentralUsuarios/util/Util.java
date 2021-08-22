@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import org.apache.commons.lang3.StringUtils;
 
 import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestAgregarArchivosDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
@@ -173,18 +174,55 @@ public abstract class Util {
 		return errores;
 	}
 
-	public static List<String> validarArchivo(ArchivoDTO archivoDto) {
+	public static List<String> validarArchivo(RequestAgregarArchivosDTO archivoDto) {
 		List<String> errores = new ArrayList<>();
 
 		if (archivoDto != null) {
-			if (archivoDto.getArchivo() == null) {
-				errores.add(ConstantesValidaciones.ARCHIVO + ConstantesValidaciones.VALOR_INCORRECTO);
+			if(archivoDto.getIdUnidadDocumental() ==0) {
+				errores.add(ConstantesValidaciones.ARCHIVO_CODIGO_UNIDAD_DOCUMENTAL + ConstantesValidaciones.VALOR_INCORRECTO);
+			}else {
+				if(archivoDto.getListaArchivosPorSubir()!=null && !archivoDto.getListaArchivosPorSubir().isEmpty()){
+					int constante=1;
+					for (ArchivoDTO archivo : archivoDto.getListaArchivosPorSubir()) {
+						if (archivo.getArchivo() == null) {
+							errores.add(ConstantesValidaciones.ARCHIVO+" "+constante + ConstantesValidaciones.VALOR_INCORRECTO);
+						}
+						if (StringUtils.isBlank(archivo.getNombreArchivo())) {
+							errores.add(ConstantesValidaciones.NOMBRE_ARCHIVO+" "+constante + ConstantesValidaciones.VALOR_VACIO);
+						}
+						constante++;
+					}
+					
+				}else {
+					errores.add(ConstantesValidaciones.LISTA_ARCHIVO_VACIA);
+				}
 			}
-			if (StringUtils.isBlank(archivoDto.getNombreArchivo())) {
-				errores.add(ConstantesValidaciones.NOMBRE_ARCHIVO + ConstantesValidaciones.VALOR_VACIO);
-			}
-			if (StringUtils.isBlank(archivoDto.getRutaArchivo())) {
-				errores.add(ConstantesValidaciones.RUTA_ARCHIVO + ConstantesValidaciones.VALOR_VACIO);
+		} else {
+			errores.add(ConstantesValidaciones.VALOR_NULL_OBJETO);
+		}
+
+		return errores;
+	}
+	
+	public static List<String> validarArchivoBorrar(RequestAgregarArchivosDTO archivoDto) {
+		List<String> errores = new ArrayList<>();
+
+		if (archivoDto != null) {
+			if(archivoDto.getIdUnidadDocumental() ==0) {
+				errores.add(ConstantesValidaciones.ARCHIVO_CODIGO_UNIDAD_DOCUMENTAL + ConstantesValidaciones.VALOR_INCORRECTO);
+			}else {
+				if(archivoDto.getListaArchivosPorSubir()!=null && !archivoDto.getListaArchivosPorSubir().isEmpty()){
+					int constante=1;
+					for (ArchivoDTO archivo : archivoDto.getListaArchivosPorSubir()) {
+						if (StringUtils.isBlank(archivo.getNombreArchivo())) {
+							errores.add(ConstantesValidaciones.NOMBRE_ARCHIVO+" "+constante + ConstantesValidaciones.VALOR_VACIO);
+						}
+						constante++;
+					}
+					
+				}else {
+					errores.add(ConstantesValidaciones.LISTA_ARCHIVO_VACIA);
+				}
 			}
 		} else {
 			errores.add(ConstantesValidaciones.VALOR_NULL_OBJETO);

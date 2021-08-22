@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
 import com.project.cafe.CentralUsuarios.dto.MailDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestAgregarArchivosDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseSendEMailDTO;
 import com.project.cafe.CentralUsuarios.enums.EDestinoArchivo;
@@ -27,7 +28,7 @@ import com.project.cafe.CentralUsuarios.util.Util;
 import com.project.cafe.CentralUsuarios.util.UtilMail;
 
 @RestController
-@RequestMapping("/eutanasia/paratodos")
+@RequestMapping("/central/archivos")
 public class ControladorRestArchivos {
 
 	@Autowired
@@ -39,18 +40,15 @@ public class ControladorRestArchivos {
 	// Guardar y transferir archivos SFTP
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/subirImagen")
-	public ResponseEntity<ArchivoDTO> subirImagen(@RequestBody ArchivoDTO archivoDto) {
+	public ResponseEntity<List<ArchivoDTO>> subirImagenes(@RequestBody RequestAgregarArchivosDTO archivoDto) {
 		try {
-			ArchivoDTO archivoResponseDto = new ArchivoDTO();
-			archivoDto.setRutaArchivo(archivoDto.getDestinoArchivo() == EDestinoArchivo.USER.ordinal()
-					? ConstantesValidaciones.RUTA_SFTP_IMAGES_USUARIO
-					: ConstantesValidaciones.RUTA_SFTP_IMAGES_POST);
+			List<ArchivoDTO> listaArchivosResponseDto = new ArrayList<>();
 			List<String> errores = Util.validarArchivo(archivoDto);
 			if (errores.isEmpty()) {
-				archivoResponseDto = archivoService.subirImagen(archivoDto);
+				archivoService.subirImagen(archivoDto);
 			} else {
 				StringBuilder mensajeErrores = new StringBuilder();
-				String erroresTitle = PropertiesUtil.getProperty("eutanasia.msg.validate.erroresEncontrados");
+				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
 
 				for (String error : errores) {
 					mensajeErrores.append(error + "|");
@@ -58,8 +56,38 @@ public class ControladorRestArchivos {
 
 				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 			}
+			RequestAgregarArchivosDTO requestVacio=new RequestAgregarArchivosDTO();
+			requestVacio.setIdUnidadDocumental(archivoDto.getIdUnidadDocumental());
+			listaArchivosResponseDto.addAll(archivoService.obtenerArchivos(requestVacio));
+			return new ResponseEntity<List<ArchivoDTO>>(listaArchivosResponseDto, HttpStatus.OK);
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+	
+	// borrar archivos
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/borrarImagen")
+	public ResponseEntity<List<ArchivoDTO>> borrarImagenes(@RequestBody RequestAgregarArchivosDTO archivoDto) {
+		try {
+			List<ArchivoDTO> listaArchivosResponseDto = new ArrayList<>();
+			List<String> errores = Util.validarArchivoBorrar(archivoDto);
+			if (errores.isEmpty()) {
+				archivoService.borrarImagen(archivoDto);
+			} else {
+				StringBuilder mensajeErrores = new StringBuilder();
+				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
 
-			return new ResponseEntity<ArchivoDTO>(archivoResponseDto, HttpStatus.OK);
+				for (String error : errores) {
+					mensajeErrores.append(error + "|");
+				}
+
+				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
+			}
+			RequestAgregarArchivosDTO requestVacio=new RequestAgregarArchivosDTO();
+			requestVacio.setIdUnidadDocumental(archivoDto.getIdUnidadDocumental());
+			listaArchivosResponseDto.addAll(archivoService.obtenerArchivos(requestVacio));
+			return new ResponseEntity<List<ArchivoDTO>>(listaArchivosResponseDto, HttpStatus.OK);
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
@@ -68,27 +96,20 @@ public class ControladorRestArchivos {
 	// Obtener archivos SFTP
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/obtenerArchivos")
-	public ResponseEntity<List<ArchivoDTO>> obtenerArchivos(@RequestBody ArchivoDTO archivoDto) {
+	public ResponseEntity<List<ArchivoDTO>> obtenerArchivos(@RequestBody RequestAgregarArchivosDTO archivoDto) {
 		try {
 			List<ArchivoDTO> listaArchivosResponseDto = new ArrayList<>();
 			List<String> errores = new ArrayList<>();
-			if (StringUtils.isBlank(archivoDto.getRutaArchivo())) {
+			if (archivoDto.getIdUnidadDocumental() == 0) {
 				errores.add(ConstantesValidaciones.RUTA_ARCHIVO + ConstantesValidaciones.VALOR_VACIO);
 			}
 
 			if (errores.isEmpty()) {
-				if (ConstantesValidaciones.RUTA_SFTP_IMAGES.equalsIgnoreCase(archivoDto.getRutaArchivo())) {
-					listaArchivosResponseDto.addAll(archivoService.obtenerArchivos(
-							ConstantesValidaciones.RUTA_SFTP_IMAGES_USUARIO, archivoDto.getNombreArchivo()));
-					listaArchivosResponseDto.addAll(archivoService.obtenerArchivos(
-							ConstantesValidaciones.RUTA_SFTP_IMAGES_POST, archivoDto.getNombreArchivo()));
-				} else {
-					listaArchivosResponseDto.addAll(
-							archivoService.obtenerArchivos(archivoDto.getRutaArchivo(), archivoDto.getNombreArchivo()));
-				}
+				listaArchivosResponseDto.addAll(archivoService.obtenerArchivos(archivoDto));
+
 			} else {
 				StringBuilder mensajeErrores = new StringBuilder();
-				String erroresTitle = PropertiesUtil.getProperty("eutanasia.msg.validate.erroresEncontrados");
+				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
 
 				for (String error : errores) {
 					mensajeErrores.append(error + "|");

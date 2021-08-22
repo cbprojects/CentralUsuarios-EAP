@@ -44,6 +44,10 @@ public class SociedadTB extends BaseEntidadTB implements Serializable {
 	@NotNull
 	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private ClienteTB cliente;
+	
+	@NotNull
+	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	private ServidorTB servidor;
 
 	@NotNull
 	@Column(name = "soc_Tax_Id", nullable = true, length = 20)
@@ -91,6 +95,14 @@ public class SociedadTB extends BaseEntidadTB implements Serializable {
 
 	public void setNombre10(String nombre10) {
 		this.nombre10 = nombre10;
+	}
+
+	public ServidorTB getServidor() {
+		return servidor;
+	}
+
+	public void setServidor(ServidorTB servidor) {
+		this.servidor = servidor;
 	}
 
 }

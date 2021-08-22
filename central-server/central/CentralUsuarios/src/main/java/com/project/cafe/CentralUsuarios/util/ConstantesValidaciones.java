@@ -56,6 +56,8 @@ public final class ConstantesValidaciones {
 	public static final String LLAVE_ENCRIPTAR = PropertiesUtil.getProperty("centralusuarios.key.encrypt");
 	public static final String VALOR_NULL_OBJETO = PropertiesUtil
 			.getProperty("centralusuarios.msg.validate.valor.objeto");
+	public static final String LISTA_ARCHIVO_VACIA = PropertiesUtil
+			.getProperty("centralusuarios.msg.validate.valor.listaArchivoVacia");
 	public static final String VALOR_VACIO = PropertiesUtil.getProperty("centralusuarios.msg.validate.valor.vacio");
 	public static final String VALOR_INCORRECTO = PropertiesUtil
 			.getProperty("centralusuarios.msg.validate.valor.incorrecto");
@@ -77,6 +79,7 @@ public final class ConstantesValidaciones {
 
 	// Labels
 	public static final String ARCHIVO = PropertiesUtil.getProperty("lbl.archivo.archivo");
+	public static final String ARCHIVO_CODIGO_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.archivo.unidadDocumental");
 	public static final String NOMBRE_ARCHIVO = PropertiesUtil.getProperty("lbl.archivo.nombre");
 	public static final String RUTA_ARCHIVO = PropertiesUtil.getProperty("lbl.archivo.ruta");
 
