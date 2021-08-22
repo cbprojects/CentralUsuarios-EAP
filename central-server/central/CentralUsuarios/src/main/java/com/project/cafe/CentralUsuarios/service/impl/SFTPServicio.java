@@ -212,28 +212,26 @@ public class SFTPServicio implements ISFTPServicio {
 			if (channelSftp != null) {
 				if (!StringUtils.isBlank(nombreArchivo)) {
 					InputStream resultado = channelSftp.get(rutaSFTP + nombreArchivo);
-					byte[] fileArrayBytes = new byte[resultado.available()];
-					resultado.read(fileArrayBytes);
+					byte[] fileArrayBytes = IOUtils.toByteArray(resultado);
+					resultado.close();
 
 					ArchivoDTO archivoDTO = new ArchivoDTO();
 					archivoDTO.setArchivo(fileArrayBytes);
 					archivoDTO.setNombreArchivo(nombreArchivo);
-					archivoDTO.setRutaArchivo(rutaSFTP);
-
+					
 					listaArchivos.add(archivoDTO);
 				} else {
 					List<String> nombresArchivos = this.listarArchivosFiltrados(rutaSFTP, null);
 					for (String nombreFile : nombresArchivos) {
 						if (!nombreFile.equalsIgnoreCase(".") && !nombreFile.equalsIgnoreCase("..")) {
-							InputStream resultado = channelSftp.get(rutaSFTP + nombreFile);
-							byte[] bytes = IOUtils.toByteArray(resultado);
-							resultado.close();
+//							InputStream resultado = channelSftp.get(rutaSFTP + nombreFile);
+//							byte[] bytes = IOUtils.toByteArray(resultado);
+//							resultado.close();
 
 							ArchivoDTO archivoDTO = new ArchivoDTO();
-							archivoDTO.setArchivo(bytes);
+//							archivoDTO.setArchivo(bytes);
 							archivoDTO.setNombreArchivo(nombreFile);
-							archivoDTO.setRutaArchivo(rutaSFTP);
-
+							
 							listaArchivos.add(archivoDTO);
 						}
 					}

@@ -12,7 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.project.cafe.CentralUsuarios.dao.ICajaDao;
+import com.project.cafe.CentralUsuarios.dao.IUnidadDocumentalDao;
 import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestAgregarArchivosDTO;
+import com.project.cafe.CentralUsuarios.model.ServidorTB;
+import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
 import com.project.cafe.CentralUsuarios.service.IArchivoService;
 import com.project.cafe.CentralUsuarios.service.ISFTPServicio;
 
@@ -22,26 +27,27 @@ public class ArchivoServiceImpl implements IArchivoService {
 	@Autowired
 	private ISFTPServicio SFTPServicio;
 
-	@Value("${sftp.puerto}")
+	@Autowired
+	private IUnidadDocumentalDao unidadDocuementalDAO;
+
 	private String PUERTO_SFTP;
 
-	@Value("${sftp.servidor}")
 	private String SERVIDOR_SFTP;
 
-	@Value("${sftp.usuario}")
 	private String USUARIO_SFTP;
 
-	@Value("${sftp.password}")
 	private String CLAVE_SFTP;
+
+	private static final String SEPARADOR = "/";
 
 	@Transactional
 	@Override
-	public ArchivoDTO subirImagen(ArchivoDTO archivo) {
+	public void subirImagen(RequestAgregarArchivosDTO archivo) {
 		ArchivoDTO archivoRespuesta = null;
 		boolean sftpConectado = false;
 
 		try {
-			String rutaSFTP = archivo.getRutaArchivo();
+			String rutaSFTP = rutaSftpRetornada(archivo.getIdUnidadDocumental());
 
 			// Abrir conexion a servidor sftp
 			sftpConectado = SFTPServicio.conectarServidor(SERVIDOR_SFTP, Integer.parseInt(PUERTO_SFTP), USUARIO_SFTP,
@@ -60,15 +66,15 @@ public class ArchivoServiceImpl implements IArchivoService {
 					}
 
 					rutaExiste = false;
-					rutaSFTP = rutaSFTP + archivo.getNombreArchivo();
+					for (ArchivoDTO archivoIterado : archivo.getListaArchivosPorSubir()) {
+						String rutaSFTPFinal = rutaSFTP + archivoIterado.getNombreArchivo();
 
-					// guardar archivos en el servidor que llegan en la lista
-					if (archivo.getArchivo() != null && archivo.getArchivo().length > 0) {
-						InputStream inputStreamArchivo = new ByteArrayInputStream(archivo.getArchivo());
-						SFTPServicio.guardarArchivoServidor(inputStreamArchivo, rutaSFTP);
-						archivo.setRutaArchivo(rutaSFTP);
+						// guardar archivos en el servidor que llegan en la lista
+						if (archivoIterado.getArchivo() != null && archivoIterado.getArchivo().length > 0) {
+							InputStream inputStreamArchivo = new ByteArrayInputStream(archivoIterado.getArchivo());
+							SFTPServicio.guardarArchivoServidor(inputStreamArchivo, rutaSFTPFinal);
 
-						archivoRespuesta = archivo;
+						}
 					}
 				}
 			}
@@ -79,16 +85,17 @@ public class ArchivoServiceImpl implements IArchivoService {
 			SFTPServicio.cerrarConexion();
 		}
 
-		return archivoRespuesta;
 	}
 
 	@Transactional
 	@Override
-	public List<ArchivoDTO> obtenerArchivos(String rutaCarpetaSFTP, String nombreArchivo) {
-		List<ArchivoDTO> listaArchivosRespuesta = new ArrayList<>();
+	public void borrarImagen(RequestAgregarArchivosDTO archivo) {
+		ArchivoDTO archivoRespuesta = null;
 		boolean sftpConectado = false;
 
 		try {
+			String rutaSFTP = rutaSftpRetornada(archivo.getIdUnidadDocumental());
+
 			// Abrir conexion a servidor sftp
 			sftpConectado = SFTPServicio.conectarServidor(SERVIDOR_SFTP, Integer.parseInt(PUERTO_SFTP), USUARIO_SFTP,
 					CLAVE_SFTP);
@@ -98,11 +105,70 @@ public class ArchivoServiceImpl implements IArchivoService {
 				boolean rutaExiste = false;
 
 				// validar que la ruta no este vacia
-				if (!StringUtils.isBlank(rutaCarpetaSFTP)) {
+				if (!StringUtils.isBlank(rutaSFTP)) {
+
+					rutaExiste = false;
+					for (ArchivoDTO archivoIterado : archivo.getListaArchivosPorSubir()) {
+						String rutaSFTPFinal = rutaSFTP + archivoIterado.getNombreArchivo();
+						SFTPServicio.borrarArchivoServidor(rutaSFTPFinal);
+
+					}
+				}
+			}
+
+			// cerrar conexion con servidor SFTP
+			SFTPServicio.cerrarConexion();
+		} catch (Exception ex) {
+			SFTPServicio.cerrarConexion();
+		}
+
+	}
+
+	@Transactional
+	private String rutaSftpRetornada(long idUnidadDocumental) {
+		UnidadDocumentalTB unidad = unidadDocuementalDAO.buscarUnidadDocumentalPorId(idUnidadDocumental);
+		ServidorTB servidor = unidad.getCaja().getSociedad().getServidor();
+		PUERTO_SFTP = servidor.getPuerto();
+		SERVIDOR_SFTP = servidor.getIp();
+		USUARIO_SFTP = servidor.getUsuario();
+		CLAVE_SFTP = servidor.getClave();
+		if (StringUtils.isBlank(unidad.getRutaArchivo())) {
+			String ruta = SEPARADOR + "Archivos" + SEPARADOR + unidad.getCaja().getSociedad().getId() 
+					+ SEPARADOR + unidad.getId() + SEPARADOR;
+			unidad.setRutaArchivo(ruta);
+			unidad = unidadDocuementalDAO.modificarUnidadDocumental(unidad);
+		}
+		return unidad.getRutaArchivo();
+	}
+
+	@Transactional
+	@Override
+	public List<ArchivoDTO> obtenerArchivos(RequestAgregarArchivosDTO archivo) {
+		List<ArchivoDTO> listaArchivosRespuesta = new ArrayList<>();
+		boolean sftpConectado = false;
+
+		try {
+			String rutaSFTP = rutaSftpRetornada(archivo.getIdUnidadDocumental());
+			// Abrir conexion a servidor sftp
+			sftpConectado = SFTPServicio.conectarServidor(SERVIDOR_SFTP, Integer.parseInt(PUERTO_SFTP), USUARIO_SFTP,
+					CLAVE_SFTP);
+
+			// validar conexion a servidor
+			if (sftpConectado) {
+				boolean rutaExiste = false;
+
+				// validar que la ruta no este vacia
+				if (!StringUtils.isBlank(rutaSFTP)) {
 					// validar que la ruta exista en el servidor
-					rutaExiste = SFTPServicio.esValidaRuta(rutaCarpetaSFTP);
+					rutaExiste = SFTPServicio.esValidaRuta(rutaSFTP);
 					if (rutaExiste) {
-						listaArchivosRespuesta = SFTPServicio.obtenerArchivos(rutaCarpetaSFTP, nombreArchivo);
+						if (archivo.getListaArchivosPorSubir()==null || archivo.getListaArchivosPorSubir().isEmpty()) {
+							listaArchivosRespuesta = SFTPServicio.obtenerArchivos(rutaSFTP,
+									null);
+						} else {
+							listaArchivosRespuesta = SFTPServicio.obtenerArchivos(rutaSFTP,
+									archivo.getListaArchivosPorSubir().get(0).getNombreArchivo());
+						}
 					}
 				}
 			}

@@ -30,15 +30,12 @@ public abstract class AbstractDao<T extends BaseEntidadTB> {
 
 	public void create(T entity) {
 		entity.setFechaCreacion(new Date());
-		entity.setUsuarioCreacion("SYSTEM");
 		entity.setFechaActualizacion(new Date());
-		entity.setUsuarioActualizacion("SYSTEM");
 		this.entityManager.persist(entity);
 	}
 
 	public T update(T entity) {
 		entity.setFechaActualizacion(new Date());
-		entity.setUsuarioActualizacion("SYSTEM");
 		return this.entityManager.merge(entity);
 	}
 

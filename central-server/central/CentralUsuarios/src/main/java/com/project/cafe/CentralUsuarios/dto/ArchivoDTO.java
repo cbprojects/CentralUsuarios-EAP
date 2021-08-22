@@ -8,8 +8,7 @@ public class ArchivoDTO implements Serializable {
 
 	String nombreArchivo;
 	byte[] archivo;
-	String rutaArchivo;
-	int destinoArchivo;
+	
 
 	public String getNombreArchivo() {
 		return nombreArchivo;
@@ -27,20 +26,6 @@ public class ArchivoDTO implements Serializable {
 		this.archivo = archivo;
 	}
 
-	public String getRutaArchivo() {
-		return rutaArchivo;
-	}
-
-	public void setRutaArchivo(String rutaArchivo) {
-		this.rutaArchivo = rutaArchivo;
-	}
-
-	public int getDestinoArchivo() {
-		return destinoArchivo;
-	}
-
-	public void setDestinoArchivo(int destinoArchivo) {
-		this.destinoArchivo = destinoArchivo;
-	}
+	
 
 }
