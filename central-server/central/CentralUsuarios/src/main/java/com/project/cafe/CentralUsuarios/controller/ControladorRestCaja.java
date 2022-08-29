@@ -42,7 +42,7 @@ public class ControladorRestCaja {
 			CajaTB nuevaCaja = new CajaTB();
 			if (errores.isEmpty()) {
 				// validar caja unico
-				if (validarCajaUnicoCrear(caja.getCodigoAlterno(),caja.getSociedad().getId())) {
+				if (validarCajaUnicoCrear(caja.getCodigoAlterno(),caja.getCliente().getId())) {
 					nuevaCaja = cajaService.crearCaja(caja);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
@@ -69,7 +69,7 @@ public class ControladorRestCaja {
 	}
 
 	private boolean validarCajaUnicoCrear(String codigoAlterno, long id) {
-		List<CajaTB> listaCajas = cajaService.buscarcajaPorCodigoSociedad(codigoAlterno, id);
+		List<CajaTB> listaCajas = cajaService.buscarcajaPorCodigoCliente(codigoAlterno, id);
 		if (listaCajas == null || listaCajas.isEmpty()) {
 			return true;
 		}
@@ -89,7 +89,7 @@ public class ControladorRestCaja {
 			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_CAJA_TB, caja);
 			if (errores.isEmpty()) {
 				// validar caja unico
-				if (validarCajaUnicoEditar(caja.getCodigoAlterno(), caja.getSociedad().getId(),caja.getId())) {
+				if (validarCajaUnicoEditar(caja.getCodigoAlterno(), caja.getCliente().getId(),caja.getId())) {
 					nuevaCaja = cajaService.modificarCaja(caja);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
@@ -113,8 +113,8 @@ public class ControladorRestCaja {
 
 	}
 
-	private boolean validarCajaUnicoEditar(String codigoAlterno, long idSociedad, long idCajaActual) {
-		List<CajaTB> listaCaja = cajaService.buscarcajaPorCodigoSociedad(codigoAlterno, idSociedad);
+	private boolean validarCajaUnicoEditar(String codigoAlterno, long idCliente, long idCajaActual) {
+		List<CajaTB> listaCaja = cajaService.buscarcajaPorCodigoCliente(codigoAlterno, idCliente);
 		if (listaCaja == null || listaCaja.isEmpty()) {
 			return true;
 		} else {
@@ -141,9 +141,9 @@ public class ControladorRestCaja {
 
 		@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 		@RequestMapping("/consultarCajasPorSociedad")
-		public List<CajaTB> consultarCajasPorSociedad(@RequestBody RequestConsultarPorIDDTO request) {
+		public List<CajaTB> consultarCajasPorCliente(@RequestBody RequestConsultarPorIDDTO request) {
 			try {
-				return cajaService.consultarCajasPorSociedad(request.getId());
+				return cajaService.consultarCajasPorCliente(request.getId());
 			} catch (JSONException e) {
 				throw new ModelNotFoundException(e.getMessage());
 			}

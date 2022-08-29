@@ -5,7 +5,7 @@ import java.util.List;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarCajasDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
-import com.project.cafe.CentralUsuarios.model.SociedadTB;
+import com.project.cafe.CentralUsuarios.model.ClienteTB;
 
 public interface ICajaService {
 
@@ -22,7 +22,7 @@ public interface ICajaService {
 	/*
 	 * Metodo para buscar caja por codigo y sociedad
 	 */
-	List<CajaTB> buscarcajaPorCodigoSociedad(String codigocaja, long idSociedad);
+	List<CajaTB> buscarcajaPorCodigoCliente(String codigocaja, long idCliente);
 	
 	/**
 	 * 
@@ -36,13 +36,13 @@ public interface ICajaService {
 	 * @param filtroCaja
 	 * @return caja inicial segun la sociedad enviada
 	 */
-	CajaTB retornarCajaInicialPorSociedad(SociedadTB sociedad);
+	CajaTB retornarCajaInicialPorCliente(ClienteTB cliente);
 
 	/**
 	 * 
 	 * @param idSociedad
 	 * @return lista cajas  segun la sociedad enviada
 	 */
-	List<CajaTB> consultarCajasPorSociedad(Long idSociedad);
+	List<CajaTB> consultarCajasPorCliente(Long idCliente);
 
 }

@@ -54,23 +54,15 @@ public class ControladorRestUnidadDocumental {
 
 			UnidadDocumentalTB nuevaUnidadDocumental = new UnidadDocumentalTB();
 			if (errores.isEmpty()) {
-				// validar unidad documental unica por sociedad
-				if (validarUnidadDocumentalUnicoCrear(unidadDocumental.getCodigo(),
-						unidadDocumental.getSociedadArea().getSociedad().getId())) {
-					CajaTB cajaInicial = cajalService
-							.retornarCajaInicialPorSociedad(unidadDocumental.getSociedadArea().getSociedad());
-					SociedadAreaTB sociedadArea = sociedadAreaService.buscarSociedadAreaPorSociedadArea(
-							unidadDocumental.getSociedadArea().getSociedad().getId(),
-							unidadDocumental.getSociedadArea().getArea().getId());
-					unidadDocumental.setSociedadArea(sociedadArea);
-					unidadDocumental.setCaja(cajaInicial);
-					nuevaUnidadDocumental = unidadDocumentalService.crearUnidadDocumental(unidadDocumental);
-				} else {
-					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
-					String mensajeErrores = ConstantesValidaciones.MSG_UNIDAD_DOCUMENTAL_REPETIDA;
-
-					throw new ModelNotFoundException(erroresTitle + mensajeErrores);
-				}
+				// Obtener cliente de sociedad
+				CajaTB cajaInicial = cajalService
+						.retornarCajaInicialPorCliente(unidadDocumental.getSociedadArea().getSociedad().getCliente());
+				SociedadAreaTB sociedadArea = sociedadAreaService.buscarSociedadAreaPorSociedadArea(
+						unidadDocumental.getSociedadArea().getSociedad().getId(),
+						unidadDocumental.getSociedadArea().getArea().getId());
+				unidadDocumental.setSociedadArea(sociedadArea);
+				unidadDocumental.setCaja(cajaInicial);
+				nuevaUnidadDocumental = unidadDocumentalService.crearUnidadDocumental(unidadDocumental);
 
 			} else {
 				StringBuilder mensajeErrores = new StringBuilder();
@@ -109,26 +101,19 @@ public class ControladorRestUnidadDocumental {
 			UnidadDocumentalTB nuevaUnidadDocumental = new UnidadDocumentalTB();
 			if (errores.isEmpty()) {
 				// validar unidad documental unica por sociedad
-				if (validarUnidadDocumentalUnicoEditar(unidadDocumental.getCodigo(),
-						unidadDocumental.getSociedadArea().getSociedad().getId(), unidadDocumental.getId())) {
-					if (!unidadDocumental.getCaja().getCodigoAlterno().equals("C-INICIAL")) {
-						CajaTB cajaInicial = cajalService
-								.retornarCajaInicialPorSociedad(unidadDocumental.getSociedadArea().getSociedad());
-						unidadDocumental.setCaja(cajaInicial);
-					}
 
-					SociedadAreaTB sociedadArea = sociedadAreaService.buscarSociedadAreaPorSociedadArea(
-							unidadDocumental.getSociedadArea().getSociedad().getId(),
-							unidadDocumental.getSociedadArea().getArea().getId());
-					unidadDocumental.setSociedadArea(sociedadArea);
-
-					nuevaUnidadDocumental = unidadDocumentalService.modificarUnidadDocumental(unidadDocumental);
-				} else {
-					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
-					String mensajeErrores = ConstantesValidaciones.MSG_UNIDAD_DOCUMENTAL_REPETIDA;
-
-					throw new ModelNotFoundException(erroresTitle + mensajeErrores);
+				if (!unidadDocumental.getCaja().getCodigoAlterno().equals("C-INICIAL")) {
+					CajaTB cajaInicial = cajalService
+							.retornarCajaInicialPorCliente(unidadDocumental.getSociedadArea().getSociedad().getCliente());
+					unidadDocumental.setCaja(cajaInicial);
 				}
+
+				SociedadAreaTB sociedadArea = sociedadAreaService.buscarSociedadAreaPorSociedadArea(
+						unidadDocumental.getSociedadArea().getSociedad().getId(),
+						unidadDocumental.getSociedadArea().getArea().getId());
+				unidadDocumental.setSociedadArea(sociedadArea);
+
+				nuevaUnidadDocumental = unidadDocumentalService.modificarUnidadDocumental(unidadDocumental);
 
 			} else {
 				StringBuilder mensajeErrores = new StringBuilder();
@@ -171,7 +156,6 @@ public class ControladorRestUnidadDocumental {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}
-	
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/consultarUnidadDocumentalPorCajaMasiva")
@@ -179,27 +163,31 @@ public class ControladorRestUnidadDocumental {
 			@RequestBody RequestConsultarUnidadDocumentalMasivaDTO request) {
 		try {
 			ResponseConsultarUnidadDocumentalMasivaDTO response = new ResponseConsultarUnidadDocumentalMasivaDTO();
-			response.setLstUnidadDocumentalCajaUno(unidadDocumentalService.RequestConsultarUnidadDocumentalPorCaja(request.getIdCajaUno()));
-			response.setLstUnidadDocumentalCajaDos(unidadDocumentalService.RequestConsultarUnidadDocumentalPorCaja(request.getIdCajaDos()));
+			response.setLstUnidadDocumentalCajaUno(
+					unidadDocumentalService.RequestConsultarUnidadDocumentalPorCaja(request.getIdCajaUno()));
+			response.setLstUnidadDocumentalCajaDos(
+					unidadDocumentalService.RequestConsultarUnidadDocumentalPorCaja(request.getIdCajaDos()));
 			return response;
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}
-	
+
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/cambiarCajaUnidadDocumentalMasiva")
 	public ResponseEntity<ResponseMensajeCodigoDTO> cambiarCajaUnidadDocumentalMasivo(
 			@RequestBody RequestCambiarCajaUnidadDocumentalMasivaDTO request) {
 		try {
-			if(request.getLstUnidadDocumentalCajaUno()!=null) {
-				if(!request.getLstUnidadDocumentalCajaUno().isEmpty()) {
-					unidadDocumentalService.cambiarCajaUnidadDocumentalMasivo(request.getLstUnidadDocumentalCajaUno(),request.getIdCajaUno());
+			if (request.getLstUnidadDocumentalCajaUno() != null) {
+				if (!request.getLstUnidadDocumentalCajaUno().isEmpty()) {
+					unidadDocumentalService.cambiarCajaUnidadDocumentalMasivo(request.getLstUnidadDocumentalCajaUno(),
+							request.getIdCajaUno());
 				}
 			}
-			if(request.getLstUnidadDocumentalCajaDos()!=null) {
-				if(!request.getLstUnidadDocumentalCajaDos().isEmpty()) {
-					unidadDocumentalService.cambiarCajaUnidadDocumentalMasivo(request.getLstUnidadDocumentalCajaDos(),request.getIdCajaDos());
+			if (request.getLstUnidadDocumentalCajaDos() != null) {
+				if (!request.getLstUnidadDocumentalCajaDos().isEmpty()) {
+					unidadDocumentalService.cambiarCajaUnidadDocumentalMasivo(request.getLstUnidadDocumentalCajaDos(),
+							request.getIdCajaDos());
 				}
 			}
 			ResponseMensajeCodigoDTO response = new ResponseMensajeCodigoDTO();

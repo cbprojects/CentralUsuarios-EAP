@@ -9,10 +9,8 @@ import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.project.cafe.CentralUsuarios.dao.ICajaDao;
 import com.project.cafe.CentralUsuarios.dao.IUnidadDocumentalDao;
 import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestAgregarArchivosDTO;
@@ -43,7 +41,6 @@ public class ArchivoServiceImpl implements IArchivoService {
 	@Transactional
 	@Override
 	public void subirImagen(RequestAgregarArchivosDTO archivo) {
-		ArchivoDTO archivoRespuesta = null;
 		boolean sftpConectado = false;
 
 		try {
@@ -90,7 +87,6 @@ public class ArchivoServiceImpl implements IArchivoService {
 	@Transactional
 	@Override
 	public void borrarImagen(RequestAgregarArchivosDTO archivo) {
-		ArchivoDTO archivoRespuesta = null;
 		boolean sftpConectado = false;
 
 		try {
@@ -102,12 +98,10 @@ public class ArchivoServiceImpl implements IArchivoService {
 
 			// validar conexion a servidor
 			if (sftpConectado) {
-				boolean rutaExiste = false;
-
+				 
 				// validar que la ruta no este vacia
 				if (!StringUtils.isBlank(rutaSFTP)) {
 
-					rutaExiste = false;
 					for (ArchivoDTO archivoIterado : archivo.getListaArchivosPorSubir()) {
 						String rutaSFTPFinal = rutaSFTP + archivoIterado.getNombreArchivo();
 						SFTPServicio.borrarArchivoServidor(rutaSFTPFinal);
@@ -127,13 +121,13 @@ public class ArchivoServiceImpl implements IArchivoService {
 	@Transactional
 	private String rutaSftpRetornada(long idUnidadDocumental) {
 		UnidadDocumentalTB unidad = unidadDocuementalDAO.buscarUnidadDocumentalPorId(idUnidadDocumental);
-		ServidorTB servidor = unidad.getCaja().getSociedad().getServidor();
+		ServidorTB servidor = unidad.getSociedadArea().getSociedad().getServidor();
 		PUERTO_SFTP = servidor.getPuerto();
 		SERVIDOR_SFTP = servidor.getIp();
 		USUARIO_SFTP = servidor.getUsuario();
 		CLAVE_SFTP = servidor.getClave();
 		if (StringUtils.isBlank(unidad.getRutaArchivo())) {
-			String ruta = SEPARADOR + "Archivos" + SEPARADOR + unidad.getCaja().getSociedad().getId() 
+			String ruta = SEPARADOR + "Archivos" + SEPARADOR + unidad.getCaja().getCliente().getId() 
 					+ SEPARADOR + unidad.getId() + SEPARADOR;
 			unidad.setRutaArchivo(ruta);
 			unidad = unidadDocuementalDAO.modificarUnidadDocumental(unidad);

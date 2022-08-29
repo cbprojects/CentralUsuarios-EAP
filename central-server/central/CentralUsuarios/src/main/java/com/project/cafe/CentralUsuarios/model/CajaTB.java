@@ -55,9 +55,10 @@ public class CajaTB extends BaseEntidadTB implements Serializable {
 	@Column(name = "caj_QR", nullable = true, length = 128)
 	private String qr;
 
+	
 	@NotNull
 	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	private SociedadTB sociedad;
+	private ClienteTB cliente;
 
 	public long getId() {
 		return id;
@@ -107,12 +108,14 @@ public class CajaTB extends BaseEntidadTB implements Serializable {
 		this.qr = qr;
 	}
 
-	public SociedadTB getSociedad() {
-		return sociedad;
+	public ClienteTB getCliente() {
+		return cliente;
 	}
+
+	public void setCliente(ClienteTB cliente) {
+		this.cliente = cliente;
+	}
+
 	
-	public void setSociedad(SociedadTB sociedad) {
-		this.sociedad = sociedad;
-	}
 
 }

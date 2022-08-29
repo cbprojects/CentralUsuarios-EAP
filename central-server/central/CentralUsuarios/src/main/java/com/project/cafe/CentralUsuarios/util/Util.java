@@ -143,10 +143,10 @@ public abstract class Util {
 				errores.add(ConstantesValidaciones.SIN_ENTREPANO_CAJA + ConstantesValidaciones.NO_TIENE_ENTREPANO);
 			}
 		}
-		if(cajaTB.getSociedad()==null) {
+		if(cajaTB.getCliente()==null) {
 			errores.add(ConstantesValidaciones.SIN_SOCIEDAD_CAJA+ ConstantesValidaciones.NO_TIENE_SOCIEDAD);
 		}else {
-			if(cajaTB.getSociedad().getId()==0) {
+			if(cajaTB.getCliente().getId()==0) {
 				errores.add(ConstantesValidaciones.SIN_SOCIEDAD_CAJA+ ConstantesValidaciones.NO_TIENE_SOCIEDAD);
 			}
 		}

@@ -12,8 +12,8 @@ import com.project.cafe.CentralUsuarios.dao.IEntrepanoDao;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarCajasDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
+import com.project.cafe.CentralUsuarios.model.ClienteTB;
 import com.project.cafe.CentralUsuarios.model.EntrepanoTB;
-import com.project.cafe.CentralUsuarios.model.SociedadTB;
 import com.project.cafe.CentralUsuarios.service.ICajaService;
 
 @Service
@@ -38,33 +38,34 @@ public class CajaServiceImpl implements ICajaService {
 	}
 	
 	@Override
-	public List<CajaTB> buscarcajaPorCodigoSociedad(String codigocaja, long idSociedad) {
-		return cajaDAO.buscarcajaPorCodigoSociedad(codigocaja,idSociedad);
+	public List<CajaTB> buscarcajaPorCodigoCliente(String codigocaja, long idCliente) {
+		return cajaDAO.buscarcajaPorCodigoCliente(codigocaja,idCliente);
 	}
 
 	@Override
 	public ResponseConsultarDTO<CajaTB> consultarCajasFiltros(RequestConsultarCajasDTO filtroCaja) {
-		// TODO Auto-generated method stub
 		return cajaDAO.consultarCajasFiltros(filtroCaja);
 	}
 
 	@Transactional
 	@Override
-	public CajaTB retornarCajaInicialPorSociedad(SociedadTB sociedad) {
-		List<CajaTB> lstCajas=cajaDAO.buscarcajaPorCodigoSociedad("C-INICIAL",sociedad.getId());
+	public CajaTB retornarCajaInicialPorCliente(ClienteTB cliente) {
+		List<CajaTB> lstCajas=cajaDAO.buscarcajaPorCodigoCliente("C-INICIAL",cliente.getId());
 		if(lstCajas == null || lstCajas.isEmpty()) {
 			List<EntrepanoTB> lstEntrepano = entrepanoDAO.buscarEntrepanoPorCodigo("ENTREPANO0");
 			EntrepanoTB nuevoEntrepano= new EntrepanoTB();
 			nuevoEntrepano=lstEntrepano.get(0);
 			CajaTB nuevaCaja= new CajaTB();
-			nuevaCaja.setSociedad(sociedad);
+			nuevaCaja.setCliente(cliente);
 			nuevaCaja.setCodigoAlterno("C-INICIAL");
 			nuevaCaja.setCodigoBarras("CAJA_INICIAL");
-			nuevaCaja.setDescripcion("Caja inicial sociedad:"+sociedad.getNombre());
+			nuevaCaja.setDescripcion("Caja inicial cliente:"+cliente.getNombre());
 			nuevaCaja.setEntrepano(nuevoEntrepano);
 			Short activo=1;
 			nuevaCaja.setEstado(activo);
 			nuevaCaja.setQr("CAJA_INICIAL");
+			nuevaCaja.setUsuarioCreacion("SYSTEM");
+			nuevaCaja.setUsuarioActualizacion("SYSTEM");
 			return cajaDAO.crearCaja(nuevaCaja);
 		}else {
 			return lstCajas.get(0);
@@ -72,8 +73,8 @@ public class CajaServiceImpl implements ICajaService {
 	}
 
 	@Override
-	public List<CajaTB> consultarCajasPorSociedad(Long idSociedad) {
-		return cajaDAO.consultarCajasPorSociedad(idSociedad);
+	public List<CajaTB> consultarCajasPorCliente(Long idCliente) {
+		return cajaDAO.consultarCajasPorCliente(idCliente);
 	}
 	
 

@@ -24,7 +24,7 @@ public interface ICajaDao {
 	/*
 	 * Metodo para buscar caja por codigo y sociedad
 	 */
-	List<CajaTB> buscarcajaPorCodigoSociedad(String codigocaja, long idSociedad);
+	List<CajaTB> buscarcajaPorCodigoCliente(String codigocaja, long idCliente);
 	
 	/**
 	 * 
@@ -38,7 +38,7 @@ public interface ICajaDao {
 	 * @param idSociedad
 	 * @return lista cajas  segun la sociedad enviada
 	 */
-	List<CajaTB> consultarCajasPorSociedad(Long idSociedad);
+	List<CajaTB> consultarCajasPorCliente(Long idCliente);
 
 	/**
 	 * 

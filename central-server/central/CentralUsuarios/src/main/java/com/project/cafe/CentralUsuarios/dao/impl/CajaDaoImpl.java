@@ -37,7 +37,7 @@ public class CajaDaoImpl extends AbstractDao<CajaTB> implements ICajaDao {
 	}
 
 	@Override
-	public List<CajaTB> buscarcajaPorCodigoSociedad(String codigocaja, long idSociedad) {
+	public List<CajaTB> buscarcajaPorCodigoCliente(String codigocaja, long idCliente) {
 		// PARAMETROS
 		Map<String, Object> pamameters = new HashMap<>();
 
@@ -48,9 +48,9 @@ public class CajaDaoImpl extends AbstractDao<CajaTB> implements ICajaDao {
 			JPQL.append(" AND c.codigoAlterno = :CODIGO ");
 			pamameters.put("CODIGO", codigocaja);
 		}
-		if (idSociedad == 0) {
-			JPQL.append(" AND c.sociedad.id = :SOCIEDAD ");
-			pamameters.put("SOCIEDAD", idSociedad);
+		if (idCliente == 0) {
+			JPQL.append(" AND c.cliente.id = :CLIENTE ");
+			pamameters.put("CLIENTE", idCliente);
 		}
 		// Q. Order By
 		JPQL.append(" ORDER BY c.id");
@@ -96,10 +96,10 @@ public class CajaDaoImpl extends AbstractDao<CajaTB> implements ICajaDao {
 			JPQL.append(" AND c.qr = :QR ");
 			pamametros.put("QR", filtroCaja.getCaja().getQr());
 		}
-		if (filtroCaja.getCaja().getSociedad() != null) {
-			if (filtroCaja.getCaja().getSociedad().getId() != 0) {
-				JPQL.append(" AND c.sociedad.id = :IDSOCIEDAD ");
-				pamametros.put("IDSOCIEDAD", filtroCaja.getCaja().getSociedad().getId());
+		if (filtroCaja.getCaja().getCliente() != null) {
+			if (filtroCaja.getCaja().getCliente().getId() != 0) {
+				JPQL.append(" AND c.cliente.id = :IDCLIENTE ");
+				pamametros.put("IDCLIENTE", filtroCaja.getCaja().getCliente().getId());
 			}
 
 		}
@@ -155,15 +155,15 @@ public class CajaDaoImpl extends AbstractDao<CajaTB> implements ICajaDao {
 	}
 
 	@Override
-	public List<CajaTB> consultarCajasPorSociedad(Long idSociedad) {
+	public List<CajaTB> consultarCajasPorCliente(Long idCliente) {
 		// PARAMETROS
 		Map<String, Object> pamameters = new HashMap<>();
 
 		// QUERY
 		StringBuilder JPQL = new StringBuilder("SELECT c FROM CajaTB c WHERE 1 = 1 ");
 		// WHERE
-		JPQL.append(" AND c.sociedad.id = :ID ");
-		pamameters.put("ID", idSociedad);
+		JPQL.append(" AND c.cliente.id = :ID ");
+		pamameters.put("ID", idCliente);
 
 		// Q. Order By
 		JPQL.append(" ORDER BY c.id");
