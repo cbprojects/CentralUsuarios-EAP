@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -92,8 +93,11 @@ public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
 							UdListDTO ud= new  UdListDTO();
 							ud.setIdUd(listaUD.get(i).getId());
 							ud.setCodigoUd(listaUD.get(i).getCodigo());
-							String[] strArr = listaUD.get(i).getNombreArchivos().split("#--#");
-						    List<String> strList = new ArrayList<String>(Arrays.asList(strArr));
+							List<String> strList =new ArrayList<String>();
+							if(StringUtils.isNotBlank(listaUD.get(i).getNombreArchivos())) {
+								String[] strArr = listaUD.get(i).getNombreArchivos().split("#--#");
+								strList = new ArrayList<String>(Arrays.asList(strArr));
+							}
 						    ud.setDocumentosUd(strList);
 						    udList.add(ud);
 						    cajaLst.get(j).setLstUdTotales(udList);
@@ -109,8 +113,11 @@ public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
 						UdListDTO ud= new  UdListDTO();
 						ud.setIdUd(listaUD.get(i).getId());
 						ud.setCodigoUd(listaUD.get(i).getCodigo());
-						String[] strArr = listaUD.get(i).getNombreArchivos().split("#--#");
-					    List<String> strList = new ArrayList<String>(Arrays.asList(strArr));
+						List<String> strList =new ArrayList<String>();
+						if(StringUtils.isNotBlank(listaUD.get(i).getNombreArchivos())) {
+							String[] strArr = listaUD.get(i).getNombreArchivos().split("#--#");
+							strList = new ArrayList<String>(Arrays.asList(strArr));
+						}
 					    ud.setDocumentosUd(strList);
 					    udList.add(ud);
 					    caja.setLstUdTotales(udList);
@@ -124,8 +131,11 @@ public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
 					UdListDTO ud= new  UdListDTO();
 					ud.setIdUd(listaUD.get(i).getId());
 					ud.setCodigoUd(listaUD.get(i).getCodigo());
-					String[] strArr = listaUD.get(i).getNombreArchivos().split("#--#");
-				    List<String> strList = new ArrayList<String>(Arrays.asList(strArr));
+					List<String> strList =new ArrayList<String>();
+					if(StringUtils.isNotBlank(listaUD.get(i).getNombreArchivos())) {
+						String[] strArr = listaUD.get(i).getNombreArchivos().split("#--#");
+						strList = new ArrayList<String>(Arrays.asList(strArr));
+					}
 				    ud.setDocumentosUd(strList);
 				    udList.add(ud);
 				    caja.setLstUdTotales(udList);
