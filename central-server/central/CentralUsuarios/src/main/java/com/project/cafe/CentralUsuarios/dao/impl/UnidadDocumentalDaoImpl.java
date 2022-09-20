@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.project.cafe.CentralUsuarios.dao.AbstractDao;
 import com.project.cafe.CentralUsuarios.dao.IUnidadDocumentalDao;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarArchivoUdDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarListaUdDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUnidadDocumentalDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
@@ -185,6 +187,168 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 		pamameters.forEach((k, v) -> query.setParameter(k, v));
 
 		return query.getResultList();
+	}
+
+	@Override
+	public List<UnidadDocumentalTB> consultarUnidadDocumentalList(RequestConsultarListaUdDTO request) {
+		
+		// PARAMETROS
+		Map<String, Object> pamametros = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder(
+				"SELECT u FROM UnidadDocumentalTB u " + " INNER JOIN u.sociedadArea sa INNER JOIN u.caja ca " + " WHERE 1 = 1 ");
+		// WHERE
+		if (request.getIdCliente() != null) {
+			if (request.getIdCliente() != 0) {
+				JPQL.append(" AND ca.cliente.id = :IDCLIENTE ");
+				pamametros.put("IDCLIENTE",
+						request.getIdCliente());
+			}
+		}
+		
+		if (request.getIdSociedad() != null) {
+			if (request.getIdSociedad() != 0) {
+				JPQL.append(" AND sa.sociedad.id = :IDSOCIEDAD ");
+				pamametros.put("IDSOCIEDAD",
+						request.getIdSociedad());
+			}
+		}
+		
+		if (request.getIdCaja() != null) {
+			if (request.getIdCaja() != 0) {
+				JPQL.append(" AND u.caja.id = :IDCAJA ");
+				pamametros.put("IDCAJA",
+						request.getIdCaja());
+			}
+		}
+		
+		if (request.getIdUnidadDocumental() != null) {
+			if (request.getIdUnidadDocumental() != 0) {
+				JPQL.append(" AND u.id = :ID ");
+				pamametros.put("ID",
+						request.getIdUnidadDocumental());
+			}
+		}
+		
+		if (request.getIdTipoUD() != null) {
+			if (request.getIdTipoUD() != 0) {
+				JPQL.append(" AND u.tipoDocumental.id = :IDTIPODOCUMENTAL ");
+				pamametros.put("IDTIPODOCUMENTAL",
+						request.getIdTipoUD());
+			}
+		}
+		
+		if (request.getIdArea() != null) {
+			if (request.getIdArea() != 0) {
+				JPQL.append(" AND sa.area.id = :IDAREA ");
+				pamametros.put("IDAREA",
+						request.getIdArea());
+			}
+		}
+		
+		if (request.getIdContenedor() != null) {
+			if (request.getIdContenedor() != 0) {
+				JPQL.append(" AND u.contenedor.id = :IDCONTENEDOR ");
+				pamametros.put("IDCONTENEDOR",
+						request.getIdContenedor());
+			}
+		}
+
+		// Q. Order By
+		JPQL.append(" ORDER BY u.id DESC");
+		// END QUERY
+
+		
+
+		TypedQuery<UnidadDocumentalTB> query = em.createQuery(JPQL.toString(), UnidadDocumentalTB.class);
+		pamametros.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getResultList();
+
+		
+	}
+
+	@Override
+	public List<UnidadDocumentalTB> obtenerArchivos(RequestConsultarArchivoUdDTO request) {
+		// PARAMETROS
+				Map<String, Object> pamametros = new HashMap<>();
+
+				// QUERY
+				StringBuilder JPQL = new StringBuilder(
+						"SELECT u FROM UnidadDocumentalTB u " + " INNER JOIN u.sociedadArea sa INNER JOIN u.caja ca " + " WHERE 1 = 1 ");
+				// WHERE
+				if (request.getIdCliente() != null) {
+					if (request.getIdCliente() != 0) {
+						JPQL.append(" AND ca.cliente.id = :IDCLIENTE ");
+						pamametros.put("IDCLIENTE",
+								request.getIdCliente());
+					}
+				}
+				
+				if (request.getIdSociedad() != null) {
+					if (request.getIdSociedad() != 0) {
+						JPQL.append(" AND sa.sociedad.id = :IDSOCIEDAD ");
+						pamametros.put("IDSOCIEDAD",
+								request.getIdSociedad());
+					}
+				}
+				
+				if (request.getIdCaja() != null) {
+					if (request.getIdCaja() != 0) {
+						JPQL.append(" AND u.caja.id = :IDCAJA ");
+						pamametros.put("IDCAJA",
+								request.getIdCaja());
+					}
+				}
+				
+				if (request.getIdUnidadDocumental() != null) {
+					if (request.getIdUnidadDocumental() != 0) {
+						JPQL.append(" AND u.id = :ID ");
+						pamametros.put("ID",
+								request.getIdUnidadDocumental());
+					}
+				}
+				
+				if (request.getIdTipoUD() != null) {
+					if (request.getIdTipoUD() != 0) {
+						JPQL.append(" AND u.tipoDocumental.id = :IDTIPODOCUMENTAL ");
+						pamametros.put("IDTIPODOCUMENTAL",
+								request.getIdTipoUD());
+					}
+				}
+				
+				if (request.getIdArea() != null) {
+					if (request.getIdArea() != 0) {
+						JPQL.append(" AND sa.area.id = :IDAREA ");
+						pamametros.put("IDAREA",
+								request.getIdArea());
+					}
+				}
+				
+				if (request.getIdContenedor() != null) {
+					if (request.getIdContenedor() != 0) {
+						JPQL.append(" AND u.contenedor.id = :IDCONTENEDOR ");
+						pamametros.put("IDCONTENEDOR",
+								request.getIdContenedor());
+					}
+				}
+				if (StringUtils.isNotBlank(request.getFiltroBusqueda())) {
+					JPQL.append(" AND UPPER(u.nombreArchivos) LIKE UPPER(:NOMBRE) ");
+					pamametros.put("NOMBRE", ConstantesValidaciones.COMODIN_BD
+							+ request.getFiltroBusqueda() + ConstantesValidaciones.COMODIN_BD);
+				}
+
+				// Q. Order By
+				JPQL.append(" ORDER BY u.id DESC");
+				// END QUERY
+
+				
+
+				TypedQuery<UnidadDocumentalTB> query = em.createQuery(JPQL.toString(), UnidadDocumentalTB.class);
+				pamametros.forEach((k, v) -> query.setParameter(k, v));
+
+				return query.getResultList();
 	}
 
 }

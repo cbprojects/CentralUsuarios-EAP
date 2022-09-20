@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarArchivoUdDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarListaUdDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUnidadDocumentalDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
@@ -42,6 +44,10 @@ public interface IUnidadDocumentalDao {
 	 * Metodo para buscar unidad documental por caja
 	 */
 	List<UnidadDocumentalTB> RequestConsultarUnidadDocumentalPorCaja(Long idCaja);
+
+	List<UnidadDocumentalTB> consultarUnidadDocumentalList(RequestConsultarListaUdDTO request);
+
+	List<UnidadDocumentalTB> obtenerArchivos(RequestConsultarArchivoUdDTO request);
 
 	
 

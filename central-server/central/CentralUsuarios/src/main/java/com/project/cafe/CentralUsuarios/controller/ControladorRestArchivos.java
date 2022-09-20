@@ -10,18 +10,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
+import com.project.cafe.CentralUsuarios.dto.CajaListDTO;
 import com.project.cafe.CentralUsuarios.dto.MailDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestAgregarArchivosDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarArchivoUdDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseSendEMailDTO;
 import com.project.cafe.CentralUsuarios.enums.EDestinoArchivo;
 import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
 import com.project.cafe.CentralUsuarios.service.IArchivoService;
+import com.project.cafe.CentralUsuarios.service.IUnidadDocumentalService;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
 import com.project.cafe.CentralUsuarios.util.PropertiesUtil;
 import com.project.cafe.CentralUsuarios.util.Util;
@@ -36,16 +40,19 @@ public class ControladorRestArchivos {
 
 	@Autowired
 	IArchivoService archivoService;
+	
+	@Autowired
+	IUnidadDocumentalService unidadDocumentalService;
 
 	// Guardar y transferir archivos SFTP
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/subirImagen")
-	public ResponseEntity<List<ArchivoDTO>> subirImagenes(@RequestBody RequestAgregarArchivosDTO archivoDto) {
+	public ResponseEntity<List<String>> subirImagenes(@RequestBody RequestAgregarArchivosDTO archivoDto) {
 		try {
-			List<ArchivoDTO> listaArchivosResponseDto = new ArrayList<>();
+			List<String> listaArchivosResponseDto = new ArrayList<>();
 			List<String> errores = Util.validarArchivo(archivoDto);
 			if (errores.isEmpty()) {
-				archivoService.subirImagen(archivoDto);
+				listaArchivosResponseDto.addAll(archivoService.subirImagen(archivoDto));
 			} else {
 				StringBuilder mensajeErrores = new StringBuilder();
 				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
@@ -56,10 +63,9 @@ public class ControladorRestArchivos {
 
 				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 			}
-			RequestAgregarArchivosDTO requestVacio=new RequestAgregarArchivosDTO();
-			requestVacio.setIdUnidadDocumental(archivoDto.getIdUnidadDocumental());
-			listaArchivosResponseDto.addAll(archivoService.obtenerArchivos(requestVacio));
-			return new ResponseEntity<List<ArchivoDTO>>(listaArchivosResponseDto, HttpStatus.OK);
+			
+			
+			return new ResponseEntity<List<String>>(listaArchivosResponseDto, HttpStatus.OK);
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
@@ -68,12 +74,12 @@ public class ControladorRestArchivos {
 	// borrar archivos
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/borrarImagen")
-	public ResponseEntity<List<ArchivoDTO>> borrarImagenes(@RequestBody RequestAgregarArchivosDTO archivoDto) {
+	public ResponseEntity<List<String>> borrarImagenes(@RequestBody RequestAgregarArchivosDTO archivoDto) {
 		try {
-			List<ArchivoDTO> listaArchivosResponseDto = new ArrayList<>();
+			List<String> listaArchivosResponseDto = new ArrayList<>();
 			List<String> errores = Util.validarArchivoBorrar(archivoDto);
 			if (errores.isEmpty()) {
-				archivoService.borrarImagen(archivoDto);
+				listaArchivosResponseDto.addAll(archivoService.borrarImagen(archivoDto));
 			} else {
 				StringBuilder mensajeErrores = new StringBuilder();
 				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
@@ -84,10 +90,7 @@ public class ControladorRestArchivos {
 
 				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 			}
-			RequestAgregarArchivosDTO requestVacio=new RequestAgregarArchivosDTO();
-			requestVacio.setIdUnidadDocumental(archivoDto.getIdUnidadDocumental());
-			listaArchivosResponseDto.addAll(archivoService.obtenerArchivos(requestVacio));
-			return new ResponseEntity<List<ArchivoDTO>>(listaArchivosResponseDto, HttpStatus.OK);
+			return new ResponseEntity<List<String>>(listaArchivosResponseDto, HttpStatus.OK);
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
@@ -96,16 +99,16 @@ public class ControladorRestArchivos {
 	// Obtener archivos SFTP
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/obtenerArchivos")
-	public ResponseEntity<List<ArchivoDTO>> obtenerArchivos(@RequestBody RequestAgregarArchivosDTO archivoDto) {
+	public ResponseEntity<List<CajaListDTO>> obtenerArchivos(@RequestBody RequestConsultarArchivoUdDTO request) {
 		try {
-			List<ArchivoDTO> listaArchivosResponseDto = new ArrayList<>();
+			List<CajaListDTO> listaArchivosResponseDto = new ArrayList<>();
 			List<String> errores = new ArrayList<>();
-			if (archivoDto.getIdUnidadDocumental() == 0) {
-				errores.add(ConstantesValidaciones.RUTA_ARCHIVO + ConstantesValidaciones.VALOR_VACIO);
-			}
+//			if (request.getIdUnidadDocumental() == 0) {
+//				errores.add(ConstantesValidaciones.RUTA_ARCHIVO + ConstantesValidaciones.VALOR_VACIO);
+//			}
 
 			if (errores.isEmpty()) {
-				listaArchivosResponseDto.addAll(archivoService.obtenerArchivos(archivoDto));
+				listaArchivosResponseDto.addAll(unidadDocumentalService.obtenerArchivos(request));
 
 			} else {
 				StringBuilder mensajeErrores = new StringBuilder();
@@ -118,11 +121,42 @@ public class ControladorRestArchivos {
 				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 			}
 
-			return new ResponseEntity<List<ArchivoDTO>>(listaArchivosResponseDto, HttpStatus.OK);
+			return new ResponseEntity<List<CajaListDTO>>(listaArchivosResponseDto, HttpStatus.OK);
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 	}
+	
+	// Obtener archivos SFTP
+		@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+		@RequestMapping("/descargarArchivos")
+		public ResponseEntity<List<ArchivoDTO>> descargarArchivos(@RequestBody RequestAgregarArchivosDTO archivoDto) {
+			try {
+				List<ArchivoDTO> listaArchivosResponseDto = new ArrayList<>();
+				List<String> errores = new ArrayList<>();
+				if (archivoDto.getIdUnidadDocumental() == 0) {
+					errores.add(ConstantesValidaciones.RUTA_ARCHIVO + ConstantesValidaciones.VALOR_VACIO);
+				}
+
+				if (errores.isEmpty()) {
+					listaArchivosResponseDto.addAll(archivoService.obtenerArchivos(archivoDto));
+
+				} else {
+					StringBuilder mensajeErrores = new StringBuilder();
+					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
+
+					for (String error : errores) {
+						mensajeErrores.append(error + "|");
+					}
+
+					throw new ModelNotFoundException(erroresTitle + mensajeErrores);
+				}
+
+				return new ResponseEntity<List<ArchivoDTO>>(listaArchivosResponseDto, HttpStatus.OK);
+			} catch (JSONException e) {
+				throw new ModelNotFoundException(e.getMessage());
+			}
+		}
 
 	// Enviar email con plantilla
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

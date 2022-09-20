@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.cafe.CentralUsuarios.dto.RequestCambiarCajaUnidadDocumentalMasivaDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarListaUdDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUnidadDocumentalDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUnidadDocumentalMasivaDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
@@ -194,6 +195,17 @@ public class ControladorRestUnidadDocumental {
 			response.setCodigo(PropertiesUtil.getProperty("centralusuarios.msg.validate.string.cero"));
 			response.setMensaje(PropertiesUtil.getProperty("centralusuarios.msg.validate.string.mensaje.exito"));
 			return new ResponseEntity<ResponseMensajeCodigoDTO>(response, HttpStatus.OK);
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+	
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/consultarUnidadDocumentalLista")
+	public List<UnidadDocumentalTB> consultarUnidadDocumentalFiltros(
+			@RequestBody RequestConsultarListaUdDTO request) {
+		try {
+			return unidadDocumentalService.consultarUnidadDocumentalList(request);
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}

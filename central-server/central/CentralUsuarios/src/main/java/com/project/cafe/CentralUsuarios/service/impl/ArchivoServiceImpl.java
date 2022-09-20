@@ -37,12 +37,15 @@ public class ArchivoServiceImpl implements IArchivoService {
 	private String CLAVE_SFTP;
 
 	private static final String SEPARADOR = "/";
-
+	private static final String SEPARADOR_ARCHIVOS = "#--#";
+	private UnidadDocumentalTB unidad = null;
+	
 	@Transactional
 	@Override
-	public void subirImagen(RequestAgregarArchivosDTO archivo) {
+	public List<String> subirImagen(RequestAgregarArchivosDTO archivo) {
 		boolean sftpConectado = false;
-
+		this.unidad = new UnidadDocumentalTB();
+		List<String> lista = new ArrayList<>();
 		try {
 			String rutaSFTP = rutaSftpRetornada(archivo.getIdUnidadDocumental());
 
@@ -78,17 +81,48 @@ public class ArchivoServiceImpl implements IArchivoService {
 
 			// cerrar conexion con servidor SFTP
 			SFTPServicio.cerrarConexion();
+			llenarNombreArchivos(archivo);
+			lista = realizarLista(unidad);
 		} catch (Exception ex) {
 			SFTPServicio.cerrarConexion();
 		}
+		return lista;
+	}
+	
+	private List<String> realizarLista(UnidadDocumentalTB unidad) {
+		List<String> lista = new ArrayList<>();
+		String[] listaSeparada = unidad.getNombreArchivos().split(SEPARADOR_ARCHIVOS);
+		for (String dato : listaSeparada) {
+			lista.add(dato);
+		}
+		return lista;
+	}
 
+	@Transactional
+	private void llenarNombreArchivos(RequestAgregarArchivosDTO archivo) {
+		String datos="";
+		for (int i = 0; i < archivo.getListaArchivosPorSubir().size(); i++) {
+			if(i+1==archivo.getListaArchivosPorSubir().size()) {
+				datos=datos+archivo.getListaArchivosPorSubir().get(i).getNombreArchivo();
+			}else {
+				datos=datos+archivo.getListaArchivosPorSubir().get(i).getNombreArchivo()+SEPARADOR_ARCHIVOS;
+			}
+		}
+		if (StringUtils.isBlank(this.unidad.getNombreArchivos())) {
+			this.unidad.setNombreArchivos(datos);
+			
+		}else {
+			this.unidad.setNombreArchivos(this.unidad.getNombreArchivos()+SEPARADOR_ARCHIVOS+datos);
+		}
+		this.unidad = unidadDocuementalDAO.modificarUnidadDocumental(this.unidad);
 	}
 
 	@Transactional
 	@Override
-	public void borrarImagen(RequestAgregarArchivosDTO archivo) {
+	public List<String> borrarImagen(RequestAgregarArchivosDTO archivo) {
 		boolean sftpConectado = false;
-
+		this.unidad = new UnidadDocumentalTB();
+		List<String> lista = new ArrayList<>();
 		try {
 			String rutaSFTP = rutaSftpRetornada(archivo.getIdUnidadDocumental());
 
@@ -112,27 +146,51 @@ public class ArchivoServiceImpl implements IArchivoService {
 
 			// cerrar conexion con servidor SFTP
 			SFTPServicio.cerrarConexion();
+			llenarNombreArchivosEliminar(archivo);
+			lista = realizarLista(unidad);
 		} catch (Exception ex) {
 			SFTPServicio.cerrarConexion();
 		}
-
+		return lista;
+	}
+	
+	@Transactional
+	private void llenarNombreArchivosEliminar(RequestAgregarArchivosDTO archivo) {
+		List<String> lista = new ArrayList<>();
+		String[] listaSeparada = this.unidad.getNombreArchivos().split(SEPARADOR_ARCHIVOS);
+		for (String dato : listaSeparada) {
+			lista.add(dato);
+		}
+		lista.remove(archivo.listaArchivosPorSubir.get(0).getNombreArchivo());
+		String datos="";
+		if(!lista.isEmpty()) {
+			for (int i = 0; i < lista.size(); i++) {
+				if(i+1==lista.size()) {
+					datos=datos+lista.get(i);
+				}else {
+					datos=datos+lista.get(i)+SEPARADOR_ARCHIVOS;
+				}
+			}
+		}
+		this.unidad.setNombreArchivos(datos);
+		this.unidad = unidadDocuementalDAO.modificarUnidadDocumental(this.unidad);
 	}
 
 	@Transactional
 	private String rutaSftpRetornada(long idUnidadDocumental) {
-		UnidadDocumentalTB unidad = unidadDocuementalDAO.buscarUnidadDocumentalPorId(idUnidadDocumental);
-		ServidorTB servidor = unidad.getSociedadArea().getSociedad().getServidor();
+		this.unidad = unidadDocuementalDAO.buscarUnidadDocumentalPorId(idUnidadDocumental);
+		ServidorTB servidor = this.unidad.getSociedadArea().getSociedad().getServidor();
 		PUERTO_SFTP = servidor.getPuerto();
 		SERVIDOR_SFTP = servidor.getIp();
 		USUARIO_SFTP = servidor.getUsuario();
 		CLAVE_SFTP = servidor.getClave();
-		if (StringUtils.isBlank(unidad.getRutaArchivo())) {
-			String ruta = SEPARADOR + "Archivos" + SEPARADOR + unidad.getCaja().getCliente().getId() 
-					+ SEPARADOR + unidad.getId() + SEPARADOR;
-			unidad.setRutaArchivo(ruta);
-			unidad = unidadDocuementalDAO.modificarUnidadDocumental(unidad);
+		if (StringUtils.isBlank(this.unidad.getRutaArchivo())) {
+			String ruta = SEPARADOR + "Archivos" + SEPARADOR + this.unidad.getCaja().getCliente().getId() 
+					+ SEPARADOR + this.unidad.getId() + SEPARADOR;
+			this.unidad.setRutaArchivo(ruta);
+			this.unidad = unidadDocuementalDAO.modificarUnidadDocumental(this.unidad);
 		}
-		return unidad.getRutaArchivo();
+		return this.unidad.getRutaArchivo();
 	}
 
 	@Transactional
@@ -140,7 +198,7 @@ public class ArchivoServiceImpl implements IArchivoService {
 	public List<ArchivoDTO> obtenerArchivos(RequestAgregarArchivosDTO archivo) {
 		List<ArchivoDTO> listaArchivosRespuesta = new ArrayList<>();
 		boolean sftpConectado = false;
-
+		this.unidad = new UnidadDocumentalTB();
 		try {
 			String rutaSFTP = rutaSftpRetornada(archivo.getIdUnidadDocumental());
 			// Abrir conexion a servidor sftp

@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -64,6 +65,10 @@ public class UnidadDocumentalTB extends BaseEntidadTB implements Serializable {
 	
 	@Column(name = "und_ruta_archivo", nullable = true, length = 128)
 	private String rutaArchivo;
+	
+	@Lob
+	@Column(name = "und_nombre_archivos", nullable = true)
+	private String nombreArchivos;
 	
 	@NotNull
 	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

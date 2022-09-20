@@ -2,6 +2,9 @@ package com.project.cafe.CentralUsuarios.service;
 
 import java.util.List;
 
+import com.project.cafe.CentralUsuarios.dto.CajaListDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarArchivoUdDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarListaUdDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUnidadDocumentalDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
@@ -44,5 +47,11 @@ public interface IUnidadDocumentalService {
 	 * Metodo para cambiar de caja las unidades documentales
 	 */
 	void cambiarCajaUnidadDocumentalMasivo(List<UnidadDocumentalTB> lstUnidadDocumentalCajaUno, Long idCajaUno);
+	
+	
+	List<UnidadDocumentalTB> consultarUnidadDocumentalList (RequestConsultarListaUdDTO request);
+
+	
+	List<CajaListDTO> obtenerArchivos(RequestConsultarArchivoUdDTO request);
 
 }

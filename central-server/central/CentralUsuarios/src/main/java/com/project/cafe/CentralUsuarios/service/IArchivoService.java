@@ -10,7 +10,7 @@ public interface IArchivoService {
 	/*
 	 * Método para subir imagen al servidor sftp
 	 */
-	public void subirImagen(RequestAgregarArchivosDTO archivoDto);
+	public List<String> subirImagen(RequestAgregarArchivosDTO archivoDto);
 
 	/*
 	 * Método para obtener archivos del servidor sftp
@@ -20,6 +20,6 @@ public interface IArchivoService {
 	/*
 	 * Método para borrar imagen al servidor sftp
 	 */
-	public void borrarImagen(RequestAgregarArchivosDTO archivoDto);
+	public List<String> borrarImagen(RequestAgregarArchivosDTO archivoDto);
 
 }
