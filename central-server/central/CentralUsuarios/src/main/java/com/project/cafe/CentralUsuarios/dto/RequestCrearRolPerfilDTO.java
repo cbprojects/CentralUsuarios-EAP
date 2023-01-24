@@ -14,6 +14,8 @@ public class RequestCrearRolPerfilDTO  implements Serializable  {
 	private PerfilTB perfil;
 
 	private List<RolTB> lstRoles;
+	
+	private String user;
 
 	
 	public List<RolTB> getLstRoles() {
@@ -32,17 +34,23 @@ public class RequestCrearRolPerfilDTO  implements Serializable  {
 		this.perfil = perfil;
 	}
 
-	
+	public String getUser() {
+		return user;
+	}
 
-	public RequestCrearRolPerfilDTO(PerfilTB perfil, List<RolTB> lstRoles) {
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public RequestCrearRolPerfilDTO(PerfilTB perfil, List<RolTB> lstRoles, String user) {
+		super();
 		this.perfil = perfil;
 		this.lstRoles = lstRoles;
+		this.user = user;
 	}
 
 	public RequestCrearRolPerfilDTO() {
-		
+		super();
 	}
-
-	
 
 }

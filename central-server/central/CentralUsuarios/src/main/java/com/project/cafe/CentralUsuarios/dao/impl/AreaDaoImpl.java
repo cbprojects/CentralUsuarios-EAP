@@ -12,62 +12,84 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.project.cafe.CentralUsuarios.dao.AbstractDao;
-import com.project.cafe.CentralUsuarios.dao.IClienteDao;
+import com.project.cafe.CentralUsuarios.dao.IAreaDao;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarMasivoDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
-import com.project.cafe.CentralUsuarios.model.ClienteTB;
+import com.project.cafe.CentralUsuarios.model.AreaTB;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
 
 @Repository
-public class ClienteDaoImpl extends AbstractDao<ClienteTB> implements IClienteDao {
+public class AreaDaoImpl extends AbstractDao<AreaTB> implements IAreaDao {
 
 	@PersistenceContext(unitName = "default")
 	private EntityManager em;
-	
+
 	@Override
-	public ClienteTB crearCliente(ClienteTB cliente) {
-		super.create(cliente);
-		return cliente;
+	public AreaTB crearArea(AreaTB area) {
+		super.create(area);
+		return area;
 	}
 
 	@Override
-	public ClienteTB modificarCliente(ClienteTB cliente) {
-		super.update(cliente);
-		return cliente;
+	public AreaTB modificarArea(AreaTB area) {
+		super.update(area);
+		return area;
 	}
 
 	@Override
-	public List<ClienteTB> buscarClientePorCodigo(String nombre) {
+	public List<AreaTB> buscarAreaPorCodigo(String nombre) {
 		// PARAMETROS
 		Map<String, Object> pamameters = new HashMap<>();
 
 		// QUERY
-		StringBuilder JPQL = new StringBuilder("SELECT r FROM ClienteTB r WHERE 1 = 1 ");
+		StringBuilder JPQL = new StringBuilder("SELECT r FROM AreaTB r WHERE 1 = 1 ");
 		// WHERE
 		if (!StringUtils.isBlank(nombre)) {
-			JPQL.append("AND UPPER(r.nombre) = :NOMBRE ");
+			JPQL.append(" AND UPPER(r.nombre) =:NOMBRE ");
 			pamameters.put("NOMBRE", nombre.toUpperCase());
 		}
 		// Q. Order By
 		JPQL.append(" ORDER BY r.id");
 		// END QUERY
 
-		TypedQuery<ClienteTB> query = em.createQuery(JPQL.toString(), ClienteTB.class);
+		TypedQuery<AreaTB> query = em.createQuery(JPQL.toString(), AreaTB.class);
 		pamameters.forEach((k, v) -> query.setParameter(k, v));
 
 		return query.getResultList();
 	}
 	
 	@Override
-	public ResponseConsultarDTO<ClienteTB> consultarClienteFiltros(RequestConsultarMasivoDTO request){
+	public List<AreaTB> buscarAreaPorId(Long id) {
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
 
-		ResponseConsultarDTO<ClienteTB> response = new ResponseConsultarDTO<>();
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT r FROM AreaTB r WHERE 1 = 1 ");
+		// WHERE
+		if (id != null) {
+			JPQL.append(" AND r.id =:ID ");
+			pamameters.put("ID", id);
+		}
+		// Q. Order By
+		JPQL.append(" ORDER BY r.id");
+		// END QUERY
+
+		TypedQuery<AreaTB> query = em.createQuery(JPQL.toString(), AreaTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getResultList();
+	}
+
+	@Override
+	public ResponseConsultarDTO<AreaTB> consultarAreaFiltros(RequestConsultarMasivoDTO request) {
+
+		ResponseConsultarDTO<AreaTB> response = new ResponseConsultarDTO<>();
 
 		// PARAMETROS
 		Map<String, Object> pamametros = new HashMap<>();
 
 		// QUERY
-		StringBuilder JPQL = new StringBuilder("SELECT r FROM ClienteTB r WHERE 1 = 1 ");
+		StringBuilder JPQL = new StringBuilder("SELECT r FROM AreaTB r WHERE 1 = 1 ");
 		// WHERE
 		if (StringUtils.isNotBlank(request.getMasivo().getNombre1())) {
 			JPQL.append(" AND UPPER(r.nombre) LIKE UPPER(:NOMBRE) ");
@@ -76,8 +98,8 @@ public class ClienteDaoImpl extends AbstractDao<ClienteTB> implements IClienteDa
 		}
 
 		if (StringUtils.isNotBlank(request.getMasivo().getNombre2())) {
-			JPQL.append(" AND UPPER(r.tax) LIKE UPPER(:TAX) ");
-			pamametros.put("TAX", ConstantesValidaciones.COMODIN_BD + request.getMasivo().getNombre2()
+			JPQL.append(" AND UPPER(r.nombre10) LIKE UPPER(:NOMBRE10) ");
+			pamametros.put("NOMBRE10", ConstantesValidaciones.COMODIN_BD + request.getMasivo().getNombre2()
 					+ ConstantesValidaciones.COMODIN_BD);
 		}
 
@@ -92,36 +114,17 @@ public class ClienteDaoImpl extends AbstractDao<ClienteTB> implements IClienteDa
 		pamametros.forEach((k, v) -> queryCount.setParameter(k, v));
 		response.setRegistrosTotales(queryCount.getSingleResult());
 
-		TypedQuery<ClienteTB> query = em.createQuery(JPQL.toString(), ClienteTB.class);
+		TypedQuery<AreaTB> query = em.createQuery(JPQL.toString(), AreaTB.class);
 		pamametros.forEach((k, v) -> query.setParameter(k, v));
 
 		query.setFirstResult(request.getRegistroInicial());
 		query.setMaxResults(request.getCantidadRegistro());
-		List<ClienteTB> listaCliente = query.getResultList();
+		List<AreaTB> listaArea = query.getResultList();
 
-		response.setResultado(listaCliente);
+		response.setResultado(listaArea);
 
 		return response;
 	}
 
-	@Override
-	public List<ClienteTB> buscarClientesActivos() {
-		// PARAMETROS
-		Map<String, Object> pamameters = new HashMap<>();
-
-		// QUERY
-		StringBuilder JPQL = new StringBuilder("SELECT c FROM ClienteTB c WHERE 1 = 1 ");
-		// WHERE
-			JPQL.append("AND c.estado = 1 ");
-			
-		// Q. Order By
-		JPQL.append(" ORDER BY c.id");
-		// END QUERY
-
-		TypedQuery<ClienteTB> query = em.createQuery(JPQL.toString(), ClienteTB.class);
-		pamameters.forEach((k, v) -> query.setParameter(k, v));
-
-		return query.getResultList();
-	}
 
 }

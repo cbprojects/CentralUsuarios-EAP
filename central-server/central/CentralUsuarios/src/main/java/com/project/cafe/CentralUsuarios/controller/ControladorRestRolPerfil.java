@@ -53,6 +53,8 @@ public class ControladorRestRolPerfil {
 					crearRolPerfil.setPerfil(requestCrearRolPErfil.getPerfil());
 					crearRolPerfil.setRol(rolTB);
 					crearRolPerfil.setEstado(activo);
+					crearRolPerfil.setUsuarioCreacion(requestCrearRolPErfil.getUser());
+					crearRolPerfil.setUsuarioActualizacion(requestCrearRolPErfil.getUser());
 					rolPerfilService.crearRolPerfil(crearRolPerfil);
 				}
 			}

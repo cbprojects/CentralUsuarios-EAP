@@ -43,8 +43,6 @@ public final class ConstantesValidaciones {
 	public static final char[] SIMBOLOS = CARACTERES.toCharArray();
 	public static final char[] BUFFER = new char[TAMANO_TOKEN];
 	public static final String CLAVE_AES = "B13EC3B0742D2308";
-	
-	
 
 	// Mensajes
 	public static final String ERROR_LOGIN_DATOS_INCORRECTOS_INACTIVOS = PropertiesUtil
@@ -79,7 +77,8 @@ public final class ConstantesValidaciones {
 
 	// Labels
 	public static final String ARCHIVO = PropertiesUtil.getProperty("lbl.archivo.archivo");
-	public static final String ARCHIVO_CODIGO_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.archivo.unidadDocumental");
+	public static final String ARCHIVO_CODIGO_UNIDAD_DOCUMENTAL = PropertiesUtil
+			.getProperty("lbl.archivo.unidadDocumental");
 	public static final String NOMBRE_ARCHIVO = PropertiesUtil.getProperty("lbl.archivo.nombre");
 	public static final String RUTA_ARCHIVO = PropertiesUtil.getProperty("lbl.archivo.ruta");
 
@@ -128,6 +127,27 @@ public final class ConstantesValidaciones {
 	public static final String MSG_ROL_REPETIDO = PropertiesUtil
 			.getProperty("centralusuarios.msg.validate.rolRepetido");
 
+	//
+	public static final String TIPO_MASIVO = PropertiesUtil.getProperty("centralusuarios.msg.tipoMasivo");
+	
+	// Labels Area
+	public static final String NOMBRE_AREA = PropertiesUtil.getProperty("lbl.area.nombre");
+	public static final String NOMBRE10_AREA = PropertiesUtil.getProperty("lbl.area.nombre10");
+	public static final String MSG_AREA_REPETIDO = PropertiesUtil.getProperty("lbl.area.repetido");
+
+	// Labels Cliente
+	public static final String NOMBRE_CLIENTE = PropertiesUtil.getProperty("lbl.cliente.nombre");
+	public static final String TAXID_CLIENTE = PropertiesUtil.getProperty("lbl.cliente.taxid");
+	public static final String MSG_CLIENTE_REPETIDO = PropertiesUtil.getProperty("lbl.cliente.repetido");
+
+	// Labels Contenedor
+	public static final String NOMBRE_CONTENEDOR = PropertiesUtil.getProperty("lbl.contenedor.nombre");
+	public static final String MSG_CONTENEDOR_REPETIDO = PropertiesUtil.getProperty("lbl.contenedor.repetido");
+
+	// Labels tipoUD
+	public static final String NOMBRE_TIPOUD = PropertiesUtil.getProperty("lbl.tipoUD.nombre");
+	public static final String MSG_TIPOUD_REPETIDO = PropertiesUtil.getProperty("lbl.tipoUD.repetido");
+
 	// Labels usuario
 	public static final String NICK_USUARIO = PropertiesUtil.getProperty("lbl.rol.codigo");
 	public static final String CONTRASENA_USUARIO = PropertiesUtil.getProperty("lbl.rol.descripcion");
@@ -135,7 +155,7 @@ public final class ConstantesValidaciones {
 	// labels RolPerfil
 	public static final String MSG_BUSQUEDA_ROLPERFIL_VACIO = PropertiesUtil
 			.getProperty("centralusuarios.rolperfil.validate.busquedaRolPerfilVacio");
-	
+
 	// labels caja
 	public static final String CODIGO_CAJA = PropertiesUtil.getProperty("lbl.caja.codigo");
 	public static final String CODIGO_BARRAS_CAJA = PropertiesUtil.getProperty("lbl.caja.codigoBarras");
@@ -144,19 +164,29 @@ public final class ConstantesValidaciones {
 	public static final String SIN_SOCIEDAD_CAJA = PropertiesUtil.getProperty("lbl.caja.sociedad");
 	public static final String NO_TIENE_SOCIEDAD = PropertiesUtil.getProperty("lbl.msg.validate.cajaSinSociedad");
 	public static final String MSG_CAJA_REPETIDA = PropertiesUtil.getProperty("lbl.msg.validate.cajaRepetida");
-	
-	//labels unidad documental 
+
+	// labels unidad documental
 	public static final String CODIGO_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.codigo");
 	public static final String NOMBRE_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.nombre");
-	public static final String CODIGO_BARRAS_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.codigoBarras");
-	public static final String FECHA_RECIBE_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.fechaRecibe");
-	public static final String SOCIEDAD_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.sociedad");
-	public static final String SIN_SOCIEDAD_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.msg.validate.unidadDocumentalSinSociedad");
+	public static final String CODIGO_BARRAS_UNIDAD_DOCUMENTAL = PropertiesUtil
+			.getProperty("lbl.unidad.documental.codigoBarras");
+	public static final String FECHA_RECIBE_UNIDAD_DOCUMENTAL = PropertiesUtil
+			.getProperty("lbl.unidad.documental.fechaRecibe");
+	public static final String SOCIEDAD_UNIDAD_DOCUMENTAL = PropertiesUtil
+			.getProperty("lbl.unidad.documental.sociedad");
+	public static final String SIN_SOCIEDAD_UNIDAD_DOCUMENTAL = PropertiesUtil
+			.getProperty("lbl.msg.validate.unidadDocumentalSinSociedad");
 	public static final String AREA_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.area");
-	public static final String SIN_AREA_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.msg.validate.unidadDocumentalSinArea");
-	public static final String TIPO_DOCUMENTAL_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.tipoDocumental");
-	public static final String SIN_TIPO_DOCUMENTAL_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.msg.validate.unidadDocumentalSinTipoDocumental");
-	public static final String CONTENEDOR_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.Contenedor");
-	public static final String SIN_CONTENEDOR_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.msg.validate.unidadDocumentalSinContenedor");
-	public static final String MSG_UNIDAD_DOCUMENTAL_REPETIDA = PropertiesUtil.getProperty("lbl.msg.validate.unidadDocumentalRepetida");
+	public static final String SIN_AREA_UNIDAD_DOCUMENTAL = PropertiesUtil
+			.getProperty("lbl.msg.validate.unidadDocumentalSinArea");
+	public static final String TIPO_DOCUMENTAL_UNIDAD_DOCUMENTAL = PropertiesUtil
+			.getProperty("lbl.unidad.documental.tipoDocumental");
+	public static final String SIN_TIPO_DOCUMENTAL_UNIDAD_DOCUMENTAL = PropertiesUtil
+			.getProperty("lbl.msg.validate.unidadDocumentalSinTipoDocumental");
+	public static final String CONTENEDOR_UNIDAD_DOCUMENTAL = PropertiesUtil
+			.getProperty("lbl.unidad.documental.Contenedor");
+	public static final String SIN_CONTENEDOR_UNIDAD_DOCUMENTAL = PropertiesUtil
+			.getProperty("lbl.msg.validate.unidadDocumentalSinContenedor");
+	public static final String MSG_UNIDAD_DOCUMENTAL_REPETIDA = PropertiesUtil
+			.getProperty("lbl.msg.validate.unidadDocumentalRepetida");
 }
