@@ -2877,3 +2877,35 @@ org.eclipse.core.runtime.CoreException: Variable references non-existent resourc
 2022-09-20 11:25:39,075 [Worker-34: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
 2022-09-20 11:25:39,076 [Worker-34: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2022-09-20 11:25:39,076 [Worker-34: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2022-10-01 11:37:35,616 [Worker-0: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2022-10-01 11:39:36,875 [Worker-6: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2022-10-01 11:41:22,184 [Worker-9: Importing Maven projects] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.project.cafe:CentralUsuarios:0.0.1-SNAPSHOT @ C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\pom.xml.
+2022-10-01 11:41:27,941 [Worker-9: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /CentralUsuarios/src/main/java
+2022-10-01 11:41:27,942 [Worker-9: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /CentralUsuarios/src/main/resources
+2022-10-01 11:41:27,943 [Worker-9: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /CentralUsuarios/src/main/resources
+2022-10-01 11:41:27,943 [Worker-9: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /CentralUsuarios/src/test/java
+2022-10-01 11:41:28,326 [Worker-9: Importing Maven projects] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 11 sec
+2022-10-01 11:41:30,962 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-01 11:41:30,970 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2022-10-01 11:41:31,016 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2022-10-01 11:41:31,049 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-01 11:41:31,049 [Worker-6: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2022-10-01 11:46:05,871 [Worker-0: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-01 11:46:05,873 [Worker-0: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2022-10-01 11:46:05,874 [Worker-0: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-01 11:46:05,876 [Worker-0: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-01 11:46:05,876 [Worker-0: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2022-10-01 11:50:55,468 [Worker-15: Launching Executing install in C__Users_USER_Documents_TRABAJO_JULIO_MUNOZ_EAP_ITCON_2_central-server_central_CentralUsuarios] INFO  o.e.m.i.launch.MavenLaunchDelegate - C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios
+2022-10-01 11:50:55,470 [Worker-15: Launching Executing install in C__Users_USER_Documents_TRABAJO_JULIO_MUNOZ_EAP_ITCON_2_central-server_central_CentralUsuarios] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B install -Dstyle.color=always
+2022-10-01 11:51:00,189 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-01 11:51:00,191 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2022-10-01 11:51:00,193 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2022-10-01 11:51:00,195 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-01 11:51:00,195 [Worker-20: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2022-10-30 11:38:15,230 [Worker-7: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2022-10-30 11:38:24,617 [Worker-12: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-30 11:38:24,620 [Worker-12: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2022-10-30 11:38:24,630 [Worker-12: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2022-10-30 11:38:24,642 [Worker-12: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-30 11:38:24,642 [Worker-12: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2022-10-30 14:16:41,144 [Worker-3: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
