@@ -11,12 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.sun.istack.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
@@ -31,15 +29,15 @@ public class BloqueTB extends BaseEntidadTB implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull
+	@NonNull
 	@Column(name = "blo_id", nullable = false)
 	private long id;
 
-	@NotNull
+	@NonNull
 	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private BodegaTB bodega;
 
-	@NotNull
+	@NonNull
 	@Column(name = "blo_codigo", nullable = false, length = 10)
 	private String codigo;
 

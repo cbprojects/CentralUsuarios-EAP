@@ -8,12 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.sun.istack.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
@@ -28,15 +26,15 @@ public class AreaTB extends BaseEntidadTB implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull
+	@NonNull
 	@Column(name = "are_id", nullable = false)
 	private long id;
 
-	@NotNull
+	@NonNull
 	@Column(name = "are_nombre", nullable = false, length = 50)
 	private String nombre;
 
-	@NotNull
+	@NonNull
 	@Column(name = "are_nombre10", nullable = false, length = 10)
 	private String nombre10;
 

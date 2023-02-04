@@ -4,15 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.transaction.Transactional;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.project.cafe.CentralUsuarios.dao.ICajaDao;
 import com.project.cafe.CentralUsuarios.dao.IUnidadDocumentalDao;
 import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestAgregarArchivosDTO;
@@ -43,7 +38,6 @@ public class ArchivoServiceImpl implements IArchivoService {
 	@Transactional
 	@Override
 	public void subirImagen(RequestAgregarArchivosDTO archivo) {
-		ArchivoDTO archivoRespuesta = null;
 		boolean sftpConectado = false;
 
 		try {
@@ -65,7 +59,6 @@ public class ArchivoServiceImpl implements IArchivoService {
 						SFTPServicio.crearDirectorio(rutaSFTP);
 					}
 
-					rutaExiste = false;
 					for (ArchivoDTO archivoIterado : archivo.getListaArchivosPorSubir()) {
 						String rutaSFTPFinal = rutaSFTP + archivoIterado.getNombreArchivo();
 
@@ -90,7 +83,6 @@ public class ArchivoServiceImpl implements IArchivoService {
 	@Transactional
 	@Override
 	public void borrarImagen(RequestAgregarArchivosDTO archivo) {
-		ArchivoDTO archivoRespuesta = null;
 		boolean sftpConectado = false;
 
 		try {
@@ -102,12 +94,10 @@ public class ArchivoServiceImpl implements IArchivoService {
 
 			// validar conexion a servidor
 			if (sftpConectado) {
-				boolean rutaExiste = false;
-
+				
 				// validar que la ruta no este vacia
 				if (!StringUtils.isBlank(rutaSFTP)) {
 
-					rutaExiste = false;
 					for (ArchivoDTO archivoIterado : archivo.getListaArchivosPorSubir()) {
 						String rutaSFTPFinal = rutaSFTP + archivoIterado.getNombreArchivo();
 						SFTPServicio.borrarArchivoServidor(rutaSFTPFinal);

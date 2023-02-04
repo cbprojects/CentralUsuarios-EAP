@@ -6,10 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.sun.istack.NotNull;
-
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @MappedSuperclass
@@ -17,16 +15,16 @@ import lombok.Setter;
 @Setter
 public class BaseEntidadTB {
 
-	@NotNull
+	@NonNull
 	@Column(name = "gdo_estado", nullable = false)
 	private short estado;
 
-	@NotNull
+	@NonNull
 	@Column(name = "gdo_fecha_creacion", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaCreacion;
 
-	@NotNull
+	@NonNull
 	@Column(name = "gdo_usuario_creacion", nullable = false)
 	private String usuarioCreacion;
 
@@ -34,7 +32,7 @@ public class BaseEntidadTB {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaActualizacion;
 
-	@NotNull
+	@NonNull
 	@Column(name = "gdo_usuario_actualizacion", nullable = false)
 	private String usuarioActualizacion;
 

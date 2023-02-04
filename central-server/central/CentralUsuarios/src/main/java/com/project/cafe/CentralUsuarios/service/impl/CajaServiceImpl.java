@@ -44,7 +44,6 @@ public class CajaServiceImpl implements ICajaService {
 
 	@Override
 	public ResponseConsultarDTO<CajaTB> consultarCajasFiltros(RequestConsultarCajasDTO filtroCaja) {
-		// TODO Auto-generated method stub
 		return cajaDAO.consultarCajasFiltros(filtroCaja);
 	}
 
