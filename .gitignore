@@ -1685,3 +1685,4 @@
 .metadata/.plugins/org.eclipse.jdt.launching/.install.xml
 .metadata/.plugins/org.eclipse.m2e.core/workspaceState.ser
 /.metadata/
+.sonarlint/default/.sonartmp_11190759426077643700/sonarlint-slf4j-sonar-log1165713990329810970.jar
