@@ -21,10 +21,12 @@ import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
 import com.project.cafe.CentralUsuarios.model.AreaTB;
 import com.project.cafe.CentralUsuarios.model.ClienteTB;
 import com.project.cafe.CentralUsuarios.model.ContenedorUDTB;
+import com.project.cafe.CentralUsuarios.model.SedeTB;
 import com.project.cafe.CentralUsuarios.model.TipoUDTB;
 import com.project.cafe.CentralUsuarios.service.IAreaService;
 import com.project.cafe.CentralUsuarios.service.IClienteService;
 import com.project.cafe.CentralUsuarios.service.IContenedorService;
+import com.project.cafe.CentralUsuarios.service.ISedeService;
 import com.project.cafe.CentralUsuarios.service.ITipoUDService;
 import com.project.cafe.CentralUsuarios.util.ConstantesTablasNombre;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
@@ -47,6 +49,9 @@ public class ControladorRestMasivo {
 	
 	@Autowired
 	private ITipoUDService tipoUDService;
+	
+	@Autowired
+	private ISedeService sedeService;
 
 	// CREATE
 
@@ -58,7 +63,7 @@ public class ControladorRestMasivo {
 			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_MASIVO_TB, request);
 			MasivoDTO masivo = new MasivoDTO();
 			if (errores.isEmpty()) {
-				// validar unicos por masivo 1 area 2 cliente 3 contenedor 4 tipoUD
+				// validar unicos por masivo 1 area 2 cliente 3 contenedor 4 tipoUD 5 sede
 				if(request.getTipoMasivo().intValue()==1) {
 					if (validarAreaUnicoCrear(request.getMasivoDTO().getNombre1())) {
 						masivo = areaService.crearArea(request.getMasivoDTO());
@@ -96,6 +101,15 @@ public class ControladorRestMasivo {
 
 						throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 					}
+				}else if(request.getTipoMasivo().intValue()==5) {
+					if (validarSedeUnicoCrear(request.getMasivoDTO().getNombre1())) {
+						masivo = sedeService.crearSede(request.getMasivoDTO());
+					} else {
+						String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
+						String mensajeErrores = ConstantesValidaciones.MSG_SEDE_REPETIDO;
+
+						throw new ModelNotFoundException(erroresTitle + mensajeErrores);
+					}
 				}
 			} else {
 				StringBuilder mensajeErrores = new StringBuilder();
@@ -112,6 +126,14 @@ public class ControladorRestMasivo {
 		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
+	}
+	
+	private boolean validarSedeUnicoCrear(String nombre) {
+		List<SedeTB> listaSede = sedeService.buscarSedePorCodigo(nombre);
+		if (listaSede == null || listaSede.isEmpty()) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean validarAreaUnicoCrear(String nombre) {
@@ -153,7 +175,7 @@ public class ControladorRestMasivo {
 			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_MASIVO_TB, request);
 			MasivoDTO masivo = new MasivoDTO();
 			if (errores.isEmpty()) {
-				// validar unicos por masivo 1 area 2 cliente 3 contenedor 4 tipoUD
+				// validar unicos por masivo 1 area 2 cliente 3 contenedor 4 tipoUD 5 sede
 				if(request.getTipoMasivo().intValue()==1) {
 					if (validarAreaUnicoEditar(request.getMasivoDTO().getNombre1(),request.getMasivoDTO().getIdMasivo())) {
 						masivo = areaService.modificarArea(request.getMasivoDTO());
@@ -191,6 +213,15 @@ public class ControladorRestMasivo {
 
 						throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 					}
+				}else if(request.getTipoMasivo().intValue()==5) {
+					if (validarSedeUnicoEditar(request.getMasivoDTO().getNombre1(),request.getMasivoDTO().getIdMasivo())) {
+						masivo = sedeService.modificarSede(request.getMasivoDTO());
+					} else {
+						String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
+						String mensajeErrores = ConstantesValidaciones.MSG_SEDE_REPETIDO;
+
+						throw new ModelNotFoundException(erroresTitle + mensajeErrores);
+					}
 				}
 			} else {
 				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
@@ -206,6 +237,18 @@ public class ControladorRestMasivo {
 			throw new ModelNotFoundException(e.getMessage());
 		}
 
+	}
+	
+	private boolean validarSedeUnicoEditar(String codigo, long id) {
+		List<SedeTB> listaSede = sedeService.buscarSedePorCodigo(codigo);
+		if (listaSede == null || listaSede.isEmpty()) {
+			return true;
+		} else {
+			if (listaSede.get(0).getId() == (id)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean validarAreaUnicoEditar(String codigo, long id) {
@@ -268,6 +311,8 @@ public class ControladorRestMasivo {
 				response= contendorService.consultarContenedorFiltros(request);
 			}else if(request.getTipoMasivo().intValue()==4) {
 				response= tipoUDService.consultarTipoUDFiltros(request);
+			}else if(request.getTipoMasivo().intValue()==5) {
+				response= sedeService.consultarSedeFiltros(request);
 			}
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());

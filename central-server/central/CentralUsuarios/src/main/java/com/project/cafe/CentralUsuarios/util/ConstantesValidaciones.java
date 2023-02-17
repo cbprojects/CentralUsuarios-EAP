@@ -127,9 +127,17 @@ public final class ConstantesValidaciones {
 	public static final String MSG_ROL_REPETIDO = PropertiesUtil
 			.getProperty("centralusuarios.msg.validate.rolRepetido");
 
+	// prestamo
+	public static final String MSG_PRESTAMO_IDFALTANTE = PropertiesUtil
+			.getProperty("lbl.prestamo.idFaltante");
+	public static final String CREAR_PRESTAMO = PropertiesUtil.getProperty("lbl.prestamo.escrear");
+	public static final String IDUD_PRESTAMO = PropertiesUtil.getProperty("lbl.prestamo.idud");
+	public static final String RESPONSABLE_PRESTAMO = PropertiesUtil.getProperty("lbl.prestamo.responsable");
+	public static final String USUARIO_PRESTAMO = PropertiesUtil.getProperty("lbl.prestamo.usuario");
+	
 	//
 	public static final String TIPO_MASIVO = PropertiesUtil.getProperty("centralusuarios.msg.tipoMasivo");
-	
+
 	// Labels Area
 	public static final String NOMBRE_AREA = PropertiesUtil.getProperty("lbl.area.nombre");
 	public static final String NOMBRE10_AREA = PropertiesUtil.getProperty("lbl.area.nombre10");
@@ -151,6 +159,12 @@ public final class ConstantesValidaciones {
 	// Labels usuario
 	public static final String NICK_USUARIO = PropertiesUtil.getProperty("lbl.rol.codigo");
 	public static final String CONTRASENA_USUARIO = PropertiesUtil.getProperty("lbl.rol.descripcion");
+
+	// Labels sede
+	public static final String NOMBRE_SEDE = PropertiesUtil.getProperty("lbl.sede.nombre");
+	public static final String NOMBRE10_SEDE = PropertiesUtil.getProperty("lbl.sede.nombre10");
+	public static final String DIRECCION_SEDE = PropertiesUtil.getProperty("lbl.sede.direccion");
+	public static final String MSG_SEDE_REPETIDO = PropertiesUtil.getProperty("lbl.sede.repetido");
 
 	// labels RolPerfil
 	public static final String MSG_BUSQUEDA_ROLPERFIL_VACIO = PropertiesUtil

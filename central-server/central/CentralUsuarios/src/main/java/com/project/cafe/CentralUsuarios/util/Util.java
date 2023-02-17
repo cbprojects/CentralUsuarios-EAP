@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestAgregarArchivosDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestCrearMasivoDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestEditarPrestamoDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
@@ -58,6 +59,9 @@ public abstract class Util {
 			case ConstantesTablasNombre.MRA_MASIVO_TB:
 				errores = validarMasivo((RequestCrearMasivoDTO) entidadTB);
 				break;
+			case ConstantesTablasNombre.MRA_PRESTAMO_TB:
+				errores = validarPrestamo((RequestEditarPrestamoDTO) entidadTB);
+				break;
 			}
 		} else {
 			errores.add(ConstantesValidaciones.TABLA_NO_ESTABLECIDA_VALIDACIONES);
@@ -66,6 +70,23 @@ public abstract class Util {
 		return errores;
 	}
 	
+	public static List<String> validarPrestamo(RequestEditarPrestamoDTO request){
+		List<String> errores = new ArrayList<>();
+		if(request.getEsCrear()==null) {
+			errores.add(ConstantesValidaciones.CREAR_PRESTAMO + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if(request.getIdUd()==null || request.getIdUd()==0l) {
+			errores.add(ConstantesValidaciones.IDUD_PRESTAMO + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if(StringUtils.isBlank(request.getResponsable())) {
+			errores.add(ConstantesValidaciones.RESPONSABLE_PRESTAMO + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if(StringUtils.isBlank(request.getUsuarioCreacion())) {
+			errores.add(ConstantesValidaciones.USUARIO_PRESTAMO + ConstantesValidaciones.VALOR_VACIO);
+		}
+		return errores;
+	}
+
 	public static List<String> validarMasivo(RequestCrearMasivoDTO request) {
 		List<String> errores = new ArrayList<>();
 		if(request.getTipoMasivo()==null || request.getMasivoDTO()==null) {
@@ -92,6 +113,16 @@ public abstract class Util {
 			}else if(request.getTipoMasivo().intValue()==4) {
 				if (StringUtils.isBlank(request.getMasivoDTO().getNombre1())) {
 					errores.add(ConstantesValidaciones.NOMBRE_TIPOUD + ConstantesValidaciones.VALOR_VACIO);
+				}
+			}else if(request.getTipoMasivo().intValue()==5) {
+				if (StringUtils.isBlank(request.getMasivoDTO().getNombre1())) {
+					errores.add(ConstantesValidaciones.NOMBRE_SEDE + ConstantesValidaciones.VALOR_VACIO);
+				}
+				if (StringUtils.isBlank(request.getMasivoDTO().getNombre2())) {
+					errores.add(ConstantesValidaciones.NOMBRE10_SEDE + ConstantesValidaciones.VALOR_VACIO);
+				}
+				if (StringUtils.isBlank(request.getMasivoDTO().getNombre3())) {
+					errores.add(ConstantesValidaciones.DIRECCION_SEDE + ConstantesValidaciones.VALOR_VACIO);
 				}
 			}
 		}

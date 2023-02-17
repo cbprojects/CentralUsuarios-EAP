@@ -10,10 +10,10 @@ public class MasivoDTO extends BaseEntidadTB implements Serializable {
 	
 	private static final long serialVersionUID = 5755029091905695439L;
 	
-	public Long idMasivo;
-	public String nombre1;
-	public String nombre2;
-	
+	private Long idMasivo;
+	private String nombre1;
+	private String nombre2;
+	private String nombre3;
 	
 	public Long getIdMasivo() {
 		return idMasivo;
@@ -33,6 +33,11 @@ public class MasivoDTO extends BaseEntidadTB implements Serializable {
 	public void setNombre2(String nombre2) {
 		this.nombre2 = nombre2;
 	}
-	
+	public String getNombre3() {
+		return nombre3;
+	}
+	public void setNombre3(String nombre3) {
+		this.nombre3 = nombre3;
+	}
 	
 }

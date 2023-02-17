@@ -28,7 +28,6 @@ import com.project.cafe.CentralUsuarios.service.ICajaService;
 import com.project.cafe.CentralUsuarios.service.ISociedadAreaService;
 import com.project.cafe.CentralUsuarios.service.IUnidadDocumentalService;
 import com.project.cafe.CentralUsuarios.util.ConstantesTablasNombre;
-import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
 import com.project.cafe.CentralUsuarios.util.PropertiesUtil;
 import com.project.cafe.CentralUsuarios.util.Util;
 
