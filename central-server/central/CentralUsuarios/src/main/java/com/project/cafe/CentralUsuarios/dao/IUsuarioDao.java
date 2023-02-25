@@ -42,4 +42,6 @@ public interface IUsuarioDao {
 	 */
 	Optional<UsuarioTB> loginUsuario(String user, String clave);
 
+	List<UsuarioTB> consultarUsuarioActivo();
+
 }

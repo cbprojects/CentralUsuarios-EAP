@@ -47,6 +47,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	public Optional<UsuarioTB> loginUsuario(String user, String clave) {
 		return usuarioDAO.loginUsuario(user,clave);
 	}
+
+	@Override
+	public List<UsuarioTB> consultarUsuarioActivo() {
+		return usuarioDAO.consultarUsuarioActivo();
+	}
 	
 	
 

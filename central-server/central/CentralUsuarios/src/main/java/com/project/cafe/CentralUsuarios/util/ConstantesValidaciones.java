@@ -128,14 +128,29 @@ public final class ConstantesValidaciones {
 			.getProperty("centralusuarios.msg.validate.rolRepetido");
 
 	// prestamo
-	public static final String MSG_PRESTAMO_IDFALTANTE = PropertiesUtil
-			.getProperty("lbl.prestamo.idFaltante");
+	public static final String MSG_PRESTAMO_IDFALTANTE = PropertiesUtil.getProperty("lbl.prestamo.idFaltante");
 	public static final String CREAR_PRESTAMO = PropertiesUtil.getProperty("lbl.prestamo.escrear");
 	public static final String IDUD_PRESTAMO = PropertiesUtil.getProperty("lbl.prestamo.idud");
 	public static final String RESPONSABLE_PRESTAMO = PropertiesUtil.getProperty("lbl.prestamo.responsable");
 	public static final String USUARIO_PRESTAMO = PropertiesUtil.getProperty("lbl.prestamo.usuario");
-	
-	//
+
+	// sociedad
+	public static final String CLIENTE_SOCIEDAD = PropertiesUtil.getProperty("lbl.sociedad.cliente");
+	public static final String SERVIDOR_SOCIEDAD = PropertiesUtil.getProperty("lbl.sociedad.servidor");
+	public static final String NOMBRE_SOCIEDAD = PropertiesUtil.getProperty("lbl.sociedad.nombre");
+	public static final String NOMBRE10_SOCIEDAD = PropertiesUtil.getProperty("lbl.sociedad.nombre10");
+	public static final String TAX_SOCIEDAD = PropertiesUtil.getProperty("lbl.sociedad.tax");
+	public static final String SOCIEDAD_REPETIDO = PropertiesUtil.getProperty("lbl.sociedad.repetido");
+	// sociedad area
+	public static final String SOCIEDAD_SOCIEDAD_AREA = PropertiesUtil.getProperty("lbl.sociedad.area.sociedad");
+	public static final String AREA_SOCIEDAD_AREA = PropertiesUtil.getProperty("lbl.sociedad.area.area");
+	public static final String SOCIEDAD_AREA_REPETIDO = PropertiesUtil.getProperty("lbl.sociedad.area.repetido");
+
+	// usuario sede
+	public static final String USUARIO_USUARIO_SEDE = PropertiesUtil.getProperty("lbl.usuario.sede.usuario");
+	public static final String SEDE_USUARIO_SEDE = PropertiesUtil.getProperty("lbl.usuario.sede.sede");
+	public static final String USUARIO_SEDE_REPETIDO = PropertiesUtil.getProperty("lbl.usuario.sede.repetido");
+	//tipo masivo
 	public static final String TIPO_MASIVO = PropertiesUtil.getProperty("centralusuarios.msg.tipoMasivo");
 
 	// Labels Area

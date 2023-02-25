@@ -56,53 +56,10 @@ public class SociedadTB extends BaseEntidadTB implements Serializable {
 	@NotNull
 	@Column(name = "soc_nombre_10", nullable = true, length = 10)
 	private String nombre10;
+	
+	@Column(name = "soc_quienFacturar", nullable = true)
+	private Long quienFacturar;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public ClienteTB getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(ClienteTB cliente) {
-		this.cliente = cliente;
-	}
-
-	public String getTax() {
-		return tax;
-	}
-
-	public void setTax(String tax) {
-		this.tax = tax;
-	}
-
-	public String getNombre10() {
-		return nombre10;
-	}
-
-	public void setNombre10(String nombre10) {
-		this.nombre10 = nombre10;
-	}
-
-	public ServidorTB getServidor() {
-		return servidor;
-	}
-
-	public void setServidor(ServidorTB servidor) {
-		this.servidor = servidor;
-	}
+	
 
 }

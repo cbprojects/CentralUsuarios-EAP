@@ -32,4 +32,6 @@ public interface ISedeService {
 	 */
 	ResponseConsultarDTO<MasivoDTO> consultarSedeFiltros(RequestConsultarMasivoDTO request);
 
+	List<SedeTB> consultarSedeActiva();
+
 }

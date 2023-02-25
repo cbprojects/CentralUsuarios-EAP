@@ -36,7 +36,7 @@ public class PrestamoHistoricoDaoImpl extends AbstractDao<PrestamoHistoricoTB> i
 		pamameters.put("IDUD", idUd);
 		
 		// Q. Order By
-		JPQL.append(" ORDER BY r.id ");
+		JPQL.append(" ORDER BY r.id desc");
 		// END QUERY
 
 		TypedQuery<PrestamoHistoricoTB> query = em.createQuery(JPQL.toString(), PrestamoHistoricoTB.class);

@@ -99,4 +99,9 @@ public class AreaServiceImpl implements IAreaService {
 		masivo.setEstado(area.getEstado());
 		return masivo;
 	}
+
+	@Override
+	public List<AreaTB> consultarAreasActiva() {
+		return areaDAO.consultarAreasActiva();
+	}
 }

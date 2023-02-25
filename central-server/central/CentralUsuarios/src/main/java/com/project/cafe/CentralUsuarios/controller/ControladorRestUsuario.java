@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -258,6 +259,16 @@ public class ControladorRestUsuario {
 		mailDto.setModel(model);
 
 		mailUtil.sendMail(mailDto, ConstantesValidaciones.TEMPLATE_MAIL_RECORDAR_CLAVE);
+	}
+	
+	@GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/consultarUsuarioActivo")
+	public List<UsuarioTB> consultarUsuarioActivo() {
+		try {
+			return usuarioService.consultarUsuarioActivo();
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
 	}
 
 }

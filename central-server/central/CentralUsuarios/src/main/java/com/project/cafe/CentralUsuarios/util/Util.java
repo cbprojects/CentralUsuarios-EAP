@@ -15,7 +15,10 @@ import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolTB;
+import com.project.cafe.CentralUsuarios.model.SociedadAreaTB;
+import com.project.cafe.CentralUsuarios.model.SociedadTB;
 import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
+import com.project.cafe.CentralUsuarios.model.UsuarioSedeTB;
 import com.project.cafe.CentralUsuarios.model.UsuarioTB;
 
 public abstract class Util {
@@ -62,11 +65,62 @@ public abstract class Util {
 			case ConstantesTablasNombre.MRA_PRESTAMO_TB:
 				errores = validarPrestamo((RequestEditarPrestamoDTO) entidadTB);
 				break;
+			case ConstantesTablasNombre.MRA_SOCIEDAD_TB:
+				errores = validarSociedad((SociedadTB) entidadTB);
+				break;
+			case ConstantesTablasNombre.MRA_SOCIEDAD_AREA_TB:
+				errores = validarSociedadArea((SociedadAreaTB) entidadTB);
+				break;
+			case ConstantesTablasNombre.MRA_USUARIO_SEDE_TB:
+				errores = validarUsuarioSede((UsuarioSedeTB) entidadTB);
+				break;
 			}
 		} else {
 			errores.add(ConstantesValidaciones.TABLA_NO_ESTABLECIDA_VALIDACIONES);
 		}
 
+		return errores;
+	}
+	
+	public static List<String> validarUsuarioSede(UsuarioSedeTB entidadTB){
+		List<String> errores = new ArrayList<>();
+		if(entidadTB.getUsuario()==null) {
+			errores.add(ConstantesValidaciones.USUARIO_USUARIO_SEDE + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if(entidadTB.getSede()==null) {
+			errores.add(ConstantesValidaciones.SEDE_USUARIO_SEDE + ConstantesValidaciones.VALOR_VACIO);
+		}
+		return errores;
+	}
+	
+	public static List<String> validarSociedadArea(SociedadAreaTB entidadTB){
+		List<String> errores = new ArrayList<>();
+		if(entidadTB.getSociedad()==null) {
+			errores.add(ConstantesValidaciones.SOCIEDAD_SOCIEDAD_AREA + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if(entidadTB.getArea()==null) {
+			errores.add(ConstantesValidaciones.AREA_SOCIEDAD_AREA + ConstantesValidaciones.VALOR_VACIO);
+		}
+		return errores;
+	}
+
+	public static List<String> validarSociedad(SociedadTB sociedad){
+		List<String> errores = new ArrayList<>();
+		if(sociedad.getCliente()==null) {
+			errores.add(ConstantesValidaciones.CLIENTE_SOCIEDAD + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if(sociedad.getServidor()==null) {
+			errores.add(ConstantesValidaciones.SERVIDOR_SOCIEDAD + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if(StringUtils.isBlank(sociedad.getNombre())) {
+			errores.add(ConstantesValidaciones.NOMBRE_SOCIEDAD + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if(StringUtils.isBlank(sociedad.getNombre10())) {
+			errores.add(ConstantesValidaciones.NOMBRE10_SOCIEDAD + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if(StringUtils.isBlank(sociedad.getTax())) {
+			errores.add(ConstantesValidaciones.TAX_SOCIEDAD + ConstantesValidaciones.VALOR_VACIO);
+		}
 		return errores;
 	}
 	

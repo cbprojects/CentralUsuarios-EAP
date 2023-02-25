@@ -11,6 +11,8 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import com.project.cafe.CentralUsuarios.dao.AbstractDao;
 import com.project.cafe.CentralUsuarios.dao.ISociedadAreaDao;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarSociedadAreaDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.AreaTB;
 import com.project.cafe.CentralUsuarios.model.SociedadAreaTB;
 
@@ -19,6 +21,85 @@ public class SociedadAreaDaoImpl extends AbstractDao<SociedadAreaTB> implements 
 
 	@PersistenceContext(unitName = "default")
 	private EntityManager em;
+	
+	@Override
+	public SociedadAreaTB crearSociedadArea(SociedadAreaTB newSociedadArea) {
+		super.create(newSociedadArea);
+		return newSociedadArea;
+	}
+
+	@Override
+	public SociedadAreaTB modificarSociedadArea(SociedadAreaTB newSociedadArea) {
+		super.update(newSociedadArea);
+		return newSociedadArea;
+	}
+	
+	@Override
+	public List<SociedadAreaTB> buscarSociedadAreaPorId(long idS, long idA) {
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT r FROM SociedadAreaTB r WHERE 1 = 1 ");
+		// WHERE
+		JPQL.append(" AND r.sociedad.id = :IDS ");
+		pamameters.put("IDS", idS);
+		
+		JPQL.append(" AND r.area.id = :IDA ");
+		pamameters.put("IDA", idA);
+		// Q. Order By
+		JPQL.append(" ORDER BY r.id");
+		// END QUERY
+
+		TypedQuery<SociedadAreaTB> query = em.createQuery(JPQL.toString(), SociedadAreaTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getResultList();
+	}
+	
+	@Override
+	public ResponseConsultarDTO<SociedadAreaTB> consultarRolesFiltros(RequestConsultarSociedadAreaDTO request) {
+
+		ResponseConsultarDTO<SociedadAreaTB> response = new ResponseConsultarDTO<>();
+
+		// PARAMETROS
+		Map<String, Object> pamametros = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT r FROM SociedadAreaTB r WHERE 1 = 1 ");
+		// WHERE
+		if (request.getSociedadArea().getSociedad()!=null && request.getSociedadArea().getSociedad().getId()!=0l) {
+			JPQL.append(" AND r.sociedad.id = :IDS ");
+			pamametros.put("IDS", request.getSociedadArea().getSociedad().getId());
+		}
+
+		if (request.getSociedadArea().getArea()!=null && request.getSociedadArea().getArea().getId()!=0l) {
+			JPQL.append(" AND r.area.id = :IDA ");
+			pamametros.put("IDA", request.getSociedadArea().getArea().getId());
+		}
+
+		String COUNT = "SELECT COUNT(r) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
+
+		// Q. Order By
+		JPQL.append(" ORDER BY r.id DESC");
+		// END QUERY
+
+		// QUERY COUNT
+		TypedQuery<Long> queryCount = em.createQuery(COUNT, Long.class);
+		pamametros.forEach((k, v) -> queryCount.setParameter(k, v));
+		response.setRegistrosTotales(queryCount.getSingleResult());
+
+		TypedQuery<SociedadAreaTB> query = em.createQuery(JPQL.toString(), SociedadAreaTB.class);
+		pamametros.forEach((k, v) -> query.setParameter(k, v));
+
+		query.setFirstResult(request.getRegistroInicial());
+		query.setMaxResults(request.getCantidadRegistro());
+		List<SociedadAreaTB> listaSociedadArea= query.getResultList();
+
+		response.setResultado(listaSociedadArea);
+
+		return response;
+	}
 
 	@Override
 	public List<AreaTB> buscarAreasActivasPorSociedad(Long idSociedad) {

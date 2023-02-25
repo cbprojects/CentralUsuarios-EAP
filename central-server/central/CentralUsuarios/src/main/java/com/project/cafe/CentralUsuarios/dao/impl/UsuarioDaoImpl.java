@@ -133,7 +133,7 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 			pamameters.put("EMAIL", user);
 			JPQL.append(" AND u.contrasena = :CLAVE ");
 			pamameters.put("CLAVE", clave);
-			
+
 			// Q. Order By
 			JPQL.append(" ORDER BY u.id");
 			// END QUERY
@@ -142,13 +142,27 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 			pamameters.forEach((k, v) -> query.setParameter(k, v));
 
 			return Optional.of(query.getSingleResult());
-			
+
 		} catch (Exception ex) {
-            if (ex instanceof NoResultException) {
-                return Optional.empty();
-            }
-        }
+			if (ex instanceof NoResultException) {
+				return Optional.empty();
+			}
+		}
 		return null;
+	}
+
+	@Override
+	public List<UsuarioTB> consultarUsuarioActivo() {
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT s FROM UsuarioTB s WHERE s.estado = 1 ");
+
+		// Q. Order By
+		JPQL.append(" ORDER BY s.id");
+		// END QUERY
+
+		TypedQuery<UsuarioTB> query = em.createQuery(JPQL.toString(), UsuarioTB.class);
+
+		return query.getResultList();
 	}
 
 }

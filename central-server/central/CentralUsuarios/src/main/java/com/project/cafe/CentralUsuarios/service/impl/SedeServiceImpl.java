@@ -102,4 +102,9 @@ public class SedeServiceImpl implements ISedeService {
 		masivo.setEstado(Sede.getEstado());
 		return masivo;
 	}
+
+	@Override
+	public List<SedeTB> consultarSedeActiva() {
+		return SedeDAO.consultarSedeActiva();
+	}
 }

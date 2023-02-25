@@ -39,4 +39,6 @@ public interface IUsuarioService {
 	 */
 	Optional<UsuarioTB> loginUsuario(String user, String clave);
 
+	List<UsuarioTB> consultarUsuarioActivo();
+
 }

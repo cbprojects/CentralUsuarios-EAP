@@ -38,4 +38,6 @@ public interface IAreaDao {
 	 */
 	ResponseConsultarDTO<AreaTB> consultarAreaFiltros(RequestConsultarMasivoDTO request);
 
+	List<AreaTB> consultarAreasActiva();
+
 }

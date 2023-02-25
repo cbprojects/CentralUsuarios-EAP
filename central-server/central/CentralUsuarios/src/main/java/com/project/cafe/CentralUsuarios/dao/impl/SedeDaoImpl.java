@@ -111,5 +111,18 @@ public class SedeDaoImpl extends AbstractDao<SedeTB> implements ISedeDao {
 		return response;
 	}
 
+	@Override
+	public List<SedeTB> consultarSedeActiva() {
 
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT s FROM SedeTB s WHERE s.estado = 1 ");
+
+		// Q. Order By
+		JPQL.append(" ORDER BY s.id");
+		// END QUERY
+
+		TypedQuery<SedeTB> query = em.createQuery(JPQL.toString(), SedeTB.class);
+		
+		return query.getResultList();
+	}
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,11 +23,13 @@ import com.project.cafe.CentralUsuarios.model.AreaTB;
 import com.project.cafe.CentralUsuarios.model.ClienteTB;
 import com.project.cafe.CentralUsuarios.model.ContenedorUDTB;
 import com.project.cafe.CentralUsuarios.model.SedeTB;
+import com.project.cafe.CentralUsuarios.model.ServidorTB;
 import com.project.cafe.CentralUsuarios.model.TipoUDTB;
 import com.project.cafe.CentralUsuarios.service.IAreaService;
 import com.project.cafe.CentralUsuarios.service.IClienteService;
 import com.project.cafe.CentralUsuarios.service.IContenedorService;
 import com.project.cafe.CentralUsuarios.service.ISedeService;
+import com.project.cafe.CentralUsuarios.service.IServidorService;
 import com.project.cafe.CentralUsuarios.service.ITipoUDService;
 import com.project.cafe.CentralUsuarios.util.ConstantesTablasNombre;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
@@ -53,6 +56,9 @@ public class ControladorRestMasivo {
 	@Autowired
 	private ISedeService sedeService;
 
+	@Autowired
+	private IServidorService servidorService;
+	
 	// CREATE
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -320,4 +326,33 @@ public class ControladorRestMasivo {
 		return response;
 	}
 
+	@GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/consultarAreasActiva")
+	public List<AreaTB> consultarAreasActiva() {
+		try {
+			return areaService.consultarAreasActiva();
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+	
+	@GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/consultarSedeActiva")
+	public List<SedeTB> consultarSedeActiva() {
+		try {
+			return sedeService.consultarSedeActiva();
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+	
+	@GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/consultarServidorActivo")
+	public List<ServidorTB> consultarServidorActivo() {
+		try {
+			return servidorService.consultarServidorActivo();
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
 }

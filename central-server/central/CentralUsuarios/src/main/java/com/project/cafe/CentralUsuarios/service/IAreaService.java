@@ -32,4 +32,6 @@ public interface IAreaService {
 	 */
 	ResponseConsultarDTO<MasivoDTO> consultarAreaFiltros(RequestConsultarMasivoDTO request);
 
+	List<AreaTB> consultarAreasActiva();
+
 }

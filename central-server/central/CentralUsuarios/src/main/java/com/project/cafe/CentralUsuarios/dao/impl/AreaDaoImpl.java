@@ -126,5 +126,20 @@ public class AreaDaoImpl extends AbstractDao<AreaTB> implements IAreaDao {
 		return response;
 	}
 
+	@Override
+	public List<AreaTB> consultarAreasActiva() {
 
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT s FROM AreaTB s WHERE s.estado = 1 ");
+
+		// Q. Order By
+		JPQL.append(" ORDER BY s.id");
+		// END QUERY
+
+		TypedQuery<AreaTB> query = em.createQuery(JPQL.toString(), AreaTB.class);
+		
+		return query.getResultList();
+	}
+
+	
 }
