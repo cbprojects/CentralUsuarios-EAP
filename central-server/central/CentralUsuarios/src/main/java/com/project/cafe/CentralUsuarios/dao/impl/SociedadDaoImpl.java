@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -25,12 +26,15 @@ public class SociedadDaoImpl extends AbstractDao<SociedadTB> implements ISocieda
 	private EntityManager em;
 
 	@Override
+	@Transactional
 	public SociedadTB crearSociedad(SociedadTB sociedad) {
 		super.create(sociedad);
 		return sociedad;
+		
 	}
 
 	@Override
+	@Transactional
 	public SociedadTB modificarSociedad(SociedadTB sociedad) {
 		super.update(sociedad);
 		return sociedad;

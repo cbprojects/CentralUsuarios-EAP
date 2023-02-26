@@ -108,9 +108,17 @@ public abstract class Util {
 		List<String> errores = new ArrayList<>();
 		if(sociedad.getCliente()==null) {
 			errores.add(ConstantesValidaciones.CLIENTE_SOCIEDAD + ConstantesValidaciones.VALOR_VACIO);
+		}else {
+			if(sociedad.getCliente().getId()==0l) {
+				errores.add(ConstantesValidaciones.CLIENTE_SOCIEDAD + ConstantesValidaciones.VALOR_VACIO);
+			}
 		}
-		if(sociedad.getServidor()==null) {
+		if(sociedad.getServidor()==null) { 
 			errores.add(ConstantesValidaciones.SERVIDOR_SOCIEDAD + ConstantesValidaciones.VALOR_VACIO);
+		}else {
+			if(sociedad.getServidor().getId()==0l) { 
+				errores.add(ConstantesValidaciones.SERVIDOR_SOCIEDAD + ConstantesValidaciones.VALOR_VACIO);
+			}
 		}
 		if(StringUtils.isBlank(sociedad.getNombre())) {
 			errores.add(ConstantesValidaciones.NOMBRE_SOCIEDAD + ConstantesValidaciones.VALOR_VACIO);

@@ -77,7 +77,7 @@ public class UsuarioSedeDaoImpl extends AbstractDao<UsuarioSedeTB> implements IU
 		}
 
 		if (request.getUsuarioSede().getSede()!=null && request.getUsuarioSede().getSede().getId()!=0l) {
-			JPQL.append(" AND r.area.id = :IDA ");
+			JPQL.append(" AND r.sede.id = :IDA ");
 			pamametros.put("IDA", request.getUsuarioSede().getSede().getId());
 		}
 
