@@ -1515,3 +1515,64 @@
 2023-02-26 18:47:45,757 [Worker-113: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
 2023-02-26 18:47:45,758 [Worker-113: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2023-02-26 18:47:45,758 [Worker-113: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 06:25:07,604 [Worker-3: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2023-02-27 09:01:53,045 [Worker-24: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 09:01:53,048 [Worker-24: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 09:01:53,067 [Worker-24: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 09:01:53,070 [Worker-24: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 09:01:53,070 [Worker-24: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 09:18:58,653 [Worker-21: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 09:18:58,656 [Worker-21: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 09:18:58,671 [Worker-21: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 09:18:58,673 [Worker-21: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 09:18:58,673 [Worker-21: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 09:24:56,670 [Worker-37: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 09:24:56,672 [Worker-37: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 09:24:56,674 [Worker-37: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 09:24:56,676 [Worker-37: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 09:24:56,676 [Worker-37: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 09:32:04,778 [Worker-42: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 09:32:04,779 [Worker-42: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 09:32:04,782 [Worker-42: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 09:32:04,792 [Worker-42: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 09:32:04,792 [Worker-42: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 09:32:39,607 [Worker-42: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 09:32:39,608 [Worker-42: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 09:32:39,610 [Worker-42: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 09:32:39,611 [Worker-42: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 09:32:39,611 [Worker-42: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 16:03:18,708 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 16:03:18,709 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 16:03:18,722 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 16:03:18,724 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 16:03:18,724 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 16:03:46,528 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 16:03:46,530 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 16:03:46,533 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 16:03:46,535 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 16:03:46,535 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 16:03:54,747 [Worker-49: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 16:03:54,748 [Worker-49: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 16:03:54,750 [Worker-49: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 16:03:54,752 [Worker-49: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 16:03:54,752 [Worker-49: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 16:13:14,943 [Worker-56: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 16:13:14,944 [Worker-56: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 16:13:14,946 [Worker-56: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 16:13:14,947 [Worker-56: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 16:13:14,948 [Worker-56: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 17:22:27,130 [Worker-101: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 17:22:27,131 [Worker-101: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 17:22:27,134 [Worker-101: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 17:22:27,135 [Worker-101: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 17:22:27,135 [Worker-101: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 17:23:27,900 [Worker-104: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 17:23:27,901 [Worker-104: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 17:23:27,903 [Worker-104: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 17:23:27,905 [Worker-104: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 17:23:27,906 [Worker-104: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-27 17:24:07,263 [Worker-99: Launching CentralUsuarios - CentralUsuariosApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 17:24:07,264 [Worker-99: Launching CentralUsuarios - CentralUsuariosApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2023-02-27 17:24:07,267 [Worker-99: Launching CentralUsuarios - CentralUsuariosApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2023-02-27 17:24:07,269 [Worker-99: Launching CentralUsuarios - CentralUsuariosApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-02-27 17:24:07,269 [Worker-99: Launching CentralUsuarios - CentralUsuariosApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources

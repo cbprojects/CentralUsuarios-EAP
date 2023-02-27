@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -26,12 +27,15 @@ public class UsuarioSedeDaoImpl extends AbstractDao<UsuarioSedeTB> implements IU
 	private EntityManager em;
 	
 	@Override
+	@Transactional
 	public UsuarioSedeTB crearUsuarioSede(UsuarioSedeTB newUsuarioSede) {
 		super.create(newUsuarioSede);
 		return newUsuarioSede;
 	}
 
+
 	@Override
+	@Transactional
 	public UsuarioSedeTB modificarUsuarioSede(UsuarioSedeTB newUsuarioSede) {
 		super.update(newUsuarioSede);
 		return newUsuarioSede;

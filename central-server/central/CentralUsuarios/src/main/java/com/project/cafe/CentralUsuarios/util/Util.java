@@ -86,9 +86,17 @@ public abstract class Util {
 		List<String> errores = new ArrayList<>();
 		if(entidadTB.getUsuario()==null) {
 			errores.add(ConstantesValidaciones.USUARIO_USUARIO_SEDE + ConstantesValidaciones.VALOR_VACIO);
+		}else {
+			if(entidadTB.getUsuario().getId()==0l) {
+				errores.add(ConstantesValidaciones.USUARIO_USUARIO_SEDE + ConstantesValidaciones.VALOR_VACIO);
+			}
 		}
 		if(entidadTB.getSede()==null) {
 			errores.add(ConstantesValidaciones.SEDE_USUARIO_SEDE + ConstantesValidaciones.VALOR_VACIO);
+		}else {
+			if(entidadTB.getSede().getId()==0l) {
+				errores.add(ConstantesValidaciones.SEDE_USUARIO_SEDE + ConstantesValidaciones.VALOR_VACIO);
+			}
 		}
 		return errores;
 	}
@@ -97,9 +105,17 @@ public abstract class Util {
 		List<String> errores = new ArrayList<>();
 		if(entidadTB.getSociedad()==null) {
 			errores.add(ConstantesValidaciones.SOCIEDAD_SOCIEDAD_AREA + ConstantesValidaciones.VALOR_VACIO);
+		}else {
+			if(entidadTB.getSociedad().getId()==0l) {
+				errores.add(ConstantesValidaciones.SOCIEDAD_SOCIEDAD_AREA + ConstantesValidaciones.VALOR_VACIO);
+			}
 		}
 		if(entidadTB.getArea()==null) {
 			errores.add(ConstantesValidaciones.AREA_SOCIEDAD_AREA + ConstantesValidaciones.VALOR_VACIO);
+		}else {
+			if(entidadTB.getArea().getId()==0l) {
+				errores.add(ConstantesValidaciones.AREA_SOCIEDAD_AREA + ConstantesValidaciones.VALOR_VACIO);
+			}
 		}
 		return errores;
 	}

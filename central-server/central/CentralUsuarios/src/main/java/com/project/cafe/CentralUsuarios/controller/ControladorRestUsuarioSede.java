@@ -43,7 +43,7 @@ public class ControladorRestUsuarioSede {
 			if (errores.isEmpty()) {
 				// validar rol unico
 				if (validarUsuarioSedeUnicoCrear(usuarioSede.getUsuario().getId(), usuarioSede.getSede().getId())) {
-					newUsuarioSede = usuarioSedeService.crearUsuarioSede(newUsuarioSede);
+					newUsuarioSede = usuarioSedeService.crearUsuarioSede(usuarioSede);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
 					String mensajeErrores = ConstantesValidaciones.USUARIO_SEDE_REPETIDO;
@@ -88,7 +88,7 @@ public class ControladorRestUsuarioSede {
 			if (errores.isEmpty()) {
 				// validar rol unico
 				if (validarUsuarioSedeUnicoEditar(usuarioSede.getUsuario().getId(), usuarioSede.getSede().getId(),usuarioSede.getId())) {
-					newUsuarioSede = usuarioSedeService.modificarUsuarioSede(newUsuarioSede);
+					newUsuarioSede = usuarioSedeService.modificarUsuarioSede(usuarioSede);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
 					String mensajeErrores = ConstantesValidaciones.USUARIO_SEDE_REPETIDO;
