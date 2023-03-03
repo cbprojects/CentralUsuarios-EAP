@@ -43,7 +43,7 @@ public class ControladorRestSociedadArea {
 			if (errores.isEmpty()) {
 				// validar rol unico
 				if (validarSociedadAreaUnicoCrear(sociedadArea.getSociedad().getId(), sociedadArea.getArea().getId())) {
-					newSociedadArea = sociedadAreaService.crearSociedadArea(newSociedadArea);
+					newSociedadArea = sociedadAreaService.crearSociedadArea(sociedadArea);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
 					String mensajeErrores = ConstantesValidaciones.SOCIEDAD_AREA_REPETIDO;
@@ -88,7 +88,7 @@ public class ControladorRestSociedadArea {
 			if (errores.isEmpty()) {
 				// validar rol unico
 				if (validarSociedadAreaUnicoEditar(sociedadArea.getSociedad().getId(), sociedadArea.getArea().getId(),sociedadArea.getId())) {
-					newSociedadArea = sociedadAreaService.modificarSociedadArea(newSociedadArea);
+					newSociedadArea = sociedadAreaService.modificarSociedadArea(sociedadArea);
 				} else {
 					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
 					String mensajeErrores = ConstantesValidaciones.SOCIEDAD_AREA_REPETIDO;

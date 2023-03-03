@@ -90,10 +90,8 @@ public class UnidadDocumentalTB extends BaseEntidadTB implements Serializable {
 	@Column(name = "und_fecha_fin", nullable = true)
 	private Date fechaFin;
 	
-	@NotNull
-	@Column(name = "und_fecha_recibe", nullable = false)
+	@Column(name = "und_fecha_recibe", nullable = true)
 	private Date fechaRecibe;
-	
 	
 	@Column(name = "und_cajaRecibido", nullable = true, length = 128)
 	private String cajaRecibido;

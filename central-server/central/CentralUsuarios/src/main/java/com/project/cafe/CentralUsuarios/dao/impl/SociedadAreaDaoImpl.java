@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
 import com.project.cafe.CentralUsuarios.dao.AbstractDao;
 import com.project.cafe.CentralUsuarios.dao.ISociedadAreaDao;
@@ -23,12 +25,14 @@ public class SociedadAreaDaoImpl extends AbstractDao<SociedadAreaTB> implements 
 	private EntityManager em;
 	
 	@Override
+	@Transactional
 	public SociedadAreaTB crearSociedadArea(SociedadAreaTB newSociedadArea) {
 		super.create(newSociedadArea);
 		return newSociedadArea;
 	}
 
 	@Override
+	@Transactional
 	public SociedadAreaTB modificarSociedadArea(SociedadAreaTB newSociedadArea) {
 		super.update(newSociedadArea);
 		return newSociedadArea;

@@ -2,6 +2,8 @@ package com.project.cafe.CentralUsuarios.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +26,13 @@ public class UsuarioSedeServiceImpl implements IUsuarioSedeService {
 	}
 	
 	@Override
+	@Transactional
 	public UsuarioSedeTB crearUsuarioSede(UsuarioSedeTB newUsuarioSede) {
 		return usuarioSedeDao.crearUsuarioSede(newUsuarioSede);
 	}
 
 	@Override
+	@Transactional
 	public UsuarioSedeTB modificarUsuarioSede(UsuarioSedeTB newUsuarioSede) {
 		return usuarioSedeDao.modificarUsuarioSede(newUsuarioSede);
 	}

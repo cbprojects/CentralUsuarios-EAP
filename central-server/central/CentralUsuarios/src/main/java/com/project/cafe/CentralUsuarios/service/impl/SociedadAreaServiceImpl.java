@@ -2,6 +2,8 @@ package com.project.cafe.CentralUsuarios.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +32,13 @@ public class SociedadAreaServiceImpl implements ISociedadAreaService {
 	}
 
 	@Override
+	@Transactional
 	public SociedadAreaTB crearSociedadArea(SociedadAreaTB newSociedadArea) {
 		return sociedadAreaDao.crearSociedadArea(newSociedadArea);
 	}
 
 	@Override
+	@Transactional
 	public SociedadAreaTB modificarSociedadArea(SociedadAreaTB newSociedadArea) {
 		return sociedadAreaDao.modificarSociedadArea(newSociedadArea);
 	}
