@@ -13,4 +13,5 @@ public interface IBodegaDao {
 	 */
 	List<BodegaTB> buscarBodegasActivasPorSede(Long idSede);
 
+	void crearBodega(BodegaTB bodega);
 }

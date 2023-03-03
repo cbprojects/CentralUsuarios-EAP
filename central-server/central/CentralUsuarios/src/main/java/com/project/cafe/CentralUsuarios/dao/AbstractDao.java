@@ -1,50 +1,71 @@
 package com.project.cafe.CentralUsuarios.dao;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import com.project.cafe.CentralUsuarios.model.BaseEntidadTB;
+import org.springframework.beans.factory.annotation.Value;
 
-public abstract class AbstractDao<T extends BaseEntidadTB> { 
+@Transactional
+public abstract class AbstractDao<T extends BaseEntidadTB> {
 
-	private Class<T> clazz;
+    private Class<T> clazz;
 
-	@PersistenceContext
-	EntityManager entityManager;
+    @PersistenceContext(unitName = "default")
+    EntityManager entityManager;
 
-	public final void setClazz(Class<T> clazzToSet) {
-		this.clazz = clazzToSet;
-	}
+    public final void setClazz(Class<T> clazzToSet) {
+        this.clazz = clazzToSet;
+    }
 
-	public T findOne(long id) {
-		return this.entityManager.find(clazz, id);
-	}
+    @Value("${hibernate.jdbc.batch_size}")
+    private int batchSize;
 
-	@SuppressWarnings("unchecked")
-	public List<T> findAll() {
-		return this.entityManager.createQuery("from " + clazz.getName()).getResultList();
-	}
+    public T findOne(long id) {
+        return this.entityManager.find(clazz, id);
+    }
 
-	public void create(T entity) {
-		entity.setFechaCreacion(new Date());
-		entity.setFechaActualizacion(new Date());
-		this.entityManager.persist(entity);
-	}
+    @SuppressWarnings("unchecked")
+    public List<T> findAll() {
+        return this.entityManager.createQuery("from " + clazz.getName()).getResultList();
+    }
 
-	public T update(T entity) {
-		entity.setFechaActualizacion(new Date());
-		return this.entityManager.merge(entity);
-	}
+    public void create(T entity) {
+        entity.setFechaCreacion(new Date());
+        entity.setFechaActualizacion(new Date());
+        this.entityManager.persist(entity);
+    }
 
-	public void deleteById(long entityId) {
-		T entity = findOne(entityId);
-		this.entityManager.remove(entity);
-	}
+    public T update(T entity) {
+        entity.setFechaActualizacion(new Date());
+        return this.entityManager.merge(entity);
+    }
 
-	public void flushCommitEM() {
-		this.entityManager.flush();
-	}
+    public void deleteById(long entityId) {
+        T entity = findOne(entityId);
+        this.entityManager.remove(entity);
+    }
+
+    public void flushCommitEM() {
+        this.entityManager.flush();
+    }
+
+    public void bulkSave(Collection<T> entities) {
+        int i = 0;
+        for (T t : entities) {
+            create(t);
+            i++;
+            if (i % batchSize == 0) {
+                // Flush a batch of inserts and release memory.
+                entityManager.flush();
+                entityManager.clear();
+            }
+        }
+    }
 }

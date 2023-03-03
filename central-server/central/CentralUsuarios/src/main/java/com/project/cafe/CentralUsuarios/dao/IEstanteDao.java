@@ -6,11 +6,11 @@ import com.project.cafe.CentralUsuarios.model.EstanteTB;
 
 public interface IEstanteDao {
 
-	/**
-	 * 
-	 * @param idCuerpo
-	 * @return
-	 */
-	List<EstanteTB> buscarEstantesActivosPorCuerpo(Long idCuerpo);
+    /**
+     * @param idCuerpo
+     * @return
+     */
+    List<EstanteTB> buscarEstantesActivosPorCuerpo(Long idCuerpo);
 
+    void bulkEstantes(List<EstanteTB> listaEstantes);
 }

@@ -17,29 +17,34 @@ import com.project.cafe.CentralUsuarios.model.EstanteTB;
 @Repository
 public class EstanteDaoImpl extends AbstractDao<EstanteTB> implements IEstanteDao {
 
-	@PersistenceContext(unitName = "default")
-	private EntityManager em;
+    @PersistenceContext(unitName = "default")
+    private EntityManager em;
 
-	@Override
-	public List<EstanteTB> buscarEstantesActivosPorCuerpo(Long idCuerpo) {
-		// PARAMETROS
-		Map<String, Object> pamameters = new HashMap<>();
+    @Override
+    public List<EstanteTB> buscarEstantesActivosPorCuerpo(Long idCuerpo) {
+        // PARAMETROS
+        Map<String, Object> pamameters = new HashMap<>();
 
-		// QUERY
-		StringBuilder JPQL = new StringBuilder("SELECT e FROM EstanteTB e WHERE 1 = 1 ");
-		// WHERE
-			JPQL.append("AND e.cuerpo.id = :IDCUERPO ");
-			pamameters.put("IDCUERPO", idCuerpo);
-			
-			JPQL.append("AND e.estado = 1");
-		// Q. Order By
-		JPQL.append(" ORDER BY e.id");
-		// END QUERY
+        // QUERY
+        StringBuilder JPQL = new StringBuilder("SELECT e FROM EstanteTB e WHERE 1 = 1 ");
+        // WHERE
+        JPQL.append("AND e.cuerpo.id = :IDCUERPO ");
+        pamameters.put("IDCUERPO", idCuerpo);
 
-		TypedQuery<EstanteTB> query = em.createQuery(JPQL.toString(), EstanteTB.class);
-		pamameters.forEach((k, v) -> query.setParameter(k, v));
+        JPQL.append("AND e.estado = 1");
+        // Q. Order By
+        JPQL.append(" ORDER BY e.id");
+        // END QUERY
 
-		return query.getResultList();
-	}
+        TypedQuery<EstanteTB> query = em.createQuery(JPQL.toString(), EstanteTB.class);
+        pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+        return query.getResultList();
+    }
+
+    @Override
+    public void bulkEstantes(List<EstanteTB> listaEstantes) {
+        super.bulkSave(listaEstantes);
+    }
 
 }

@@ -13,4 +13,5 @@ public interface IBloqueDao {
 	 */
 	List<BloqueTB> buscarBloquesActivosPorBodega(Long idBodega);
 
+	void bulkBloque(List<BloqueTB> listaBloque);
 }
