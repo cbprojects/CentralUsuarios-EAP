@@ -1,15 +1,11 @@
 package com.project.cafe.CentralUsuarios.service.impl;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
-import com.project.cafe.CentralUsuarios.dao.IBloqueDao;
-import com.project.cafe.CentralUsuarios.dao.ISedeDao;
 import com.project.cafe.CentralUsuarios.dto.CrearBodegaDTO;
-import com.project.cafe.CentralUsuarios.enums.ECodigosBloque;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarBodegasDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.enums.EEstado;
 import com.project.cafe.CentralUsuarios.model.*;
 import com.project.cafe.CentralUsuarios.service.*;
@@ -42,6 +38,11 @@ public class BodegaServiceImpl implements IBodegaService {
     @Override
     public List<BodegaTB> buscarBodegasActivasPorSede(Long idSede) {
         return bodegaDao.buscarBodegasActivasPorSede(idSede);
+    }
+
+    @Override
+    public ResponseConsultarDTO<BodegaTB> consultarBodegaFiltros(RequestConsultarBodegasDTO filtroBodega) {
+        return bodegaDao.consultarBodegaFiltros(filtroBodega);
     }
 
     @Override
