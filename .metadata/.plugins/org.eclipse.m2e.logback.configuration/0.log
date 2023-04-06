@@ -1576,3 +1576,5 @@
 2023-02-27 17:24:07,267 [Worker-99: Launching CentralUsuarios - CentralUsuariosApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
 2023-02-27 17:24:07,269 [Worker-99: Launching CentralUsuarios - CentralUsuariosApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2023-02-27 17:24:07,269 [Worker-99: Launching CentralUsuarios - CentralUsuariosApplication] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\USER\Documents\TRABAJO_JULIO_MUNOZ\EAP_ITCON_2\central-server\central\CentralUsuarios\src\test\resources
+2023-02-28 08:29:59,202 [Worker-7: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2023-04-06 12:04:19,169 [Worker-5: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
