@@ -5,13 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import com.project.cafe.CentralUsuarios.dto.*;
 import org.apache.commons.lang3.StringUtils;
 
-import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
-import com.project.cafe.CentralUsuarios.dto.RequestAgregarArchivosDTO;
-import com.project.cafe.CentralUsuarios.dto.RequestCrearMasivoDTO;
-import com.project.cafe.CentralUsuarios.dto.RequestEditarPrestamoDTO;
-import com.project.cafe.CentralUsuarios.dto.RequestSendEMailDTO;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolTB;
@@ -100,7 +96,7 @@ public abstract class Util {
 		}
 		return errores;
 	}
-	
+
 	public static List<String> validarSociedadArea(SociedadAreaTB entidadTB){
 		List<String> errores = new ArrayList<>();
 		if(entidadTB.getSociedad()==null) {
@@ -402,8 +398,45 @@ public abstract class Util {
 			errores.add(ConstantesValidaciones.VALOR_NULL_OBJETO);
 		}
 
-		return errores;
-	}
+        return errores;
+    }
+
+    public static List<String> validarCrearBodega(CrearBodegaDTO request) {
+        List<String> errores = new ArrayList<>();
+        if (request.sedeId == 0L) {
+            errores.add(ConstantesValidaciones.SEDE_ID + ConstantesValidaciones.VALOR_VACIO);
+        }
+        if (StringUtils.isBlank(request.nombreBodega)) {
+            errores.add(ConstantesValidaciones.NOMBRE_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+        }
+		if (StringUtils.isBlank(request.nombre10Bodega)) {
+			errores.add(ConstantesValidaciones.NOMBRE_10_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (StringUtils.isBlank(request.usuarioCreacion)) {
+			errores.add(ConstantesValidaciones.USU_CREACION + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (StringUtils.isBlank(request.codigoBodega)) {
+			errores.add(ConstantesValidaciones.CODIGO_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (StringUtils.isBlank(request.ownerNameBodega)) {
+			errores.add(ConstantesValidaciones.OWNER_NOMBRE_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (request.cantidadBloques == 0) {
+			errores.add(ConstantesValidaciones.CANTIDAD_BLOQUES + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (request.cantidadCuerposXBloque == 0) {
+			errores.add(ConstantesValidaciones.CUERPO_X_BLOQUE + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (request.cantidadEstantesXCuerpo == 0) {
+			errores.add(ConstantesValidaciones.ESTANTE_X_CUERPO + ConstantesValidaciones.VALOR_VACIO);
+		}
+		if (request.cantidadEntrepanoXEstante == 0) {
+			errores.add(ConstantesValidaciones.ENTREPANO_ESTANTE + ConstantesValidaciones.VALOR_VACIO);
+		}
+
+
+        return errores;
+    }
 
 	public static String generarToken(String usuario) {
 		char[] SYM_USUARIO = usuario.toCharArray();

@@ -17,29 +17,34 @@ import com.project.cafe.CentralUsuarios.model.CuerpoTB;
 @Repository
 public class CuerpoDaoImpl extends AbstractDao<CuerpoTB> implements ICuerpoDao {
 
-	@PersistenceContext(unitName = "default")
-	private EntityManager em;
+    @PersistenceContext(unitName = "default")
+    private EntityManager em;
 
-	@Override
-	public List<CuerpoTB> buscarCuerposActivosPorBloque(Long idBloque) {
-		// PARAMETROS
-		Map<String, Object> pamameters = new HashMap<>();
+    @Override
+    public List<CuerpoTB> buscarCuerposActivosPorBloque(Long idBloque) {
+        // PARAMETROS
+        Map<String, Object> pamameters = new HashMap<>();
 
-		// QUERY
-		StringBuilder JPQL = new StringBuilder("SELECT c FROM CuerpoTB c WHERE 1 = 1 ");
-		// WHERE
-			JPQL.append("AND c.bloque.id = :IDBLOQUE ");
-			pamameters.put("IDBLOQUE", idBloque);
-			
-			JPQL.append("AND c.estado = 1");
-		// Q. Order By
-		JPQL.append(" ORDER BY c.id");
-		// END QUERY
+        // QUERY
+        StringBuilder JPQL = new StringBuilder("SELECT c FROM CuerpoTB c WHERE 1 = 1 ");
+        // WHERE
+        JPQL.append("AND c.bloque.id = :IDBLOQUE ");
+        pamameters.put("IDBLOQUE", idBloque);
 
-		TypedQuery<CuerpoTB> query = em.createQuery(JPQL.toString(), CuerpoTB.class);
-		pamameters.forEach((k, v) -> query.setParameter(k, v));
+        JPQL.append("AND c.estado = 1");
+        // Q. Order By
+        JPQL.append(" ORDER BY c.id");
+        // END QUERY
 
-		return query.getResultList();
-	}
+        TypedQuery<CuerpoTB> query = em.createQuery(JPQL.toString(), CuerpoTB.class);
+        pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+        return query.getResultList();
+    }
+
+    @Override
+    public void bulkCuerpo(List<CuerpoTB> listaCuerpo) {
+        super.bulkSave(listaCuerpo);
+    }
 
 }

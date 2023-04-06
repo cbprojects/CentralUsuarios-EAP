@@ -19,38 +19,29 @@ import com.project.cafe.CentralUsuarios.util.PropertiesUtil;
 @RestController
 public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
-	private final String ERROR_NO_DATOS_BD = "Entidad no encontrada para el QUERY";
+    private final String ERROR_NO_DATOS_BD = "Entidad no encontrada para el QUERY";
 
-	@ExceptionHandler(Exception.class)
-	public final ResponseEntity<Object> manejarTodasExcepciones(Exception ex, WebRequest request) {
-		String mensaje = ex.getMessage().toUpperCase().contains(ERROR_NO_DATOS_BD.toUpperCase())
-				? PropertiesUtil.getProperty("musicroom.msg.validate.noResultBD")
-				: ex.getMessage();
-		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), mensaje, request.getDescription(true));
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<Object> manejarTodasExcepciones(Exception ex, WebRequest request) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        String mensaje = ex.getMessage().toUpperCase().contains(ERROR_NO_DATOS_BD.toUpperCase())
+                ? PropertiesUtil.getProperty("musicroom.msg.validate.noResultBD")
+                : ex.getMessage();
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), mensaje, request.getDescription(true));
 
-		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+        if (ex instanceof BadRequestException) {
+            status = HttpStatus.BAD_REQUEST;
+        }
 
-	@ExceptionHandler(ModelNotFoundException.class)
-	public final ResponseEntity<Object> manejarModeloExcepciones(ModelNotFoundException ex, WebRequest request) {
-		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-				request.getDescription(false));
+        return new ResponseEntity<Object>(exceptionResponse, status);
+    }
 
-		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
-	}
+    @ExceptionHandler(ModelNotFoundException.class)
+    public final ResponseEntity<Object> manejarModeloExcepciones(ModelNotFoundException ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+                request.getDescription(false));
 
-	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		String errores = "";
-		for (ObjectError e : ex.getBindingResult().getAllErrors()) {
-			errores += e.getObjectName();
-		}
-
-		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
-				PropertiesUtil.getProperty("musicroom.msg.validate.erroresEncontrados"), errores);
-
-		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
-	}
+        return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
 
 }

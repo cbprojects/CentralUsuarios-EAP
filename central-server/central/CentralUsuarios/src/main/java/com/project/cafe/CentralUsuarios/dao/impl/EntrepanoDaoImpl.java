@@ -17,51 +17,56 @@ import com.project.cafe.CentralUsuarios.model.EntrepanoTB;
 @Repository
 public class EntrepanoDaoImpl extends AbstractDao<EntrepanoTB> implements IEntrepanoDao {
 
-	@PersistenceContext(unitName = "default")
-	private EntityManager em;
+    @PersistenceContext(unitName = "default")
+    private EntityManager em;
 
-	@Override
-	public List<EntrepanoTB> buscarEntrepanosActivosPorEstante(Long idEstante) {
-		// PARAMETROS
-		Map<String, Object> pamameters = new HashMap<>();
+    @Override
+    public List<EntrepanoTB> buscarEntrepanosActivosPorEstante(Long idEstante) {
+        // PARAMETROS
+        Map<String, Object> pamameters = new HashMap<>();
 
-		// QUERY
-		StringBuilder JPQL = new StringBuilder("SELECT e FROM EntrepanoTB e WHERE 1 = 1 ");
-		// WHERE
-		JPQL.append("AND e.estante.id = :IDESTANTE ");
-		pamameters.put("IDESTANTE", idEstante);
+        // QUERY
+        StringBuilder JPQL = new StringBuilder("SELECT e FROM EntrepanoTB e WHERE 1 = 1 ");
+        // WHERE
+        JPQL.append("AND e.estante.id = :IDESTANTE ");
+        pamameters.put("IDESTANTE", idEstante);
 
-		JPQL.append("AND e.estado = 1");
-		// Q. Order By
-		JPQL.append(" ORDER BY e.id");
-		// END QUERY
+        JPQL.append("AND e.estado = 1");
+        // Q. Order By
+        JPQL.append(" ORDER BY e.id");
+        // END QUERY
 
-		TypedQuery<EntrepanoTB> query = em.createQuery(JPQL.toString(), EntrepanoTB.class);
-		pamameters.forEach((k, v) -> query.setParameter(k, v));
+        TypedQuery<EntrepanoTB> query = em.createQuery(JPQL.toString(), EntrepanoTB.class);
+        pamameters.forEach((k, v) -> query.setParameter(k, v));
 
-		return query.getResultList();
-	}
+        return query.getResultList();
+    }
 
-	@Override
-	public List<EntrepanoTB> buscarEntrepanoPorCodigo(String codigo) {
-		// PARAMETROS
-		Map<String, Object> pamameters = new HashMap<>();
+    @Override
+    public List<EntrepanoTB> buscarEntrepanoPorCodigo(String codigo) {
+        // PARAMETROS
+        Map<String, Object> pamameters = new HashMap<>();
 
-		// QUERY
-		StringBuilder JPQL = new StringBuilder("SELECT e FROM EntrepanoTB e WHERE 1 = 1 ");
-		// WHERE
-		JPQL.append("AND e.codigo = :CODIGO ");
-		pamameters.put("CODIGO", codigo);
+        // QUERY
+        StringBuilder JPQL = new StringBuilder("SELECT e FROM EntrepanoTB e WHERE 1 = 1 ");
+        // WHERE
+        JPQL.append("AND e.codigo = :CODIGO ");
+        pamameters.put("CODIGO", codigo);
 
-		JPQL.append("AND e.estado = 1");
-		// Q. Order By
-		JPQL.append(" ORDER BY e.id");
-		// END QUERY
+        JPQL.append("AND e.estado = 1");
+        // Q. Order By
+        JPQL.append(" ORDER BY e.id");
+        // END QUERY
 
-		TypedQuery<EntrepanoTB> query = em.createQuery(JPQL.toString(), EntrepanoTB.class);
-		pamameters.forEach((k, v) -> query.setParameter(k, v));
+        TypedQuery<EntrepanoTB> query = em.createQuery(JPQL.toString(), EntrepanoTB.class);
+        pamameters.forEach((k, v) -> query.setParameter(k, v));
 
-		return query.getResultList();
-	}
+        return query.getResultList();
+    }
+
+    @Override
+    public void bulkEntrepanos(List<EntrepanoTB> listaEntrepanos) {
+        super.bulkSave(listaEntrepanos);
+    }
 
 }

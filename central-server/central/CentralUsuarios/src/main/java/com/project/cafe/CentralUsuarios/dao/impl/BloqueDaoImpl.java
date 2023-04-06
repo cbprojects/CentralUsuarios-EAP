@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
-import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
-import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
@@ -42,5 +40,10 @@ public class BloqueDaoImpl extends AbstractDao<BloqueTB> implements IBloqueDao {
 		pamameters.forEach((k, v) -> query.setParameter(k, v));
 
 		return query.getResultList();
+	}
+
+	@Override
+	public void bulkBloque(List<BloqueTB> listaBloque){
+		super.bulkSave(listaBloque);
 	}
 }

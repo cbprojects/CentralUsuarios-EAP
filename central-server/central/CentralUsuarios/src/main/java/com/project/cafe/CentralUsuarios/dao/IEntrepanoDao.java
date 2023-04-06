@@ -20,4 +20,5 @@ public interface IEntrepanoDao {
 	 */
 	List<EntrepanoTB> buscarEntrepanoPorCodigo(String codigo);
 
+	void bulkEntrepanos(List<EntrepanoTB> listaEntrepanos);
 }

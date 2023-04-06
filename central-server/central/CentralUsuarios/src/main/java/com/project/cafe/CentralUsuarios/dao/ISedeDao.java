@@ -25,8 +25,12 @@ public interface ISedeDao {
 	 * Metodo para consultar los sede por codigo
 	 */
 	List<SedeTB> buscarSedePorCodigo(String codigoRol);
-	
-	
+
+	/*
+	 * Metodo para consultar sede por id
+	 */
+	SedeTB buscarSedePorId(long id);
+
 	/**
 	 *  método que consulta los area de manera paginada
 	 * @param filtroRol

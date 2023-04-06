@@ -2,6 +2,8 @@ package com.project.cafe.CentralUsuarios.dao;
 
 import java.util.List;
 
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarBodegasDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.BodegaTB;
 
 public interface IBodegaDao {
@@ -13,4 +15,7 @@ public interface IBodegaDao {
 	 */
 	List<BodegaTB> buscarBodegasActivasPorSede(Long idSede);
 
+	ResponseConsultarDTO<BodegaTB> consultarBodegaFiltros(RequestConsultarBodegasDTO filtroBodega);
+
+	void crearBodega(BodegaTB bodega);
 }

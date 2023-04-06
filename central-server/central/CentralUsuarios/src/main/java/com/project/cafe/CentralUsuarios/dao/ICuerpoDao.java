@@ -13,4 +13,5 @@ public interface ICuerpoDao {
  */
 	List<CuerpoTB> buscarCuerposActivosPorBloque(Long idBloque);
 
+	void bulkCuerpo(List<CuerpoTB> listaCuerpo);
 }
