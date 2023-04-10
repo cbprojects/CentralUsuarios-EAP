@@ -193,6 +193,7 @@ public final class ConstantesValidaciones {
     public static final String SIN_SOCIEDAD_CAJA = PropertiesUtil.getProperty("lbl.caja.sociedad");
     public static final String NO_TIENE_SOCIEDAD = PropertiesUtil.getProperty("lbl.msg.validate.cajaSinSociedad");
     public static final String MSG_CAJA_REPETIDA = PropertiesUtil.getProperty("lbl.msg.validate.cajaRepetida");
+    public static final String NO_TIENE_SEDE = PropertiesUtil.getProperty("lbl.msg.validate.bodegaSinSede");
 
     // labels unidad documental
     public static final String CODIGO_UNIDAD_DOCUMENTAL = PropertiesUtil.getProperty("lbl.unidad.documental.codigo");
@@ -219,7 +220,7 @@ public final class ConstantesValidaciones {
     public static final String MSG_UNIDAD_DOCUMENTAL_REPETIDA = PropertiesUtil
             .getProperty("lbl.msg.validate.unidadDocumentalRepetida");
 
-    //LABELS CREAR BODEGA
+    //LABELS BODEGA
     public static final String SEDE_ID = PropertiesUtil.getProperty("lbl.bodega.crear.sedeId");
     public static final String NOMBRE_BODEGA = PropertiesUtil.getProperty("lbl.bodega.crear.nombreBodega");
     public static final String NOMBRE_10_BODEGA = PropertiesUtil.getProperty("lbl.bodega.crear.nombre10Bodega");
@@ -230,5 +231,7 @@ public final class ConstantesValidaciones {
     public static final String USU_CREACION = PropertiesUtil.getProperty("lbl.bodega.crear.usuarioCreacion");
     public static final String CODIGO_BODEGA = PropertiesUtil.getProperty("lbl.bodega.crear.codigoBodega");
     public static final String OWNER_NOMBRE_BODEGA = PropertiesUtil.getProperty("lbl.bodega.crear.ownerNameBodega");
+    public static final String MSG_BODEGA_REPETIDA = PropertiesUtil.getProperty("centralusuarios.msg.validate.bodegaRepetida");
+    public static final String SIN_SEDE_BODEGA = PropertiesUtil.getProperty("lbl.bodega.sede");
 
 }

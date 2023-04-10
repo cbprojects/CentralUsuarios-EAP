@@ -110,4 +110,32 @@ public class BodegaDaoImpl extends AbstractDao<BodegaTB> implements IBodegaDao {
         super.create(bodega);
     }
 
+    @Override
+    public List<BodegaTB> buscarBodegaPorCodigo(String codigo) {
+        // PARAMETROS
+        Map<String, Object> pamameters = new HashMap<>();
+
+        // QUERY
+        StringBuilder JPQL = new StringBuilder("SELECT b FROM BodegaTB b WHERE 1 = 1 ");
+        // WHERE
+        if (!StringUtils.isBlank(codigo)) {
+            JPQL.append("AND b.codigo = :CODIGO ");
+            pamameters.put("CODIGO", codigo);
+        }
+        // Q. Order By
+        JPQL.append(" ORDER BY b.id");
+        // END QUERY
+
+        TypedQuery<BodegaTB> query = em.createQuery(JPQL.toString(), BodegaTB.class);
+        pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+        return query.getResultList();
+    }
+
+    @Override
+    public BodegaTB modificarBodega(BodegaTB bodega) {
+        super.update(bodega);
+        return bodega;
+    }
+
 }

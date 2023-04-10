@@ -5,6 +5,7 @@ public final class ConstantesTablasNombre {
 	public static final String MRA_USUARIO_AUTOR_TB = "eu_usuario_autor_tb";
 	public static final String MRA_PERFIL_TB = "gdo_perfil_tb";
 	public static final String MRA_ROL_TB = "gdo_rol_tb";
+	public static final String MRA_BODEGA_TB = "gdo_bodega_tb";
 	public static final String MRA_SOCIEDAD_TB = "gdo_sociedad_tb";
 	public static final String MRA_SOCIEDAD_AREA_TB = "gdo_sociedad_area_tb";
 	public static final String MRA_USUARIO_SEDE_TB = "gdo_usuario_sede_tb";

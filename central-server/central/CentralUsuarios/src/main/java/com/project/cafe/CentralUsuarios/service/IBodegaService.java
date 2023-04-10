@@ -7,6 +7,8 @@ import com.project.cafe.CentralUsuarios.dto.RequestConsultarBodegasDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.model.BodegaTB;
 
+import javax.transaction.Transactional;
+
 public interface IBodegaService {
 
     /**
@@ -24,4 +26,9 @@ public interface IBodegaService {
      * @return
      */
     void crearBodega(CrearBodegaDTO crearBodegaDTO);
+
+    List<BodegaTB> buscarBodegaPorCodigo(String codigo);
+
+    @Transactional
+    BodegaTB modificarBodega(BodegaTB bodega);
 }

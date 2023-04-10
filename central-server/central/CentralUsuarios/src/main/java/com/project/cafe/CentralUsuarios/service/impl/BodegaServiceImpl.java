@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.project.cafe.CentralUsuarios.dao.IBodegaDao;
 
+import javax.transaction.Transactional;
+
 @Service
 public class BodegaServiceImpl implements IBodegaService {
 
@@ -89,6 +91,17 @@ public class BodegaServiceImpl implements IBodegaService {
         bodegaTB.setOwnerName(crearBodegaDTO.ownerNameBodega);
         bodegaTB.setSede(sedeService.buscarSedePorId(crearBodegaDTO.sedeId));
         return bodegaTB;
+    }
+
+    @Override
+    public List<BodegaTB> buscarBodegaPorCodigo(String codigo) {
+        return bodegaDao.buscarBodegaPorCodigo(codigo);
+    }
+
+    @Transactional
+    @Override
+    public BodegaTB modificarBodega(BodegaTB bodega) {
+        return bodegaDao.modificarBodega(bodega);
     }
 
 

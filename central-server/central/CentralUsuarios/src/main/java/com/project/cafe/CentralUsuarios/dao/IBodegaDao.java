@@ -18,4 +18,8 @@ public interface IBodegaDao {
 	ResponseConsultarDTO<BodegaTB> consultarBodegaFiltros(RequestConsultarBodegasDTO filtroBodega);
 
 	void crearBodega(BodegaTB bodega);
+
+	List<BodegaTB> buscarBodegaPorCodigo(String codigo);
+
+	BodegaTB modificarBodega(BodegaTB bodega);
 }
