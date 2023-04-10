@@ -1,12 +1,17 @@
 package com.project.cafe.CentralUsuarios.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 
 import com.project.cafe.CentralUsuarios.dto.*;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.project.cafe.CentralUsuarios.model.CajaTB;
 import com.project.cafe.CentralUsuarios.model.PerfilTB;
@@ -17,7 +22,17 @@ import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
 import com.project.cafe.CentralUsuarios.model.UsuarioSedeTB;
 import com.project.cafe.CentralUsuarios.model.UsuarioTB;
 
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+
 public abstract class Util {
+	
+	
 
 	public static boolean esCorreoValido(String email) {
 		Matcher mather = ConstantesValidaciones.EMAIL_PATTERN.matcher(email.toLowerCase());
@@ -458,5 +473,7 @@ public abstract class Util {
 		String salt = PasswordUtil.getSalt(ConstantesValidaciones.SALT_ENCRIPTAR_CLAVE, password);
 		return PasswordUtil.generateSecurePassword(password, salt);
 	}
+	
+	
 
 }

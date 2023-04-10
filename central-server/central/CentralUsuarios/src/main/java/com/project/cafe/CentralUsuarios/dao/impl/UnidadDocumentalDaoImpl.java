@@ -15,8 +15,10 @@ import com.project.cafe.CentralUsuarios.dao.AbstractDao;
 import com.project.cafe.CentralUsuarios.dao.IUnidadDocumentalDao;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarArchivoUdDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarListaUdDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarUDRecepcionDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUnidadDocumentalDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
+import com.project.cafe.CentralUsuarios.model.CajaTB;
 import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
 import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
 
@@ -347,6 +349,81 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 
 				TypedQuery<UnidadDocumentalTB> query = em.createQuery(JPQL.toString(), UnidadDocumentalTB.class);
 				pamametros.forEach((k, v) -> query.setParameter(k, v));
+
+				return query.getResultList();
+	}
+
+	@Override
+	public ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalRecepcion(
+			RequestConsultarUDRecepcionDTO request, CajaTB cajaTB) {
+		
+		ResponseConsultarDTO<UnidadDocumentalTB> response = new ResponseConsultarDTO<>();
+
+		// PARAMETROS
+		Map<String, Object> pamametros = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder(
+				"SELECT u FROM UnidadDocumentalTB u " + " INNER JOIN u.caja c " + " WHERE 1 = 1 ");
+		// WHERE
+		JPQL.append(" AND c.cliente.id = :IDCLIENTE ");
+				pamametros.put("IDCLIENTE",request.getCliente().getId());
+		
+		
+		JPQL.append(" AND u.caja.id = :IDCAJA ");
+		pamametros.put("IDCAJA",cajaTB.getId());
+		
+
+		String COUNT = "SELECT COUNT(u) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
+
+		// Q. Order By
+		JPQL.append(" ORDER BY u.id DESC");
+		// END QUERY
+
+		// QUERY COUNT
+		TypedQuery<Long> queryCount = em.createQuery(COUNT, Long.class);
+		pamametros.forEach((k, v) -> queryCount.setParameter(k, v));
+		response.setRegistrosTotales(queryCount.getSingleResult());
+
+		TypedQuery<UnidadDocumentalTB> query = em.createQuery(JPQL.toString(), UnidadDocumentalTB.class);
+		pamametros.forEach((k, v) -> query.setParameter(k, v));
+
+		query.setFirstResult(request.getRegistroInicial());
+		query.setMaxResults(request.getCantidadRegistro());
+		List<UnidadDocumentalTB> listaUnidadDocumental = query.getResultList();
+
+		response.setResultado(listaUnidadDocumental);
+
+		return response;
+	}
+
+	@Override
+	public List<UnidadDocumentalTB> consultarUnidadDocumentalRecepcionPdf(RequestConsultarUDRecepcionDTO request,
+			CajaTB cajaTB) {
+		// PARAMETROS
+				Map<String, Object> pamameters = new HashMap<>();
+
+				
+				// QUERY
+				StringBuilder JPQL = new StringBuilder(
+						"SELECT u FROM UnidadDocumentalTB u " + " INNER JOIN u.caja c " + " WHERE 1 = 1 ");
+				// WHERE
+				JPQL.append(" AND c.cliente.id = :IDCLIENTE ");
+				pamameters.put("IDCLIENTE",request.getCliente().getId());
+				
+				
+				JPQL.append(" AND u.caja.id = :IDCAJA ");
+				pamameters.put("IDCAJA",cajaTB.getId());
+				
+				JPQL.append(" AND u.recepcionAprobada = :APROBADA ");
+				pamameters.put("APROBADA",true);
+
+				// Q. Order By
+				JPQL.append(" ORDER BY u.id");
+				// END QUERY
+
+				TypedQuery<UnidadDocumentalTB> query = em.createQuery(JPQL.toString(), UnidadDocumentalTB.class);
+				pamameters.forEach((k, v) -> query.setParameter(k, v));
 
 				return query.getResultList();
 	}

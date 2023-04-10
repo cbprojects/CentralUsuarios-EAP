@@ -6,8 +6,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarArchivoUdDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarListaUdDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarUDRecepcionDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUnidadDocumentalDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
+import com.project.cafe.CentralUsuarios.model.CajaTB;
 import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
 
 @EnableTransactionManagement
@@ -48,6 +50,12 @@ public interface IUnidadDocumentalDao {
 	List<UnidadDocumentalTB> consultarUnidadDocumentalList(RequestConsultarListaUdDTO request);
 
 	List<UnidadDocumentalTB> obtenerArchivos(RequestConsultarArchivoUdDTO request);
+
+	ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalRecepcion(RequestConsultarUDRecepcionDTO request,
+			CajaTB cajaTB);
+
+	List<UnidadDocumentalTB> consultarUnidadDocumentalRecepcionPdf(RequestConsultarUDRecepcionDTO request,
+			CajaTB cajaTB);
 
 	
 

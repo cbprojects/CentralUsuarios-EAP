@@ -50,6 +50,36 @@ public class CajaServiceImpl implements ICajaService {
 	@Transactional
 	@Override
 	public CajaTB retornarCajaInicialPorCliente(ClienteTB cliente) {
+		List<CajaTB> lstCajas=cajaDAO.buscarcajaPorCodigoCliente("C-RECEP",cliente.getId());
+		if(lstCajas == null || lstCajas.isEmpty()) {
+			List<EntrepanoTB> lstEntrepano = entrepanoDAO.buscarEntrepanoPorCodigo("ENTREPANO0");
+			EntrepanoTB nuevoEntrepano= new EntrepanoTB();
+			nuevoEntrepano=lstEntrepano.get(0);
+			CajaTB nuevaCaja= new CajaTB();
+			nuevaCaja.setCliente(cliente);
+			nuevaCaja.setCodigoAlterno("C-RECEP");
+			nuevaCaja.setCodigoBarras("CAJA_RECEPCION");
+			nuevaCaja.setDescripcion("Caja recepcion cliente:"+cliente.getNombre());
+			nuevaCaja.setEntrepano(nuevoEntrepano);
+			Short activo=1;
+			nuevaCaja.setEstado(activo);
+			nuevaCaja.setQr("C-RECEP");
+			nuevaCaja.setUsuarioCreacion("SYSTEM");
+			nuevaCaja.setUsuarioActualizacion("SYSTEM");
+			return cajaDAO.crearCaja(nuevaCaja);
+		}else {
+			return lstCajas.get(0);
+		}
+	}
+
+	@Override
+	public List<CajaTB> consultarCajasPorCliente(Long idCliente) {
+		return cajaDAO.consultarCajasPorCliente(idCliente);
+	}
+	
+	@Transactional
+	@Override
+	public CajaTB retornarCajaPrimeraPorCliente(ClienteTB cliente) {
 		List<CajaTB> lstCajas=cajaDAO.buscarcajaPorCodigoCliente("C-INICIAL",cliente.getId());
 		if(lstCajas == null || lstCajas.isEmpty()) {
 			List<EntrepanoTB> lstEntrepano = entrepanoDAO.buscarEntrepanoPorCodigo("ENTREPANO0");
@@ -70,11 +100,6 @@ public class CajaServiceImpl implements ICajaService {
 		}else {
 			return lstCajas.get(0);
 		}
-	}
-
-	@Override
-	public List<CajaTB> consultarCajasPorCliente(Long idCliente) {
-		return cajaDAO.consultarCajasPorCliente(idCliente);
 	}
 	
 

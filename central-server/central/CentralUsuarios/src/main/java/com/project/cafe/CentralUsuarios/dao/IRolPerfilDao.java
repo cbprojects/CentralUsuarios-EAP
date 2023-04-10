@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolPerfilTB;
 
 @EnableTransactionManagement
@@ -24,6 +25,8 @@ public interface IRolPerfilDao {
 	 * Metodo para Buscar roles segun el perfil 
 	 */
 	List<RolPerfilTB> BuscarRolesSegunPerfil(long id);
+
+	List<PerfilTB> BuscarPerfilPorRolCodigo(String string);
 
 	
 }

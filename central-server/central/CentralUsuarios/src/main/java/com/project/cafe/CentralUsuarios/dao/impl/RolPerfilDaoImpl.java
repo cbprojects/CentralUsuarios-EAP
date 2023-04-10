@@ -1,5 +1,6 @@
 package com.project.cafe.CentralUsuarios.dao.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.cafe.CentralUsuarios.dao.AbstractDao;
 import com.project.cafe.CentralUsuarios.dao.IRolPerfilDao;
+import com.project.cafe.CentralUsuarios.model.PerfilTB;
 import com.project.cafe.CentralUsuarios.model.RolPerfilTB;
 
 @Repository
@@ -30,8 +32,8 @@ public class RolPerfilDaoImpl extends AbstractDao<RolPerfilTB> implements IRolPe
 	@Override
 	@Transactional
 	public void eliminarRolPerfilMasivoXPerfil(Long id) {
-		em.createQuery("delete from  RolPerfilTB " 
-                + " t where t.perfil.id =:IDPERFIL").setParameter("IDPERFIL", id).executeUpdate();
+		em.createQuery("delete from  RolPerfilTB " + " t where t.perfil.id =:IDPERFIL").setParameter("IDPERFIL", id)
+				.executeUpdate();
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class RolPerfilDaoImpl extends AbstractDao<RolPerfilTB> implements IRolPe
 		// WHERE
 		JPQL.append(" AND t.perfil.id = :IDPERFIL ");
 		pamameters.put("IDPERFIL", id);
-		
+
 		// Q. Order By
 		JPQL.append(" ORDER BY t.id");
 		// END QUERY
@@ -54,5 +56,35 @@ public class RolPerfilDaoImpl extends AbstractDao<RolPerfilTB> implements IRolPe
 
 		return query.getResultList();
 	}
-	
+
+	@Override
+	public List<PerfilTB> BuscarPerfilPorRolCodigo(String codigoRol) {
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT t FROM RolPerfilTB t WHERE t.estado = 1 ");
+		// WHERE
+		JPQL.append(" AND t.rol.codigo = :ROLCODIGO ");
+		pamameters.put("ROLCODIGO", codigoRol);
+
+		// Q. Order By
+		JPQL.append(" ORDER BY t.id");
+		// END QUERY
+
+		TypedQuery<RolPerfilTB> query = em.createQuery(JPQL.toString(), RolPerfilTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+		
+		List<RolPerfilTB> listRolPerfil=query.getResultList();
+		List<PerfilTB> lstPerfil=new ArrayList<>();
+		if(!listRolPerfil.isEmpty()) {
+			for (RolPerfilTB rolPerfilTB : listRolPerfil) {
+				lstPerfil.add(rolPerfilTB.getPerfil());
+			}
+		}
+		
+
+		return lstPerfil;
+	}
+
 }

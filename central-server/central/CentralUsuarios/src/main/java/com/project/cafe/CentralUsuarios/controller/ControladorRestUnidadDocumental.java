@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.cafe.CentralUsuarios.dto.ArchivoDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestAprobarRecepcionDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestCambiarCajaUnidadDocumentalMasivaDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarListaUdDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarUDRecepcionDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUnidadDocumentalDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUnidadDocumentalMasivaDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarUnidadDocumentalMasivaDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseGenerarPdfDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseMensajeCodigoDTO;
 import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
@@ -62,6 +66,7 @@ public class ControladorRestUnidadDocumental {
 						unidadDocumental.getSociedadArea().getArea().getId());
 				unidadDocumental.setSociedadArea(sociedadArea);
 				unidadDocumental.setCaja(cajaInicial);
+				unidadDocumental.setRecepcionAprobada(false);
 				nuevaUnidadDocumental = unidadDocumentalService.crearUnidadDocumental(unidadDocumental);
 
 			} else {
@@ -102,7 +107,7 @@ public class ControladorRestUnidadDocumental {
 			if (errores.isEmpty()) {
 				// validar unidad documental unica por sociedad
 
-				if (!unidadDocumental.getCaja().getCodigoAlterno().equals("C-INICIAL")) {
+				if (!unidadDocumental.getCaja().getCodigoAlterno().equals("C-RECEP")) {
 					CajaTB cajaInicial = cajalService
 							.retornarCajaInicialPorCliente(unidadDocumental.getSociedadArea().getSociedad().getCliente());
 					unidadDocumental.setCaja(cajaInicial);
@@ -144,7 +149,7 @@ public class ControladorRestUnidadDocumental {
 		}
 		return false;
 	}
-// CONSULTA
+// CONSULTA 
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/consultarUnidadDocumentalFiltros")
@@ -152,6 +157,18 @@ public class ControladorRestUnidadDocumental {
 			@RequestBody RequestConsultarUnidadDocumentalDTO request) {
 		try {
 			return unidadDocumentalService.consultarUnidadDocumentalFiltros(request);
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+	
+// CONSULTA RECEPCION
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/consultarUnidadDocumentalRecepcion")
+	public ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalRecepcion(
+			@RequestBody RequestConsultarUDRecepcionDTO request) {
+		try {
+			return unidadDocumentalService.consultarUnidadDocumentalRecepcion(request);
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
@@ -205,6 +222,37 @@ public class ControladorRestUnidadDocumental {
 			@RequestBody RequestConsultarListaUdDTO request) {
 		try {
 			return unidadDocumentalService.consultarUnidadDocumentalList(request);
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+	
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/aprobacionRecepcion")
+	public ResponseMensajeCodigoDTO aprobacionRecepcion(
+			@RequestBody RequestAprobarRecepcionDTO request) {
+		try {
+			return unidadDocumentalService.aprobacionRecepcion(request);
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+	
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/generarPdf")
+	public ResponseGenerarPdfDTO generarPdf(@RequestBody RequestConsultarUDRecepcionDTO request) {
+		try {
+			return unidadDocumentalService.generarPdf(request);
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+	
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/enviarPdf")
+	public ResponseMensajeCodigoDTO enviarPdf(@RequestBody RequestConsultarUDRecepcionDTO request) {
+		try {
+			return unidadDocumentalService.enviarPdf(request);
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}

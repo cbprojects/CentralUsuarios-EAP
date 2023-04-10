@@ -95,6 +95,9 @@ public class UnidadDocumentalTB extends BaseEntidadTB implements Serializable {
 	
 	@Column(name = "und_cajaRecibido", nullable = true, length = 128)
 	private String cajaRecibido;
+	
+	@Column(name = "und_recepcionAprobada", nullable = true)
+	private Boolean recepcionAprobada;
 
 	
 }

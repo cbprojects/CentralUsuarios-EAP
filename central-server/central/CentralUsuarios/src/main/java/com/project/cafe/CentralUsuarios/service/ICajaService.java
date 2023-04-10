@@ -45,4 +45,6 @@ public interface ICajaService {
 	 */
 	List<CajaTB> consultarCajasPorCliente(Long idCliente);
 
+	CajaTB retornarCajaPrimeraPorCliente(ClienteTB cliente);
+
 }

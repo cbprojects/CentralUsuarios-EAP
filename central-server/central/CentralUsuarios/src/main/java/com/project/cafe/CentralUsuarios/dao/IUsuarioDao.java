@@ -44,4 +44,8 @@ public interface IUsuarioDao {
 
 	List<UsuarioTB> consultarUsuarioActivo();
 
+	List<UsuarioTB> buscarUsuariosAdministrador(List<Long> lstPerfiles);
+
+	UsuarioTB consultarUsuariosPorId(Long idUser);
+
 }

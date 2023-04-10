@@ -165,4 +165,49 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 		return query.getResultList();
 	}
 
+	@Override
+	public List<UsuarioTB> buscarUsuariosAdministrador(List<Long> lstPerfiles) {
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder(
+				"SELECT u FROM UsuarioTB u INNER JOIN u.perfil p " + " WHERE  p = rp.perfil ");
+		// WHERE
+
+		JPQL.append(" AND p.id IN :LISTAPER ");
+		pamameters.put("LISTAPER", lstPerfiles);
+
+		// Q. Order By
+		JPQL.append(" ORDER BY u.id");
+		// END QUERY
+
+		TypedQuery<UsuarioTB> query = em.createQuery(JPQL.toString(), UsuarioTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getResultList();
+	}
+
+	@Override
+	public UsuarioTB consultarUsuariosPorId(Long idUser) {
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT u FROM UsuarioTB u WHERE 1 = 1 ");
+		// WHERE
+
+		JPQL.append("AND u.id = :ID");
+		pamameters.put("ID", idUser);
+
+		// Q. Order By
+		JPQL.append(" ORDER BY u.id");
+		// END QUERY
+
+		TypedQuery<UsuarioTB> query = em.createQuery(JPQL.toString(), UsuarioTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getResultList().get(0);
+	}
+
 }

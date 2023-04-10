@@ -3,10 +3,14 @@ package com.project.cafe.CentralUsuarios.service;
 import java.util.List;
 
 import com.project.cafe.CentralUsuarios.dto.CajaListDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestAprobarRecepcionDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarArchivoUdDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarListaUdDTO;
+import com.project.cafe.CentralUsuarios.dto.RequestConsultarUDRecepcionDTO;
 import com.project.cafe.CentralUsuarios.dto.RequestConsultarUnidadDocumentalDTO;
 import com.project.cafe.CentralUsuarios.dto.ResponseConsultarDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseGenerarPdfDTO;
+import com.project.cafe.CentralUsuarios.dto.ResponseMensajeCodigoDTO;
 import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
 
 public interface IUnidadDocumentalService {
@@ -53,5 +57,13 @@ public interface IUnidadDocumentalService {
 
 	
 	List<CajaListDTO> obtenerArchivos(RequestConsultarArchivoUdDTO request);
+
+	ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalRecepcion(RequestConsultarUDRecepcionDTO request);
+
+	ResponseMensajeCodigoDTO aprobacionRecepcion(RequestAprobarRecepcionDTO request);
+
+	ResponseGenerarPdfDTO generarPdf(RequestConsultarUDRecepcionDTO request);
+
+	ResponseMensajeCodigoDTO enviarPdf(RequestConsultarUDRecepcionDTO request);
 
 }

@@ -43,6 +43,9 @@ public class ClienteTB extends BaseEntidadTB implements Serializable {
 	@NotNull
 	@Column(name = "cli_Tax_Id", nullable = true, length = 20)
 	private String tax;
+	
+	@Column(name = "cli_numeroFactura", nullable = false,columnDefinition = "integer default 0")
+	private Integer numeroFactura;
 
 	public long getId() {
 		return id;
