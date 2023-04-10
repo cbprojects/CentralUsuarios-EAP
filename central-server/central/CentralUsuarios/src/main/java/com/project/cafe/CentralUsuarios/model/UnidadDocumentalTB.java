@@ -42,7 +42,7 @@ public class UnidadDocumentalTB extends BaseEntidadTB implements Serializable {
 	private String codigo;
 	
 	@NotNull
-	@Column(name = "und_nombre", nullable = false, length = 50)
+	@Column(name = "und_nombre", nullable = false, length = 2000)
 	private String nombre;
 	
 	@NotNull

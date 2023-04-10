@@ -172,7 +172,7 @@ public class UsuarioDaoImpl extends AbstractDao<UsuarioTB> implements IUsuarioDa
 
 		// QUERY
 		StringBuilder JPQL = new StringBuilder(
-				"SELECT u FROM UsuarioTB u INNER JOIN u.perfil p " + " WHERE  p = rp.perfil ");
+				"SELECT u FROM UsuarioTB u INNER JOIN u.perfil p " + " WHERE 1 = 1  ");
 		// WHERE
 
 		JPQL.append(" AND p.id IN :LISTAPER ");
