@@ -49,6 +49,10 @@ public class UnidadDocumentalTB extends BaseEntidadTB implements Serializable {
 	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private SociedadAreaTB sociedadArea;
 	
+	@NotNull
+	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	private ProyectoTB proyecto;
+	
 	@Column(name = "und_descripcion", nullable = true, length = 500)
 	private String descripcion;
 	

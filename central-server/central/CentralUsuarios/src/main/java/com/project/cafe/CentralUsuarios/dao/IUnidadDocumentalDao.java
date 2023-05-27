@@ -57,6 +57,9 @@ public interface IUnidadDocumentalDao {
 	List<UnidadDocumentalTB> consultarUnidadDocumentalRecepcionPdf(RequestConsultarUDRecepcionDTO request,
 			CajaTB cajaTB);
 
+	ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltrosRecep(
+			RequestConsultarUnidadDocumentalDTO request);
+
 	
 
 }

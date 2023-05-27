@@ -28,10 +28,12 @@ import com.project.cafe.CentralUsuarios.exception.ModelNotFoundException;
 import com.project.cafe.CentralUsuarios.model.CajaTB;
 import com.project.cafe.CentralUsuarios.model.SociedadAreaTB;
 import com.project.cafe.CentralUsuarios.model.UnidadDocumentalTB;
+import com.project.cafe.CentralUsuarios.service.IActaService;
 import com.project.cafe.CentralUsuarios.service.ICajaService;
 import com.project.cafe.CentralUsuarios.service.ISociedadAreaService;
 import com.project.cafe.CentralUsuarios.service.IUnidadDocumentalService;
 import com.project.cafe.CentralUsuarios.util.ConstantesTablasNombre;
+import com.project.cafe.CentralUsuarios.util.ConstantesValidaciones;
 import com.project.cafe.CentralUsuarios.util.PropertiesUtil;
 import com.project.cafe.CentralUsuarios.util.Util;
 
@@ -41,6 +43,9 @@ public class ControladorRestUnidadDocumental {
 
 	@Autowired
 	private ICajaService cajalService;
+	
+	@Autowired
+	private IActaService actaService;
 
 	@Autowired
 	private IUnidadDocumentalService unidadDocumentalService;
@@ -57,33 +62,45 @@ public class ControladorRestUnidadDocumental {
 			List<String> errores = Util.validaDatos(ConstantesTablasNombre.MRA_UNIDAD_DOCUMENTAL_TB, unidadDocumental);
 
 			UnidadDocumentalTB nuevaUnidadDocumental = new UnidadDocumentalTB();
-			if (errores.isEmpty()) {
-				// Obtener cliente de sociedad
-				CajaTB cajaInicial = cajalService
-						.retornarCajaInicialPorCliente(unidadDocumental.getSociedadArea().getSociedad().getCliente());
-				SociedadAreaTB sociedadArea = sociedadAreaService.buscarSociedadAreaPorSociedadArea(
-						unidadDocumental.getSociedadArea().getSociedad().getId(),
-						unidadDocumental.getSociedadArea().getArea().getId());
-				unidadDocumental.setSociedadArea(sociedadArea);
-				unidadDocumental.setCaja(cajaInicial);
-				unidadDocumental.setRecepcionAprobada(false);
-				nuevaUnidadDocumental = unidadDocumentalService.crearUnidadDocumental(unidadDocumental);
+			if(validarActasNoAprobadasCliente(unidadDocumental.getSociedadArea().getSociedad().getCliente().getId())) {
+				if (errores.isEmpty()) {
+					// Obtener cliente de sociedad
+					CajaTB cajaInicial = cajalService
+							.retornarCajaInicialPorCliente(unidadDocumental.getSociedadArea().getSociedad().getCliente());
+					SociedadAreaTB sociedadArea = sociedadAreaService.buscarSociedadAreaPorSociedadArea(
+							unidadDocumental.getSociedadArea().getSociedad().getId(),
+							unidadDocumental.getSociedadArea().getArea().getId());
+					unidadDocumental.setSociedadArea(sociedadArea);
+					unidadDocumental.setCaja(cajaInicial);
+					unidadDocumental.setRecepcionAprobada(false);
+					nuevaUnidadDocumental = unidadDocumentalService.crearUnidadDocumental(unidadDocumental);
 
-			} else {
-				StringBuilder mensajeErrores = new StringBuilder();
-				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
+				} else {
+					StringBuilder mensajeErrores = new StringBuilder();
+					String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
 
-				for (String error : errores) {
-					mensajeErrores.append(error + "|");
+					for (String error : errores) {
+						mensajeErrores.append(error + "|");
+					}
+
+					throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 				}
+			}else {
+				String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
+				String mensajeErrores = ConstantesValidaciones.MSG_UNIDAD_DOCUMENTAL_ACTA;
 
 				throw new ModelNotFoundException(erroresTitle + mensajeErrores);
 			}
+			
 
 			return new ResponseEntity<UnidadDocumentalTB>(nuevaUnidadDocumental, HttpStatus.OK);
 		} catch (Exception e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}
+	}
+
+	private boolean validarActasNoAprobadasCliente(long id) {
+		return actaService.validarActasNoAprobadasCliente(id);
 	}
 
 	private boolean validarUnidadDocumentalUnicoCrear(String codigo, long id) {
@@ -157,6 +174,17 @@ public class ControladorRestUnidadDocumental {
 			@RequestBody RequestConsultarUnidadDocumentalDTO request) {
 		try {
 			return unidadDocumentalService.consultarUnidadDocumentalFiltros(request);
+		} catch (JSONException e) {
+			throw new ModelNotFoundException(e.getMessage());
+		}
+	}
+	
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping("/consultarUnidadDocumentalFiltrosRecep")
+	public ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltrosRecep(
+			@RequestBody RequestConsultarUnidadDocumentalDTO request) {
+		try {
+			return unidadDocumentalService.consultarUnidadDocumentalFiltrosRecep(request);
 		} catch (JSONException e) {
 			throw new ModelNotFoundException(e.getMessage());
 		}

@@ -17,7 +17,7 @@ public interface IBodegaDao {
 
 	ResponseConsultarDTO<BodegaTB> consultarBodegaFiltros(RequestConsultarBodegasDTO filtroBodega);
 
-	void crearBodega(BodegaTB bodega);
+	BodegaTB crearBodega(BodegaTB bodega);
 
 	List<BodegaTB> buscarBodegaPorCodigo(String codigo);
 

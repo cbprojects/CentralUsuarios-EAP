@@ -47,12 +47,14 @@ public class BodegaServiceImpl implements IBodegaService {
         return bodegaDao.consultarBodegaFiltros(filtroBodega);
     }
 
+    @Transactional
     @Override
-    public void crearBodega(CrearBodegaDTO crearBodegaDTO) {
+    public BodegaTB crearBodega(CrearBodegaDTO crearBodegaDTO) {
 
         //CREAR BODEGA
+    	BodegaTB bodegaTB1=new BodegaTB();
         BodegaTB bodegaTB = buildBodega(crearBodegaDTO);
-        bodegaDao.crearBodega(bodegaTB);
+        bodegaTB1=bodegaDao.crearBodega(bodegaTB);
 
         //CREAR BLOQUES
         List<BloqueTB> listaBloques = bloqueService.buildBloques(crearBodegaDTO.cantidadBloques, crearBodegaDTO.usuarioCreacion,
@@ -77,6 +79,7 @@ public class BodegaServiceImpl implements IBodegaService {
                 });
             });
         });
+        return bodegaTB1;
 
     }
 

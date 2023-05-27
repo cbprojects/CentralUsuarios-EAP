@@ -106,8 +106,9 @@ public class BodegaDaoImpl extends AbstractDao<BodegaTB> implements IBodegaDao {
     }
 
     @Override
-    public void crearBodega(BodegaTB bodega) {
+    public BodegaTB crearBodega(BodegaTB bodega) {
         super.create(bodega);
+        return bodega;
     }
 
     @Override

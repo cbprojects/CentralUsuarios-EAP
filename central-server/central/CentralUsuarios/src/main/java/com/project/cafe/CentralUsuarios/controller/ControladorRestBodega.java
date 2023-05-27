@@ -55,13 +55,14 @@ public class ControladorRestBodega {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping("/crearBodega")
-    public void crearBodega(@RequestBody CrearBodegaDTO request) {
+    public ResponseEntity<BodegaTB> crearBodega(@RequestBody CrearBodegaDTO request) {
         try {
+        	BodegaTB newBodega = new BodegaTB();
             List<String> errores = Util.validarCrearBodega(request);
             if (errores.isEmpty()) {
                 // validar bodega unica
                 if (validarBodegaUnicaCrear(request.codigoBodega)) {
-                    bodegaService.crearBodega(request);
+                	newBodega=bodegaService.crearBodega(request);
                 } else {
                     String erroresTitle = PropertiesUtil.getProperty("centralusuarios.msg.validate.erroresEncontrados");
                     String mensajeErrores = ConstantesValidaciones.MSG_BODEGA_REPETIDA;
@@ -76,8 +77,9 @@ public class ControladorRestBodega {
                     mensajeErrores.append(error + "|");
                 }
 
-                throw new BadRequestException(erroresTitle + mensajeErrores);
+                throw new ModelNotFoundException(erroresTitle + mensajeErrores);
             }
+            return new ResponseEntity<BodegaTB>(newBodega, HttpStatus.OK);
 
         } catch (JSONException e) {
             throw new ModelNotFoundException(e.getMessage());

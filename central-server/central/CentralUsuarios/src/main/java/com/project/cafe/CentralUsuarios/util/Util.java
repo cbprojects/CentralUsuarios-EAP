@@ -79,11 +79,87 @@ public abstract class Util {
                 case ConstantesTablasNombre.MRA_BODEGA_TB:
                     errores = validarBodega((BodegaTB) entidadTB);
                     break;
+                case ConstantesTablasNombre.MRA_PROYECTO_TB:
+                    errores = validarProyecto((ProyectoTB) entidadTB);
+                    break;
+                case ConstantesTablasNombre.MRA_PERMISOS_BODEGA_TB:
+                    errores = validarPermisosBodega((PermisosBodegaTB) entidadTB);
+                    break;
+                case ConstantesTablasNombre.MRA_USUARIO_CLIENTE_TB:
+                    errores = validarUsuarioCliente((UsuarioClienteTB) entidadTB);
+                    break;
             }
         } else {
             errores.add(ConstantesValidaciones.TABLA_NO_ESTABLECIDA_VALIDACIONES);
         }
 
+        return errores;
+    }
+    
+    private static List<String> validarUsuarioCliente(UsuarioClienteTB entidadTB) {
+    	List<String> errores = new ArrayList<>();
+        if (entidadTB.getUsuario() == null) {
+            errores.add(ConstantesValidaciones.USUARIO_USUARIO_CLIENTE + ConstantesValidaciones.VALOR_VACIO);
+        } else {
+            if (entidadTB.getUsuario().getId() == 0l) {
+                errores.add(ConstantesValidaciones.USUARIO_USUARIO_CLIENTE + ConstantesValidaciones.VALOR_VACIO);
+            }
+        }
+        if (entidadTB.getCliente() == null) {
+            errores.add(ConstantesValidaciones.USUARIO_CLIENTE_CLIENTE + ConstantesValidaciones.VALOR_VACIO);
+        } else {
+            if (entidadTB.getCliente().getId() == 0l) {
+                errores.add(ConstantesValidaciones.USUARIO_CLIENTE_CLIENTE + ConstantesValidaciones.VALOR_VACIO);
+            }
+        }
+        return errores;
+	}
+
+	public static List<String> validarPermisosBodega(PermisosBodegaTB permisosBodega) {
+        List<String> errores = new ArrayList<>();
+
+        if (permisosBodega.getCrear()==null) {
+            errores.add(ConstantesValidaciones.CREAR_PERMISOS_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+        }
+        if (permisosBodega.getEditar()==null) {
+            errores.add(ConstantesValidaciones.EDITAR_PERMISOS_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+        }
+        if (permisosBodega.getConsultar()==null) {
+            errores.add(ConstantesValidaciones.CONSULTAR_PERMISOS_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+        }
+        if (permisosBodega.getEliminar()==null) {
+            errores.add(ConstantesValidaciones.ELIMINAR_PERMISOS_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+        }
+        if (permisosBodega.getBodega() == null) {
+            errores.add(ConstantesValidaciones.BODEGA_PERMISOS_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+        } else {
+            if (permisosBodega.getBodega().getId() == 0l) {
+                errores.add(ConstantesValidaciones.BODEGA_PERMISOS_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+            }
+        }
+        if (permisosBodega.getUsuario() == null) {
+            errores.add(ConstantesValidaciones.USUARIO_PERMISOS_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+        } else {
+            if (permisosBodega.getUsuario().getId() == 0l) {
+                errores.add(ConstantesValidaciones.USUARIO_PERMISOS_BODEGA + ConstantesValidaciones.VALOR_VACIO);
+            }
+        }
+        return errores;
+    }
+    
+    public static List<String> validarProyecto(ProyectoTB proyectoTB) {
+        List<String> errores = new ArrayList<>();
+
+        if (StringUtils.isBlank(proyectoTB.getNombre())) {
+            errores.add(ConstantesValidaciones.NOMBRE_PROYECTO + ConstantesValidaciones.VALOR_VACIO);
+        }
+        if (proyectoTB.getSociedad() == null) {
+            errores.add(ConstantesValidaciones.SOCIEDAD_PROYECTO + ConstantesValidaciones.VALOR_VACIO);
+        } else {
+            if (proyectoTB.getSociedad().getId() == 0l) {
+                errores.add(ConstantesValidaciones.SOCIEDAD_PROYECTO + ConstantesValidaciones.VALOR_VACIO);
+            }
+        }
         return errores;
     }
 
@@ -244,6 +320,15 @@ public abstract class Util {
             if (unidadDocumental.getContenedor().getId() == 0) {
                 errores.add(ConstantesValidaciones.CONTENEDOR_UNIDAD_DOCUMENTAL
                         + ConstantesValidaciones.SIN_CONTENEDOR_UNIDAD_DOCUMENTAL);
+            }
+        }
+        if (unidadDocumental.getProyecto() == null) {
+            errores.add(ConstantesValidaciones.PROYECTO_UNIDAD_DOCUMENTAL
+                    + ConstantesValidaciones.SIN_PROYECTO_UNIDAD_DOCUMENTAL);
+        } else {
+            if (unidadDocumental.getProyecto().getId() == 0) {
+                errores.add(ConstantesValidaciones.PROYECTO_UNIDAD_DOCUMENTAL
+                        + ConstantesValidaciones.SIN_PROYECTO_UNIDAD_DOCUMENTAL);
             }
         }
         if (unidadDocumental.getSociedadArea().getSociedad() == null) {

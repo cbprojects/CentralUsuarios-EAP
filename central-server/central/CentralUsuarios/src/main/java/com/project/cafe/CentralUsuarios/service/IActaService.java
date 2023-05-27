@@ -22,4 +22,11 @@ public interface IActaService {
 	 */
 	ResponseMensajeCodigoDTO aprobacionActa(RequestAprobarRecepcionDTO request);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	boolean validarActasNoAprobadasCliente(long id);
+
 }

@@ -121,6 +121,12 @@ public final class ConstantesValidaciones {
     public static final String MSG_PERFIL_CANTIDAD_REGISTROS = PropertiesUtil
             .getProperty("centralusuarios.perfil.validate.cantidadRegistros");
 
+ // Labels Proyecto
+    public static final String NOMBRE_PROYECTO = PropertiesUtil.getProperty("lbl.proyecto.nombre");
+    public static final String SOCIEDAD_PROYECTO = PropertiesUtil.getProperty("lbl.proyecto.sociedad");
+    public static final String MSG_PROYECTO_REPETIDO = PropertiesUtil
+            .getProperty("lbl.proyecto.repetido");
+    
     // Labels Rol
     public static final String CODIGO_ROL = PropertiesUtil.getProperty("lbl.rol.codigo");
     public static final String DESCRIPCION_ROL = PropertiesUtil.getProperty("lbl.rol.descripcion");
@@ -150,6 +156,11 @@ public final class ConstantesValidaciones {
     public static final String USUARIO_USUARIO_SEDE = PropertiesUtil.getProperty("lbl.usuario.sede.usuario");
     public static final String SEDE_USUARIO_SEDE = PropertiesUtil.getProperty("lbl.usuario.sede.sede");
     public static final String USUARIO_SEDE_REPETIDO = PropertiesUtil.getProperty("lbl.usuario.sede.repetido");
+    
+ // usuario cliente
+    public static final String USUARIO_USUARIO_CLIENTE = PropertiesUtil.getProperty("lbl.usuario.cliente.usuario");
+    public static final String USUARIO_CLIENTE_CLIENTE = PropertiesUtil.getProperty("lbl.usuario.cliente.cliente");
+    public static final String USUARIO_CLIENTE_REPETIDO = PropertiesUtil.getProperty("lbl.usuario.cliente.repetido");
     //tipo masivo
     public static final String TIPO_MASIVO = PropertiesUtil.getProperty("centralusuarios.msg.tipoMasivo");
 
@@ -180,6 +191,15 @@ public final class ConstantesValidaciones {
     public static final String NOMBRE10_SEDE = PropertiesUtil.getProperty("lbl.sede.nombre10");
     public static final String DIRECCION_SEDE = PropertiesUtil.getProperty("lbl.sede.direccion");
     public static final String MSG_SEDE_REPETIDO = PropertiesUtil.getProperty("lbl.sede.repetido");
+    
+ // Labels permisos bodega
+    public static final String CREAR_PERMISOS_BODEGA = PropertiesUtil.getProperty("lbl.permisosBodega.crear");
+    public static final String EDITAR_PERMISOS_BODEGA = PropertiesUtil.getProperty("lbl.permisosBodega.editar");
+    public static final String CONSULTAR_PERMISOS_BODEGA = PropertiesUtil.getProperty("lbl.permisosBodega.consultar");
+    public static final String ELIMINAR_PERMISOS_BODEGA = PropertiesUtil.getProperty("lbl.permisosBodega.eliminar");
+    public static final String BODEGA_PERMISOS_BODEGA = PropertiesUtil.getProperty("lbl.permisosBodega.bodega");
+    public static final String USUARIO_PERMISOS_BODEGA = PropertiesUtil.getProperty("lbl.permisosBodega.usuario");
+    public static final String MSG_PERMISOS_BODEGA_REPETIDO = PropertiesUtil.getProperty("lbl.permisosBodega.repetido");
 
     // labels RolPerfil
     public static final String MSG_BUSQUEDA_ROLPERFIL_VACIO = PropertiesUtil
@@ -219,6 +239,12 @@ public final class ConstantesValidaciones {
             .getProperty("lbl.msg.validate.unidadDocumentalSinContenedor");
     public static final String MSG_UNIDAD_DOCUMENTAL_REPETIDA = PropertiesUtil
             .getProperty("lbl.msg.validate.unidadDocumentalRepetida");
+    public static final String MSG_UNIDAD_DOCUMENTAL_ACTA = PropertiesUtil
+            .getProperty("lbl.msg.validate.unidadDocumentalActa");
+    public static final String PROYECTO_UNIDAD_DOCUMENTAL = PropertiesUtil
+            .getProperty("lbl.unidad.documental.Proyecto");
+    public static final String SIN_PROYECTO_UNIDAD_DOCUMENTAL = PropertiesUtil
+            .getProperty("lbl.msg.validate.unidadDocumentalSinProyecto");
 
     //LABELS BODEGA
     public static final String SEDE_ID = PropertiesUtil.getProperty("lbl.bodega.crear.sedeId");

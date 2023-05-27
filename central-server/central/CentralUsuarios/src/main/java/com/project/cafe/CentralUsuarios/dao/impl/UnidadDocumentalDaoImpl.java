@@ -67,7 +67,7 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 		return query.getResultList();
 	}
 
-//	@Override
+	@Override
 	public ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltros(
 			RequestConsultarUnidadDocumentalDTO filtroUnidadDocumental) {
 
@@ -119,10 +119,103 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 			}
 		}
 		if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getArea() != null) {
-			if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getId() != 0) {
+			if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getArea().getId() != 0) {
 				JPQL.append(" AND sa.area.id = :IDAREA ");
 				pamametros.put("IDAREA",
 						filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getArea().getId());
+			}
+		}
+		
+		JPQL.append(" AND u.caja.codigoAlterno != :CAJA ");
+		pamametros.put("CAJA","C-RECEP");
+		
+
+		String COUNT = "SELECT COUNT(u) " + JPQL.toString().substring(JPQL.toString().indexOf("FROM"));
+
+		// Q. Order By
+		JPQL.append(" ORDER BY u.id DESC");
+		// END QUERY
+
+		// QUERY COUNT
+		TypedQuery<Long> queryCount = em.createQuery(COUNT, Long.class);
+		pamametros.forEach((k, v) -> queryCount.setParameter(k, v));
+		response.setRegistrosTotales(queryCount.getSingleResult());
+
+		TypedQuery<UnidadDocumentalTB> query = em.createQuery(JPQL.toString(), UnidadDocumentalTB.class);
+		pamametros.forEach((k, v) -> query.setParameter(k, v));
+
+		query.setFirstResult(filtroUnidadDocumental.getRegistroInicial());
+		query.setMaxResults(filtroUnidadDocumental.getCantidadRegistro());
+		List<UnidadDocumentalTB> listaUnidadDocumental = query.getResultList();
+
+		response.setResultado(listaUnidadDocumental);
+
+		return response;
+	}
+
+	@Override
+	public ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltrosRecep(
+			RequestConsultarUnidadDocumentalDTO filtroUnidadDocumental) {
+
+		ResponseConsultarDTO<UnidadDocumentalTB> response = new ResponseConsultarDTO<>();
+
+		// PARAMETROS
+		Map<String, Object> pamametros = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder(
+				"SELECT u FROM UnidadDocumentalTB u " + " INNER JOIN u.sociedadArea sa " + " WHERE 1 = 1 ");
+		// WHERE
+		if (StringUtils.isNotBlank(filtroUnidadDocumental.getUnidadDocumental().getCodigo())) {
+			JPQL.append(" AND UPPER(u.codigo) LIKE UPPER(:CODIGO) ");
+			pamametros.put("CODIGO", ConstantesValidaciones.COMODIN_BD
+					+ filtroUnidadDocumental.getUnidadDocumental().getCodigo() + ConstantesValidaciones.COMODIN_BD);
+		}
+		if (StringUtils.isNotBlank(filtroUnidadDocumental.getUnidadDocumental().getNombre())) {
+			JPQL.append(" AND UPPER(u.nombre) LIKE UPPER(:NOMBRE) ");
+			pamametros.put("NOMBRE", ConstantesValidaciones.COMODIN_BD
+					+ filtroUnidadDocumental.getUnidadDocumental().getNombre() + ConstantesValidaciones.COMODIN_BD);
+		}
+		if (StringUtils.isNotBlank(filtroUnidadDocumental.getUnidadDocumental().getCodigoBarra())) {
+			JPQL.append(" AND u.codigoBarra = :CODIGOBARRAS ");
+			pamametros.put("CODIGOBARRAS", filtroUnidadDocumental.getUnidadDocumental().getCodigoBarra());
+		}
+		if (filtroUnidadDocumental.getUnidadDocumental().getFechaRecibe() != null) {
+			JPQL.append(" AND u.fechaRecibe = :FECHARECIBE ");
+			pamametros.put("FECHARECIBE", filtroUnidadDocumental.getUnidadDocumental().getFechaRecibe());
+		}
+		if (filtroUnidadDocumental.getUnidadDocumental().getTipoDocumental() != null) {
+			if (filtroUnidadDocumental.getUnidadDocumental().getTipoDocumental().getId() != 0) {
+				JPQL.append(" AND u.tipoDocumental.id = :IDTIPODOCUMENTAL ");
+				pamametros.put("IDTIPODOCUMENTAL",
+						filtroUnidadDocumental.getUnidadDocumental().getTipoDocumental().getId());
+			}
+		}
+		if (filtroUnidadDocumental.getUnidadDocumental().getContenedor() != null) {
+			if (filtroUnidadDocumental.getUnidadDocumental().getContenedor().getId() != 0) {
+				JPQL.append(" AND u.contenedor.id = :IDCONTENEDOR ");
+				pamametros.put("IDCONTENEDOR", filtroUnidadDocumental.getUnidadDocumental().getContenedor().getId());
+			}
+		}
+		if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad() != null) {
+			if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getId() != 0) {
+				JPQL.append(" AND sa.sociedad.id = :IDSOCIEDAD ");
+				pamametros.put("IDSOCIEDAD",
+						filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getId());
+			}
+		}
+		if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getArea() != null) {
+			if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getArea().getId() != 0) {
+				JPQL.append(" AND sa.area.id = :IDAREA ");
+				pamametros.put("IDAREA",
+						filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getArea().getId());
+			}
+		}
+		if (filtroUnidadDocumental.getUnidadDocumental().getCaja() != null) {
+			if (filtroUnidadDocumental.getUnidadDocumental().getCaja().getId() != 0) {
+				JPQL.append(" AND u.caja.id = :CAJA ");
+				pamametros.put("CAJA",
+						filtroUnidadDocumental.getUnidadDocumental().getCaja().getId());
 			}
 		}
 
@@ -148,7 +241,7 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 
 		return response;
 	}
-
+	
 	@Override
 	public UnidadDocumentalTB buscarUnidadDocumentalPorId(long idUnidadDocumental) {
 		// PARAMETROS

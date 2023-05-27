@@ -48,7 +48,7 @@ public class CajaDaoImpl extends AbstractDao<CajaTB> implements ICajaDao {
 			JPQL.append(" AND c.codigoAlterno = :CODIGO ");
 			pamameters.put("CODIGO", codigocaja);
 		}
-		if (idCliente == 0) {
+		if (idCliente != 0) {
 			JPQL.append(" AND c.cliente.id = :CLIENTE ");
 			pamameters.put("CLIENTE", idCliente);
 		}

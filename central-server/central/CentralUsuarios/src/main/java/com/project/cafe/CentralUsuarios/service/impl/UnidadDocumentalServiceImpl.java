@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.lowagie.text.pdf.UnembedFontPdfSmartCopy;
 import com.project.cafe.CentralUsuarios.dao.IActaDao;
 import com.project.cafe.CentralUsuarios.dao.ICajaDao;
 import com.project.cafe.CentralUsuarios.dao.IClienteDao;
@@ -413,6 +412,9 @@ public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
 		CajaTB caja=cajaService.retornarCajaPrimeraPorCliente(listaUnidadDocumental.get(0).getCaja().getCliente());
 		for (UnidadDocumentalTB unidadDocumentalTB : listaUnidadDocumental) {
 			unidadDocumentalTB.setCaja(caja);
+			long millis=System.currentTimeMillis();  
+	        java.sql.Date date=new java.sql.Date(millis);
+			unidadDocumentalTB.setFechaRecibe(date);
 			unidadDocumentalDAO.modificarUnidadDocumental(unidadDocumentalTB);
 		}
 		System.out.println("Termino de actulizar UD totales");
@@ -469,4 +471,28 @@ public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
 		mailUtil.sendMailPdf(mailDto,miarray,archivo);
 		
 	}
+
+	@Override
+	public ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltrosRecep(
+			RequestConsultarUnidadDocumentalDTO request) {
+		ResponseConsultarDTO<UnidadDocumentalTB> response = new ResponseConsultarDTO<>();
+		if(request.getUnidadDocumental().getSociedadArea().getSociedad().getCliente()!=null &&
+				request.getUnidadDocumental().getSociedadArea().getSociedad().getCliente().getId()!=0l) {
+		List<CajaTB> lstCajas=cajaDAO.buscarcajaPorCodigoCliente("C-RECEP",request.getUnidadDocumental().getSociedadArea().getSociedad().getCliente().getId());
+		if(lstCajas == null || lstCajas.isEmpty()) {
+			response.setRegistrosTotales(0L);
+			List<UnidadDocumentalTB> listaUnidadDocumental = new ArrayList<>();
+			response.setResultado(listaUnidadDocumental);
+		}else {
+			request.getUnidadDocumental().setCaja(lstCajas.get(0));
+			response=unidadDocumentalDAO.consultarUnidadDocumentalFiltrosRecep(request);
+		}
+		}else {
+			response.setRegistrosTotales(0L);
+			List<UnidadDocumentalTB> listaUnidadDocumental = new ArrayList<>();
+			response.setResultado(listaUnidadDocumental);
+		}
+		return response;
+	}
+	
 }

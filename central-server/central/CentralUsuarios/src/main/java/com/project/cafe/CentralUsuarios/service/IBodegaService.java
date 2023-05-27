@@ -25,7 +25,8 @@ public interface IBodegaService {
      * @param crearBodegaDTO
      * @return
      */
-    void crearBodega(CrearBodegaDTO crearBodegaDTO);
+    @Transactional
+    BodegaTB crearBodega(CrearBodegaDTO crearBodegaDTO);
 
     List<BodegaTB> buscarBodegaPorCodigo(String codigo);
 

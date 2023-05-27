@@ -66,4 +66,6 @@ public interface IUnidadDocumentalService {
 
 	ResponseMensajeCodigoDTO enviarPdf(RequestConsultarUDRecepcionDTO request);
 
+	ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalFiltrosRecep(RequestConsultarUnidadDocumentalDTO request);
+
 }

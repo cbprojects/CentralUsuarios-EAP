@@ -128,7 +128,7 @@
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DESPACHOS]]></text>
+				<text><![CDATA[CLIENTE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="490" y="320" width="40" height="20" uuid="de7eb7ba-de43-4469-a965-01b4e3a3884a"/>

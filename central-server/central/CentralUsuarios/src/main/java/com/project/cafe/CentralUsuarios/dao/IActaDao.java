@@ -35,4 +35,11 @@ public interface IActaDao {
 
 	List<ActaTB> buscarActaPorId(Long idUD);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	boolean validarActasNoAprobadasCliente(long id);
+
 }

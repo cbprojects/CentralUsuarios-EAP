@@ -101,4 +101,29 @@ public class ActaDaoImpl extends AbstractDao<ActaTB> implements IActaDao {
 		return query.getResultList();
 	}
 
+	@Override
+	public boolean validarActasNoAprobadasCliente(long id) {
+		// PARAMETROS
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT a FROM ActaTB a WHERE 1 = 1 ");
+		// WHERE
+		JPQL.append(" AND a.cliente.id = :IDCLIENTE ");
+		pamameters.put("IDCLIENTE", id);
+
+		JPQL.append(" AND a.aprobada = :APROBADO ");
+		pamameters.put("APROBADO", false);
+
+		// Q. Order By
+		JPQL.append(" ORDER BY a.id");
+		// END QUERY
+
+		TypedQuery<ActaTB> query = em.createQuery(JPQL.toString(), ActaTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getResultList().isEmpty();
+
+	}
+
 }
