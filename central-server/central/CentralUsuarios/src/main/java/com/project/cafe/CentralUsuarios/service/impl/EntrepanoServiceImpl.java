@@ -33,7 +33,7 @@ public class EntrepanoServiceImpl implements IEntrepanoService {
     public List<EntrepanoTB> buildEntrepanos(int cantidadEntrepanoXEstante, String usuarioCreacion, String usuarioAct, EstanteTB estante) {
         List<EntrepanoTB> listaEntrepanos = new ArrayList<>();
         for (int i = 0; i < cantidadEntrepanoXEstante; i++) {
-            listaEntrepanos.add(buildEntrepano(usuarioCreacion, usuarioAct, String.valueOf(i + 1), estante));
+            listaEntrepanos.add(buildEntrepano(usuarioCreacion, String.valueOf(i + 1),usuarioAct,  estante));
         }
         return listaEntrepanos;
     }

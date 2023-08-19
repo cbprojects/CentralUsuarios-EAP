@@ -78,7 +78,7 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 
 		// QUERY
 		StringBuilder JPQL = new StringBuilder(
-				"SELECT u FROM UnidadDocumentalTB u " + " INNER JOIN u.sociedadArea sa " + " WHERE 1 = 1 ");
+				"SELECT u FROM UnidadDocumentalTB u " + " INNER JOIN u.sociedadArea sa "  + " INNER JOIN sa.sociedad s " +" WHERE 1 = 1 ");
 		// WHERE
 		if (StringUtils.isNotBlank(filtroUnidadDocumental.getUnidadDocumental().getCodigo())) {
 			JPQL.append(" AND UPPER(u.codigo) LIKE UPPER(:CODIGO) ");
@@ -116,6 +116,14 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 				JPQL.append(" AND sa.sociedad.id = :IDSOCIEDAD ");
 				pamametros.put("IDSOCIEDAD",
 						filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getId());
+			}
+		}
+		
+		if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getCliente() != null) {
+			if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getCliente().getId() != 0) {
+				JPQL.append(" AND s.cliente.id = :IDCLIENTE ");
+				pamametros.put("IDCLIENTE",
+						filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getSociedad().getCliente().getId());
 			}
 		}
 		if (filtroUnidadDocumental.getUnidadDocumental().getSociedadArea().getArea() != null) {
@@ -429,7 +437,7 @@ public class UnidadDocumentalDaoImpl extends AbstractDao<UnidadDocumentalTB> imp
 					}
 				}
 				if (StringUtils.isNotBlank(request.getFiltroBusqueda())) {
-					JPQL.append(" AND UPPER(u.nombreArchivos) LIKE UPPER(:NOMBRE) ");
+					JPQL.append(" AND UPPER(u.nombre) LIKE UPPER(:NOMBRE) ");
 					pamametros.put("NOMBRE", ConstantesValidaciones.COMODIN_BD
 							+ request.getFiltroBusqueda() + ConstantesValidaciones.COMODIN_BD);
 				}

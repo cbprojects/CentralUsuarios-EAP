@@ -73,7 +73,7 @@ public class BodegaServiceImpl implements IBodegaService {
                 estanteService.bulkEstantes(listaEstantes);
                 //CREAR ENTREPANO
                 listaEstantes.forEach(estante -> {
-                    List<EntrepanoTB> listaEntrepanos = entrepanoService.buildEntrepanos(crearBodegaDTO.cantidadEstantesXCuerpo, crearBodegaDTO.usuarioCreacion,
+                    List<EntrepanoTB> listaEntrepanos = entrepanoService.buildEntrepanos(crearBodegaDTO.cantidadEntrepanoXEstante, crearBodegaDTO.usuarioCreacion,
                             crearBodegaDTO.usuarioCreacion, estante);
                     entrepanoService.bulkEntrepanos(listaEntrepanos);
                 });

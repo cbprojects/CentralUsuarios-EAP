@@ -124,4 +124,24 @@ public class ClienteDaoImpl extends AbstractDao<ClienteTB> implements IClienteDa
 		return query.getResultList();
 	}
 
+	@Override
+	public Integer buscarClientePorIDNumeroFactura(long id) {
+		Map<String, Object> pamameters = new HashMap<>();
+
+		// QUERY
+		StringBuilder JPQL = new StringBuilder("SELECT c FROM ClienteTB c WHERE 1 = 1 ");
+		// WHERE
+			JPQL.append("AND c.estado = 1 ");
+			JPQL.append("AND c.id = :ID ");
+			pamameters.put("ID", id);
+		// Q. Order By
+		JPQL.append(" ORDER BY c.id");
+		// END QUERY
+
+		TypedQuery<ClienteTB> query = em.createQuery(JPQL.toString(), ClienteTB.class);
+		pamameters.forEach((k, v) -> query.setParameter(k, v));
+
+		return query.getResultList().get(0).getNumeroFactura();
+	}
+
 }

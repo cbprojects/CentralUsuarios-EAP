@@ -15,12 +15,17 @@ public enum ECodigosBloque {
 	L("L"),
 	M("M"),
 	N("N"),
+	Ñ("Ñ"),
 	O("O"),
 	P("P"),
 	Q("Q"),
 	R("R"),
 	S("S"),
-	T("T");
+	T("T"),
+	U("U"),
+	V("V"),
+	W("W"),
+	X("X");
 
 	private final String nombre;
 

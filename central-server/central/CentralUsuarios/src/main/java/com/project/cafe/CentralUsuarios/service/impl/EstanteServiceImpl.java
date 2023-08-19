@@ -34,7 +34,7 @@ public class EstanteServiceImpl implements IEstanteService {
         List<EstanteTB> listaEstantes = new ArrayList<>();
         for (int i = 0; i < cantidadEstantesXCuerpo; i++) {
 
-            listaEstantes.add(buildEstante(usuarioCreacion, usuarioAct, String.valueOf(i + 1), cuerpo));
+            listaEstantes.add(buildEstante(usuarioCreacion, String.valueOf(i + 1),usuarioAct,  cuerpo));
         }
         return listaEstantes;
     }

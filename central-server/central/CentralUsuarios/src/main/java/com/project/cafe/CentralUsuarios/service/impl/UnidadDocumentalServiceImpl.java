@@ -56,6 +56,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRFontNotFoundException;
 
 @Service
 public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
@@ -148,7 +149,7 @@ public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
 							List<UdListDTO> udList=cajaLst.get(j).lstUdTotales;
 							UdListDTO ud= new  UdListDTO();
 							ud.setIdUd(listaUD.get(i).getId());
-							ud.setCodigoUd(listaUD.get(i).getCodigo());
+							ud.setCodigoUd(listaUD.get(i).getCodigo()+"-"+listaUD.get(i).getNombre());
 							List<String> strList =new ArrayList<String>();
 							if(StringUtils.isNotBlank(listaUD.get(i).getNombreArchivos())) {
 								String[] strArr = listaUD.get(i).getNombreArchivos().split("#--#");
@@ -168,7 +169,7 @@ public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
 						List<UdListDTO> udList=new ArrayList<UdListDTO>();
 						UdListDTO ud= new  UdListDTO();
 						ud.setIdUd(listaUD.get(i).getId());
-						ud.setCodigoUd(listaUD.get(i).getCodigo());
+						ud.setCodigoUd(listaUD.get(i).getCodigo()+"-"+listaUD.get(i).getNombre());
 						List<String> strList =new ArrayList<String>();
 						if(StringUtils.isNotBlank(listaUD.get(i).getNombreArchivos())) {
 							String[] strArr = listaUD.get(i).getNombreArchivos().split("#--#");
@@ -186,7 +187,7 @@ public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
 					List<UdListDTO> udList=new ArrayList<UdListDTO>();
 					UdListDTO ud= new  UdListDTO();
 					ud.setIdUd(listaUD.get(i).getId());
-					ud.setCodigoUd(listaUD.get(i).getCodigo());
+					ud.setCodigoUd(listaUD.get(i).getCodigo()+"-"+listaUD.get(i).getNombre());
 					List<String> strList =new ArrayList<String>();
 					if(StringUtils.isNotBlank(listaUD.get(i).getNombreArchivos())) {
 						String[] strArr = listaUD.get(i).getNombreArchivos().split("#--#");
@@ -327,6 +328,8 @@ public class UnidadDocumentalServiceImpl implements IUnidadDocumentalService {
            } catch (IOException e) {
         	   System.out.println("Error generando pdf : {} ".concat(e.toString()));
            } catch (JRException e) {
+        	   System.out.println("Error generando pdf : {} ".concat(e.toString()));
+           }catch (JRFontNotFoundException e) {
         	   System.out.println("Error generando pdf : {} ".concat(e.toString()));
            } finally {
         	   if (reportStream != null) {

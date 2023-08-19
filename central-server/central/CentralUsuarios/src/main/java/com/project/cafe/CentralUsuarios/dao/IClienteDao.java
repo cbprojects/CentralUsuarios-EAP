@@ -36,4 +36,11 @@ public interface IClienteDao {
 	 */
 	ResponseConsultarDTO<ClienteTB> consultarClienteFiltros(RequestConsultarMasivoDTO request);
 
+	/**
+	 *  método que consulta numero de factura del cliente
+	 * @param filtroRol
+	 * @return
+	 */
+	Integer buscarClientePorIDNumeroFactura(long id);
+
 }

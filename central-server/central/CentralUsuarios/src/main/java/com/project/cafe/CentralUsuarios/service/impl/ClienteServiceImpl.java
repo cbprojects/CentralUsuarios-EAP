@@ -33,6 +33,8 @@ public class ClienteServiceImpl implements IClienteService {
 	@Override
 	public MasivoDTO modificarCliente(MasivoDTO masivo) {
 		ClienteTB cliente = transformarMasivoClienteEditar(masivo);
+		Integer numeroF=clienteDao.buscarClientePorIDNumeroFactura(cliente.getId());
+		cliente.setNumeroFactura(numeroF);
 		cliente=clienteDao.modificarCliente(cliente);
 		return transformarClienteMasivo(cliente);
 	}
@@ -71,6 +73,7 @@ public class ClienteServiceImpl implements IClienteService {
 		ClienteTB cliente = new ClienteTB();
 		cliente.setNombre(masivo.getNombre1());
 		cliente.setTax(masivo.getNombre2());
+		cliente.setNumeroFactura(0);
 		cliente.setUsuarioCreacion(masivo.getUsuarioCreacion());
 		cliente.setUsuarioActualizacion(masivo.getUsuarioActualizacion());
 		cliente.setFechaCreacion(masivo.getFechaCreacion());

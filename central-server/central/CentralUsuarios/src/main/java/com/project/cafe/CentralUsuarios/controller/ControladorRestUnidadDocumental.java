@@ -124,12 +124,6 @@ public class ControladorRestUnidadDocumental {
 			if (errores.isEmpty()) {
 				// validar unidad documental unica por sociedad
 
-				if (!unidadDocumental.getCaja().getCodigoAlterno().equals("C-RECEP")) {
-					CajaTB cajaInicial = cajalService
-							.retornarCajaInicialPorCliente(unidadDocumental.getSociedadArea().getSociedad().getCliente());
-					unidadDocumental.setCaja(cajaInicial);
-				}
-
 				SociedadAreaTB sociedadArea = sociedadAreaService.buscarSociedadAreaPorSociedadArea(
 						unidadDocumental.getSociedadArea().getSociedad().getId(),
 						unidadDocumental.getSociedadArea().getArea().getId());
