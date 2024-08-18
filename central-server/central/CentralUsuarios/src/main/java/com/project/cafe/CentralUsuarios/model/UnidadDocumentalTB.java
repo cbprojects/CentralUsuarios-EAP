@@ -78,10 +78,10 @@ public class UnidadDocumentalTB extends BaseEntidadTB implements Serializable {
 	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private TipoUDTB tipoDocumental;
 	
-	@Column(name = "und_consecutivo_ini", nullable = true)
+	@Column(name = "und_consecutivo_ini", nullable = true, length = 128)
 	private String consecutivoIni;
 	
-	@Column(name = "und_consecutivo_fin", nullable = true)
+	@Column(name = "und_consecutivo_fin", nullable = true, length = 128)
 	private String consecutivoFin;
 	
 	@NotNull

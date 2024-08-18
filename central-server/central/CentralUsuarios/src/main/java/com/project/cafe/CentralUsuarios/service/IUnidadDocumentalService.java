@@ -61,6 +61,8 @@ public interface IUnidadDocumentalService {
 	ResponseConsultarDTO<UnidadDocumentalTB> consultarUnidadDocumentalRecepcion(RequestConsultarUDRecepcionDTO request);
 
 	ResponseMensajeCodigoDTO aprobacionRecepcion(RequestAprobarRecepcionDTO request);
+	
+	ResponseMensajeCodigoDTO aprobacionRecepcionTodo(RequestConsultarUDRecepcionDTO request);
 
 	ResponseGenerarPdfDTO generarPdf(RequestConsultarUDRecepcionDTO request);
 

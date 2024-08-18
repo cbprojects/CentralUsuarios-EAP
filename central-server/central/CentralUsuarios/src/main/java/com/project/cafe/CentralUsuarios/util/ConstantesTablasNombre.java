@@ -16,5 +16,6 @@ public final class ConstantesTablasNombre {
 	public static final String MRA_PROYECTO_TB = "gdo_proyecto_tb";
 	public static final String MRA_PERMISOS_BODEGA_TB = "gdo_permisos_bodega_tb";
 	public static final String MRA_UNIDAD_DOCUMENTAL_TB = "gdo_unidad_documental_tb";
+	public static final String MRA_UNIDAD_DOCUMENTAL_TB_MASIVO = "gdo_unidad_documental_tb_masivo";
 	public static final String MRA_USUARIO_CLIENTE_TB = "gdo_usuario_cliente_tb";
 }

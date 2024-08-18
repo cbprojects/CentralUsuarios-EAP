@@ -140,7 +140,7 @@ public class ControladorRestCaja {
 	// CONSULTA
 
 		@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-		@RequestMapping("/consultarCajasPorSociedad")
+		@RequestMapping("/consultarCajasPorCliente")
 		public List<CajaTB> consultarCajasPorCliente(@RequestBody RequestConsultarPorIDDTO request) {
 			try {
 				return cajaService.consultarCajasPorCliente(request.getId());

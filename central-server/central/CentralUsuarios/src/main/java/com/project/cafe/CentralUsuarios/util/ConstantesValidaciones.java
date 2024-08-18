@@ -222,6 +222,10 @@ public final class ConstantesValidaciones {
             .getProperty("lbl.unidad.documental.codigoBarras");
     public static final String FECHA_RECIBE_UNIDAD_DOCUMENTAL = PropertiesUtil
             .getProperty("lbl.unidad.documental.fechaRecibe");
+    public static final String FECHA_INICIO_UNIDAD_DOCUMENTAL = PropertiesUtil
+            .getProperty("lbl.unidad.documental.fechaInicio");
+    public static final String FECHA_FIN_UNIDAD_DOCUMENTAL = PropertiesUtil
+            .getProperty("lbl.unidad.documental.fechaFin");
     public static final String SOCIEDAD_UNIDAD_DOCUMENTAL = PropertiesUtil
             .getProperty("lbl.unidad.documental.sociedad");
     public static final String SIN_SOCIEDAD_UNIDAD_DOCUMENTAL = PropertiesUtil
@@ -241,6 +245,8 @@ public final class ConstantesValidaciones {
             .getProperty("lbl.msg.validate.unidadDocumentalRepetida");
     public static final String MSG_UNIDAD_DOCUMENTAL_ACTA = PropertiesUtil
             .getProperty("lbl.msg.validate.unidadDocumentalActa");
+    public static final String MSG_UNIDAD_DOCUMENTAL_CAJA = PropertiesUtil
+            .getProperty("lbl.msg.validate.unidadDocumentalCaja");
     public static final String PROYECTO_UNIDAD_DOCUMENTAL = PropertiesUtil
             .getProperty("lbl.unidad.documental.Proyecto");
     public static final String SIN_PROYECTO_UNIDAD_DOCUMENTAL = PropertiesUtil
